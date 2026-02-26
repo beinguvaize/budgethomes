@@ -240,12 +240,14 @@ img {
 }
 
 .hero-night {
+  background-color: var(--dark);
   background-image: url('assets/hero/hero-night.png');
   z-index: 0;
   filter: brightness(0.6);
 }
 
 .hero-day {
+  background-color: var(--dark2);
   background-image: url('assets/hero/hero-day.png');
   z-index: 1;
   /* Masking logic using CSS variable updated by JS */

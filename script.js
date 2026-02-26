@@ -13,13 +13,17 @@ const hamburger = document.querySelector('.hamburger');
 const mobileMenu = document.getElementById('mobileMenu');
 hamburger?.addEventListener('click', () => {
   hamburger.classList.toggle('open');
-  mobileMenu.classList.toggle('open');
-  document.body.style.overflow = mobileMenu.classList.contains('open') ? 'hidden' : '';
+  const isOpen = mobileMenu.classList.toggle('open');
+  hamburger.setAttribute('aria-expanded', isOpen);
+  hamburger.setAttribute('aria-label', isOpen ? 'Close menu' : 'Open menu');
+  document.body.style.overflow = isOpen ? 'hidden' : '';
 });
 document.querySelectorAll('.mobile-menu a').forEach(link => {
   link.addEventListener('click', () => {
-    hamburger.classList.remove('open');
+    hamburger?.classList.remove('open');
     mobileMenu.classList.remove('open');
+    hamburger?.setAttribute('aria-expanded', 'false');
+    hamburger?.setAttribute('aria-label', 'Open menu');
     document.body.style.overflow = '';
   });
 });
@@ -37,15 +41,17 @@ document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
 
 // ── Animated counters ──
 function animateCounter(el, target, suffix = '') {
+  const isDecimal = target % 1 !== 0;
+  const decimals = isDecimal ? 1 : 0;
   let current = 0;
   const step = target / 60;
   const timer = setInterval(() => {
     current += step;
     if (current >= target) {
-      el.textContent = target + suffix;
+      el.textContent = (isDecimal ? target.toFixed(decimals) : target) + suffix;
       clearInterval(timer);
     } else {
-      el.textContent = Math.floor(current) + suffix;
+      el.textContent = (isDecimal ? current.toFixed(decimals) : Math.floor(current)) + suffix;
     }
   }, 20);
 }
