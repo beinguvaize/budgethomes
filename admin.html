@@ -494,12 +494,125 @@
       font-size: 0.72rem;
     }
 
+    /* ── Forgot password link ── */
+    .btn-forgot {
+      display: block;
+      width: 100%;
+      margin-top: 0.75rem;
+      background: transparent;
+      border: none;
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      color: #aaa;
+      cursor: pointer;
+      letter-spacing: 0.05em;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      padding: 0.25rem 0;
+    }
+    .btn-forgot:hover { color: var(--gold); }
+
+    /* ── Change password header button ── */
+    .btn-changepw {
+      background: transparent;
+      border: 1px solid #444;
+      color: #ccc;
+      font-family: var(--mono);
+      font-size: 0.68rem;
+      letter-spacing: 0.08em;
+      padding: 0.35rem 0.9rem;
+      cursor: pointer;
+      transition: border-color 0.15s, color 0.15s;
+    }
+    .btn-changepw:hover { border-color: var(--gold-light); color: var(--gold-light); }
+
+    /* ── Modal ── */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.65);
+      z-index: 500;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+      backdrop-filter: blur(2px);
+    }
+    .modal-card {
+      background: white;
+      border: 1.5px solid var(--ink);
+      padding: 2rem 2rem 1.75rem;
+      width: 100%;
+      max-width: 400px;
+      box-shadow: 6px 6px 0 var(--ink);
+      animation: modalIn 0.2s ease;
+    }
+    @keyframes modalIn {
+      from { opacity: 0; transform: translateY(12px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .modal-title {
+      font-family: var(--serif);
+      font-size: 1.3rem;
+      font-weight: 600;
+      margin-bottom: 1.25rem;
+    }
+    .modal-input {
+      width: 100%;
+      border: 1.5px solid var(--ink);
+      background: var(--paper);
+      font-family: var(--mono);
+      font-size: 0.88rem;
+      padding: 0.65rem 0.9rem;
+      outline: none;
+      transition: border-color 0.15s;
+      display: block;
+    }
+    .modal-input:focus { border-color: var(--gold); background: white; }
+    .modal-actions {
+      display: flex;
+      gap: 0.75rem;
+      justify-content: flex-end;
+      margin-top: 1.25rem;
+    }
+
+    /* ── Recovery key display ── */
+    .recovery-key-box {
+      background: var(--ink);
+      color: var(--gold-light);
+      font-family: var(--mono);
+      font-size: 1.1rem;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      text-align: center;
+      padding: 1rem;
+      border: 2px solid var(--gold);
+      margin-bottom: 0.75rem;
+      user-select: all;
+    }
+    .btn-copy {
+      display: block;
+      width: 100%;
+      background: transparent;
+      border: 1.5px solid var(--rule);
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.5rem;
+      cursor: pointer;
+      color: #888;
+      transition: border-color 0.15s, color 0.15s;
+    }
+    .btn-copy:hover { border-color: var(--gold); color: var(--gold); }
+
     /* responsive */
     @media (max-width: 480px) {
       .admin-body { padding: 1.5rem 1rem; }
       .price-grid { grid-template-columns: 1fr 1fr; }
       .save-bar { flex-direction: column; align-items: stretch; }
       .header-tag { display: none; }
+      .btn-changepw { display: none; }
     }
   </style>
 </head>
@@ -507,14 +620,37 @@
 
 <!-- ══════════════ LOGIN ══════════════ -->
 <div id="loginScreen">
-  <div class="login-card">
+
+  <!-- Normal login -->
+  <div class="login-card" id="loginCard">
     <div class="login-logo">Budget <span>Homes</span></div>
     <div class="login-sub">Admin · Price Manager</div>
     <label class="field-label" for="pwInput">Password</label>
     <input type="password" id="pwInput" placeholder="Enter admin password" autocomplete="current-password" />
     <div class="login-err" id="loginErr"></div>
     <button class="btn-login" id="loginBtn">Unlock Panel</button>
+    <button class="btn-forgot" id="forgotBtn">Forgot password?</button>
   </div>
+
+  <!-- Forgot / Reset password using recovery key -->
+  <div class="login-card" id="resetCard" style="display:none;">
+    <div class="login-logo">Budget <span>Homes</span></div>
+    <div class="login-sub">Reset Password</div>
+    <p style="font-size:0.72rem;color:#777;margin-bottom:1.25rem;line-height:1.6;">
+      Enter your <strong>recovery key</strong> to set a new password.<br/>
+      Your recovery key is shown once when you first set up the admin panel.
+    </p>
+    <label class="field-label" for="recoveryInput">Recovery Key</label>
+    <input type="text" id="recoveryInput" placeholder="xxxx-xxxx-xxxx" autocomplete="off" style="width:100%;border:1.5px solid var(--ink);background:var(--paper);font-family:var(--mono);font-size:0.9rem;padding:0.65rem 0.9rem;outline:none;letter-spacing:0.1em;margin-bottom:1rem;" />
+    <label class="field-label" for="newPwInput">New Password</label>
+    <input type="password" id="newPwInput" placeholder="Enter new password" style="width:100%;border:1.5px solid var(--ink);background:var(--paper);font-family:var(--mono);font-size:0.9rem;padding:0.65rem 0.9rem;outline:none;letter-spacing:0.08em;margin-bottom:0.4rem;" />
+    <label class="field-label" for="confirmPwInput" style="margin-top:0.75rem;">Confirm New Password</label>
+    <input type="password" id="confirmPwInput" placeholder="Re-enter new password" style="width:100%;border:1.5px solid var(--ink);background:var(--paper);font-family:var(--mono);font-size:0.9rem;padding:0.65rem 0.9rem;outline:none;letter-spacing:0.08em;" />
+    <div class="login-err" id="resetErr"></div>
+    <button class="btn-login" id="doResetBtn" style="margin-top:1.25rem;">Set New Password</button>
+    <button class="btn-forgot" id="backToLoginBtn">← Back to login</button>
+  </div>
+
 </div>
 
 <!-- ══════════════ ADMIN PANEL ══════════════ -->
@@ -523,6 +659,7 @@
     <div class="header-brand">Budget <span>Homes</span></div>
     <div class="header-actions">
       <span class="header-tag">Price Manager</span>
+      <button class="btn-changepw" id="changePwBtn">🔑 Change Password</button>
       <button class="btn-logout" id="logoutBtn">Log out</button>
     </div>
   </header>
@@ -610,21 +747,112 @@
 <!-- Toast -->
 <div id="saveToast">✦ Prices saved successfully</div>
 
+<!-- ══════════════ CHANGE PASSWORD MODAL ══════════════ -->
+<div id="changePwModal" class="modal-backdrop" style="display:none;">
+  <div class="modal-card">
+    <div class="modal-title">Change Password</div>
+    <label class="field-label" for="cpCurrent">Current Password</label>
+    <input type="password" id="cpCurrent" placeholder="Enter current password" class="modal-input" />
+    <label class="field-label" for="cpNew" style="margin-top:0.9rem;">New Password</label>
+    <input type="password" id="cpNew" placeholder="Min 8 characters" class="modal-input" />
+    <label class="field-label" for="cpConfirm" style="margin-top:0.9rem;">Confirm New Password</label>
+    <input type="password" id="cpConfirm" placeholder="Re-enter new password" class="modal-input" />
+    <div class="login-err" id="cpErr"></div>
+    <div class="modal-actions">
+      <button class="btn-reset" id="cpCancelBtn">Cancel</button>
+      <button class="btn-save" id="cpSaveBtn">✦ Update Password</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════ RECOVERY KEY MODAL ══════════════ -->
+<div id="recoveryModal" class="modal-backdrop" style="display:none;">
+  <div class="modal-card">
+    <div class="modal-title">🔐 Save Your Recovery Key</div>
+    <p style="font-size:0.75rem;color:#666;line-height:1.7;margin-bottom:1.25rem;">
+      This key lets you reset your password if you ever forget it.<br/>
+      <strong>Store it somewhere safe</strong> — it won't be shown again.
+    </p>
+    <div class="recovery-key-box" id="recoveryKeyDisplay"></div>
+    <button class="btn-copy" id="copyKeyBtn">Copy Key</button>
+    <div class="modal-actions" style="margin-top:1.25rem;">
+      <button class="btn-save" id="recoveryDoneBtn" style="width:100%;">✦ I've saved it — Continue</button>
+    </div>
+  </div>
+</div>
+
 <script>
-  // ── Config ──────────────────────────────────────────────
-  const ADMIN_PASSWORD = 'budgethomes2026'; // ← Change this password!
-  const STORAGE_KEY = 'bh_prices_v1';
+  // ═══════════════════════════════════════════════════════
+  // Budget Homes Admin – Password & Price Manager
+  // ═══════════════════════════════════════════════════════
+
+  const STORAGE_KEY   = 'bh_prices_v1';
+  const AUTH_KEY      = 'bh_auth_v1';   // stores { hash, recoveryHash }
 
   const DEFAULTS = {
-    unit1: { name: 'Unit 1', type: 'Studio Room',       price: 1200, unit: '/night' },
-    unit2: { name: 'Unit 2', type: 'Standard Double',   price: 1500, unit: '/night' },
-    unit3: { name: 'Unit 3', type: 'Deluxe Room',       price: 1800, unit: '/night' },
-    unit4: { name: 'Unit 4', type: 'Triple Room',       price: 2200, unit: '/night' },
-    unit5: { name: 'Unit 5', type: 'Family Suite',      price: 2500, unit: '/night' },
-    pg:    { name: 'PG',     type: 'Paying Guest',      price: 7000, unit: '/month' },
+    unit1: { name: 'Unit 1', type: 'Studio Room',     price: 1200, unit: '/night' },
+    unit2: { name: 'Unit 2', type: 'Standard Double', price: 1500, unit: '/night' },
+    unit3: { name: 'Unit 3', type: 'Deluxe Room',     price: 1800, unit: '/night' },
+    unit4: { name: 'Unit 4', type: 'Triple Room',     price: 2200, unit: '/night' },
+    unit5: { name: 'Unit 5', type: 'Family Suite',    price: 2500, unit: '/night' },
+    pg:    { name: 'PG',     type: 'Paying Guest',    price: 7000, unit: '/month' },
     startingFrom: 1200,
     notes: ''
   };
+
+  // ── Crypto helpers ───────────────────────────────────────
+  async function sha256(text) {
+    const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(text));
+    return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2,'0')).join('');
+  }
+
+  function generateRecoveryKey() {
+    const seg = () => Math.random().toString(36).substring(2, 6).toUpperCase();
+    return `${seg()}-${seg()}-${seg()}`;
+  }
+
+  // ── Auth store ───────────────────────────────────────────
+  function getAuthStore() {
+    try {
+      const raw = localStorage.getItem(AUTH_KEY);
+      return raw ? JSON.parse(raw) : null;
+    } catch { return null; }
+  }
+
+  async function initAuthIfNeeded() {
+    // First-ever visit: set default password + generate recovery key
+    if (!getAuthStore()) {
+      const defaultPw      = 'budgethomes2026';
+      const recoveryKey    = generateRecoveryKey();
+      const hash           = await sha256(defaultPw);
+      const recoveryHash   = await sha256(recoveryKey);
+      localStorage.setItem(AUTH_KEY, JSON.stringify({ hash, recoveryHash }));
+      // Show the recovery key to the user on first run
+      showRecoveryModal(recoveryKey, true);
+    }
+  }
+
+  async function checkPassword(pw) {
+    const store = getAuthStore();
+    if (!store) return false;
+    return (await sha256(pw)) === store.hash;
+  }
+
+  async function checkRecoveryKey(key) {
+    const store = getAuthStore();
+    if (!store) return false;
+    return (await sha256(key)) === store.recoveryHash;
+  }
+
+  async function updatePassword(newPw) {
+    const store        = getAuthStore();
+    store.hash         = await sha256(newPw);
+    // Generate a fresh recovery key on every password change
+    const newKey       = generateRecoveryKey();
+    store.recoveryHash = await sha256(newKey);
+    localStorage.setItem(AUTH_KEY, JSON.stringify(store));
+    return newKey;
+  }
 
   // ── State ────────────────────────────────────────────────
   let saved = loadSaved();
@@ -637,21 +865,27 @@
     } catch { return JSON.parse(JSON.stringify(DEFAULTS)); }
   }
 
+  // ── DOM refs ─────────────────────────────────────────────
+  const loginScreen  = document.getElementById('loginScreen');
+  const adminPanel   = document.getElementById('adminPanel');
+  const loginCard    = document.getElementById('loginCard');
+  const resetCard    = document.getElementById('resetCard');
+  const pwInput      = document.getElementById('pwInput');
+  const loginErr     = document.getElementById('loginErr');
+
+  // ── Boot ─────────────────────────────────────────────────
+  (async () => {
+    await initAuthIfNeeded();
+    if (sessionStorage.getItem('bh_admin_auth') === '1') showPanel();
+  })();
+
   // ── Login ────────────────────────────────────────────────
-  const loginScreen = document.getElementById('loginScreen');
-  const adminPanel  = document.getElementById('adminPanel');
-  const pwInput     = document.getElementById('pwInput');
-  const loginErr    = document.getElementById('loginErr');
-  const loginBtn    = document.getElementById('loginBtn');
-
-  // Auto-login if session active
-  if (sessionStorage.getItem('bh_admin_auth') === '1') showPanel();
-
-  loginBtn.addEventListener('click', attemptLogin);
+  document.getElementById('loginBtn').addEventListener('click', attemptLogin);
   pwInput.addEventListener('keydown', e => { if (e.key === 'Enter') attemptLogin(); });
 
-  function attemptLogin() {
-    if (pwInput.value === ADMIN_PASSWORD) {
+  async function attemptLogin() {
+    const ok = await checkPassword(pwInput.value);
+    if (ok) {
       loginErr.textContent = '';
       sessionStorage.setItem('bh_admin_auth', '1');
       showPanel();
@@ -674,22 +908,107 @@
     location.reload();
   });
 
+  // ── Forgot password flow ─────────────────────────────────
+  document.getElementById('forgotBtn').addEventListener('click', () => {
+    loginCard.style.display = 'none';
+    resetCard.style.display = 'block';
+  });
+  document.getElementById('backToLoginBtn').addEventListener('click', () => {
+    resetCard.style.display = 'none';
+    loginCard.style.display = 'block';
+    document.getElementById('resetErr').textContent = '';
+  });
+
+  document.getElementById('doResetBtn').addEventListener('click', async () => {
+    const keyVal  = document.getElementById('recoveryInput').value.trim().toUpperCase();
+    const newPw   = document.getElementById('newPwInput').value;
+    const confirm = document.getElementById('confirmPwInput').value;
+    const errEl   = document.getElementById('resetErr');
+
+    if (!keyVal)         { errEl.textContent = 'Please enter your recovery key.'; return; }
+    if (newPw.length < 6){ errEl.textContent = 'Password must be at least 6 characters.'; return; }
+    if (newPw !== confirm){ errEl.textContent = 'Passwords do not match.'; return; }
+
+    const valid = await checkRecoveryKey(keyVal);
+    if (!valid) { errEl.textContent = 'Recovery key is incorrect.'; return; }
+
+    const newKey = await updatePassword(newPw);
+    errEl.textContent = '';
+    document.getElementById('recoveryInput').value = '';
+    document.getElementById('newPwInput').value    = '';
+    document.getElementById('confirmPwInput').value= '';
+    resetCard.style.display = 'none';
+    loginCard.style.display = 'block';
+    showRecoveryModal(newKey, false);
+  });
+
+  // ── Change password (from inside panel) ──────────────────
+  document.getElementById('changePwBtn').addEventListener('click', () => {
+    document.getElementById('cpCurrent').value = '';
+    document.getElementById('cpNew').value     = '';
+    document.getElementById('cpConfirm').value = '';
+    document.getElementById('cpErr').textContent = '';
+    document.getElementById('changePwModal').style.display = 'flex';
+  });
+
+  document.getElementById('cpCancelBtn').addEventListener('click', () => {
+    document.getElementById('changePwModal').style.display = 'none';
+  });
+
+  document.getElementById('cpSaveBtn').addEventListener('click', async () => {
+    const current = document.getElementById('cpCurrent').value;
+    const newPw   = document.getElementById('cpNew').value;
+    const confirm = document.getElementById('cpConfirm').value;
+    const errEl   = document.getElementById('cpErr');
+
+    if (!(await checkPassword(current))) { errEl.textContent = 'Current password is incorrect.'; return; }
+    if (newPw.length < 6)  { errEl.textContent = 'New password must be at least 6 characters.'; return; }
+    if (newPw !== confirm)  { errEl.textContent = 'New passwords do not match.'; return; }
+    if (newPw === current)  { errEl.textContent = 'New password must be different from current.'; return; }
+
+    const newKey = await updatePassword(newPw);
+    document.getElementById('changePwModal').style.display = 'none';
+    showRecoveryModal(newKey, false);
+  });
+
+  // ── Recovery key modal ───────────────────────────────────
+  function showRecoveryModal(key, isFirstTime) {
+    document.getElementById('recoveryKeyDisplay').textContent = key;
+    const modal = document.getElementById('recoveryModal');
+    const title = modal.querySelector('.modal-title');
+    title.textContent = isFirstTime ? '🔐 Welcome! Save Your Recovery Key' : '🔐 New Recovery Key Generated';
+    modal.style.display = 'flex';
+  }
+
+  document.getElementById('copyKeyBtn').addEventListener('click', () => {
+    const key = document.getElementById('recoveryKeyDisplay').textContent;
+    navigator.clipboard.writeText(key).then(() => {
+      document.getElementById('copyKeyBtn').textContent = '✓ Copied!';
+      setTimeout(() => document.getElementById('copyKeyBtn').textContent = 'Copy Key', 2000);
+    });
+  });
+
+  document.getElementById('recoveryDoneBtn').addEventListener('click', () => {
+    document.getElementById('recoveryModal').style.display = 'none';
+  });
+
+  // Close modals on backdrop click
+  document.querySelectorAll('.modal-backdrop').forEach(m => {
+    m.addEventListener('click', e => { if (e.target === m) m.style.display = 'none'; });
+  });
+
   // ── Render price cards ───────────────────────────────────
   function renderCards() {
     const nightlyKeys = ['unit1','unit2','unit3','unit4','unit5'];
     const nightlyGrid = document.getElementById('nightlyGrid');
     const pgGrid      = document.getElementById('pgGrid');
 
-    nightlyKeys.forEach(k => {
-      nightlyGrid.appendChild(makeCard(k, false));
-    });
+    nightlyKeys.forEach(k => nightlyGrid.appendChild(makeCard(k, false)));
     pgGrid.appendChild(makeCard('pg', true));
 
-    // Starting from
     document.getElementById('startingFrom').value = saved.startingFrom || DEFAULTS.startingFrom;
     document.getElementById('adminNotes').value   = saved.notes || '';
 
-    // Change listeners for dirty tracking
     nightlyGrid.querySelectorAll('input').forEach(inp => inp.addEventListener('input', markDirty));
     pgGrid.querySelectorAll('input').forEach(inp => inp.addEventListener('input', markDirty));
     document.getElementById('startingFrom').addEventListener('input', markDirty);
@@ -699,8 +1018,7 @@
   function makeCard(key, isPg) {
     const def   = DEFAULTS[key];
     const price = (saved[key] && saved[key].price) || def.price;
-
-    const card = document.createElement('div');
+    const card  = document.createElement('div');
     card.className = 'price-card' + (isPg ? ' pg-card' : '');
     card.innerHTML = `
       <div class="card-badge">${def.name}</div>
@@ -710,8 +1028,7 @@
         <span class="currency-sym">₹</span>
         <input type="number" id="inp_${key}" value="${price}" min="0" step="50" />
         <span class="price-unit">${def.unit}</span>
-      </div>
-    `;
+      </div>`;
     return card;
   }
 
@@ -722,35 +1039,29 @@
     document.getElementById('statusDot').classList.remove('saved');
   }
 
-  // ── Save ─────────────────────────────────────────────────
+  // ── Save prices ──────────────────────────────────────────
   document.getElementById('saveBtn').addEventListener('click', saveAll);
 
   function saveAll() {
     const data = JSON.parse(JSON.stringify(DEFAULTS));
-
     ['unit1','unit2','unit3','unit4','unit5','pg'].forEach(k => {
       const inp = document.getElementById('inp_' + k);
       if (inp) data[k].price = parseInt(inp.value, 10) || DEFAULTS[k].price;
     });
-
     data.startingFrom = parseInt(document.getElementById('startingFrom').value, 10) || DEFAULTS.startingFrom;
     data.notes        = document.getElementById('adminNotes').value;
-
     localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
     saved = data;
     dirty = false;
-
     document.getElementById('saveStatus').textContent = 'All prices saved · ' + new Date().toLocaleTimeString();
     document.getElementById('statusDot').classList.add('saved');
-
     const toast = document.getElementById('saveToast');
     toast.classList.add('show');
     setTimeout(() => toast.classList.remove('show'), 2800);
-
     renderPreview();
   }
 
-  // ── Reset ────────────────────────────────────────────────
+  // ── Reset prices ─────────────────────────────────────────
   document.getElementById('resetBtn').addEventListener('click', () => {
     if (!confirm('Reset all prices to original defaults?')) return;
     ['unit1','unit2','unit3','unit4','unit5','pg'].forEach(k => {
@@ -766,15 +1077,13 @@
   function renderPreview() {
     const list = document.getElementById('previewList');
     list.innerHTML = '';
-    const allKeys = ['unit1','unit2','unit3','unit4','unit5','pg'];
-    allKeys.forEach(k => {
-      const d = saved[k] || DEFAULTS[k];
+    ['unit1','unit2','unit3','unit4','unit5','pg'].forEach(k => {
+      const d  = saved[k] || DEFAULTS[k];
       const el = document.createElement('div');
       el.className = 'preview-item';
       el.innerHTML = `<strong>${d.name} ${d.type}:</strong> <span class="preview-price">₹${d.price.toLocaleString('en-IN')}${d.unit}</span>`;
       list.appendChild(el);
     });
-    // Starting from
     const sf = document.createElement('div');
     sf.className = 'preview-item';
     sf.innerHTML = `<strong>Starting from:</strong> <span class="preview-price">₹${(saved.startingFrom || DEFAULTS.startingFrom).toLocaleString('en-IN')}/night</span>`;
