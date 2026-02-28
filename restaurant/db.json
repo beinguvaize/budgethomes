@@ -1,0 +1,3019 @@
+{
+  "settings": {
+    "restaurantName": "RestroFlow",
+    "taxRate": 10,
+    "serviceChargeRate": 5,
+    "currency": "USD"
+  },
+  "users": [
+    {
+      "id": "u1",
+      "name": "Alex",
+      "pin": "1111",
+      "role": "manager",
+      "active": true
+    },
+    {
+      "id": "u2",
+      "name": "Maria",
+      "pin": "2222",
+      "role": "waiter",
+      "active": true
+    },
+    {
+      "id": "u3",
+      "name": "James",
+      "pin": "3333",
+      "role": "waiter",
+      "active": true
+    },
+    {
+      "id": "u4",
+      "name": "Chef K",
+      "pin": "4444",
+      "role": "kitchen",
+      "active": true
+    },
+    {
+      "id": "u5",
+      "name": "Sam",
+      "pin": "5555",
+      "role": "cashier",
+      "active": true
+    }
+  ],
+  "categories": [
+    {
+      "id": "cat1",
+      "name": "Starters",
+      "sortOrder": 1,
+      "icon": "🥗"
+    },
+    {
+      "id": "cat2",
+      "name": "Mains",
+      "sortOrder": 2,
+      "icon": "🍽️"
+    },
+    {
+      "id": "cat3",
+      "name": "Pizza",
+      "sortOrder": 3,
+      "icon": "🍕"
+    },
+    {
+      "id": "cat4",
+      "name": "Pasta",
+      "sortOrder": 4,
+      "icon": "🍝"
+    },
+    {
+      "id": "cat5",
+      "name": "Burgers",
+      "sortOrder": 5,
+      "icon": "🍔"
+    },
+    {
+      "id": "cat6",
+      "name": "Desserts",
+      "sortOrder": 6,
+      "icon": "🍰"
+    },
+    {
+      "id": "cat7",
+      "name": "Drinks",
+      "sortOrder": 7,
+      "icon": "🥤"
+    },
+    {
+      "id": "cat8",
+      "name": "Sides",
+      "sortOrder": 8,
+      "icon": "🍟"
+    }
+  ],
+  "modifierGroups": [
+    {
+      "id": "mg1",
+      "name": "Size",
+      "required": true,
+      "multiSelect": false,
+      "options": [
+        {
+          "id": "mg1-s",
+          "name": "Small",
+          "price": 0
+        },
+        {
+          "id": "mg1-m",
+          "name": "Medium",
+          "price": 200
+        },
+        {
+          "id": "mg1-l",
+          "name": "Large",
+          "price": 400
+        }
+      ]
+    },
+    {
+      "id": "mg2",
+      "name": "Spice Level",
+      "required": false,
+      "multiSelect": false,
+      "options": [
+        {
+          "id": "mg2-mild",
+          "name": "Mild",
+          "price": 0
+        },
+        {
+          "id": "mg2-medium",
+          "name": "Medium",
+          "price": 0
+        },
+        {
+          "id": "mg2-hot",
+          "name": "Hot",
+          "price": 0
+        },
+        {
+          "id": "mg2-extra",
+          "name": "Extra Hot",
+          "price": 0
+        }
+      ]
+    },
+    {
+      "id": "mg3",
+      "name": "Add-ons",
+      "required": false,
+      "multiSelect": true,
+      "options": [
+        {
+          "id": "mg3-cheese",
+          "name": "Extra Cheese",
+          "price": 150
+        },
+        {
+          "id": "mg3-bacon",
+          "name": "Bacon",
+          "price": 200
+        },
+        {
+          "id": "mg3-avocado",
+          "name": "Avocado",
+          "price": 250
+        },
+        {
+          "id": "mg3-egg",
+          "name": "Fried Egg",
+          "price": 150
+        },
+        {
+          "id": "mg3-mushroom",
+          "name": "Mushrooms",
+          "price": 100
+        }
+      ]
+    },
+    {
+      "id": "mg4",
+      "name": "Cooking",
+      "required": false,
+      "multiSelect": false,
+      "options": [
+        {
+          "id": "mg4-rare",
+          "name": "Rare",
+          "price": 0
+        },
+        {
+          "id": "mg4-mr",
+          "name": "Medium Rare",
+          "price": 0
+        },
+        {
+          "id": "mg4-med",
+          "name": "Medium",
+          "price": 0
+        },
+        {
+          "id": "mg4-mw",
+          "name": "Medium Well",
+          "price": 0
+        },
+        {
+          "id": "mg4-well",
+          "name": "Well Done",
+          "price": 0
+        }
+      ]
+    },
+    {
+      "id": "mg5",
+      "name": "Drink Size",
+      "required": true,
+      "multiSelect": false,
+      "options": [
+        {
+          "id": "mg5-s",
+          "name": "Regular",
+          "price": 0
+        },
+        {
+          "id": "mg5-l",
+          "name": "Large",
+          "price": 150
+        }
+      ]
+    }
+  ],
+  "menuItems": [
+    {
+      "id": "mi1",
+      "categoryId": "cat1",
+      "name": "Bruschetta",
+      "price": 850,
+      "description": "Toasted bread with tomato & basil",
+      "modifierGroups": [],
+      "available": true,
+      "image": "/images/bruschetta.png",
+      "featured": true
+    },
+    {
+      "id": "mi2",
+      "categoryId": "cat1",
+      "name": "Calamari Fritti",
+      "price": 1100,
+      "description": "Crispy fried squid with aioli",
+      "modifierGroups": [
+        "mg2"
+      ],
+      "available": true,
+      "image": "/images/calamari.png",
+      "featured": true
+    },
+    {
+      "id": "mi3",
+      "categoryId": "cat1",
+      "name": "Caesar Salad",
+      "price": 950,
+      "description": "Romaine, croutons, parmesan",
+      "modifierGroups": [
+        "mg3"
+      ],
+      "available": true,
+      "image": "/images/caesar_salad.webp"
+    },
+    {
+      "id": "mi4",
+      "categoryId": "cat1",
+      "name": "Soup of the Day",
+      "price": 700,
+      "description": "Ask your server for today's special",
+      "modifierGroups": [
+        "mg1"
+      ],
+      "available": true,
+      "image": "/images/soup.webp"
+    },
+    {
+      "id": "mi5",
+      "categoryId": "cat1",
+      "name": "Garlic Bread",
+      "price": 550,
+      "description": "With melted mozzarella",
+      "modifierGroups": [
+        "mg3"
+      ],
+      "available": true,
+      "image": "/images/garlic_bread.webp"
+    },
+    {
+      "id": "mi6",
+      "categoryId": "cat2",
+      "name": "Grilled Salmon",
+      "price": 2200,
+      "description": "Atlantic salmon with herb butter",
+      "modifierGroups": [
+        "mg2"
+      ],
+      "available": true,
+      "image": "/images/salmon.png",
+      "featured": true
+    },
+    {
+      "id": "mi7",
+      "categoryId": "cat2",
+      "name": "Ribeye Steak",
+      "price": 2800,
+      "description": "10oz prime cut, choice of sides",
+      "modifierGroups": [
+        "mg4",
+        "mg2"
+      ],
+      "available": true,
+      "image": "/images/steak.png",
+      "featured": true
+    },
+    {
+      "id": "mi8",
+      "categoryId": "cat2",
+      "name": "Chicken Parmesan",
+      "price": 1800,
+      "description": "Breaded chicken with marinara",
+      "modifierGroups": [
+        "mg2"
+      ],
+      "available": true,
+      "image": "/images/chicken_parm.webp"
+    },
+    {
+      "id": "mi9",
+      "categoryId": "cat2",
+      "name": "Fish & Chips",
+      "price": 1600,
+      "description": "Beer-battered cod with fries",
+      "modifierGroups": [],
+      "available": true,
+      "image": "/images/fish_chips.webp"
+    },
+    {
+      "id": "mi10",
+      "categoryId": "cat2",
+      "name": "Lamb Chops",
+      "price": 2600,
+      "description": "Herb-crusted with rosemary jus",
+      "modifierGroups": [
+        "mg4"
+      ],
+      "available": false,
+      "image": "/images/lamb.webp"
+    },
+    {
+      "id": "mi11",
+      "categoryId": "cat3",
+      "name": "Margherita",
+      "price": 1400,
+      "description": "Tomato, mozzarella, fresh basil",
+      "modifierGroups": [
+        "mg1",
+        "mg3"
+      ],
+      "available": true,
+      "image": "/images/margherita.png",
+      "featured": true
+    },
+    {
+      "id": "mi12",
+      "categoryId": "cat3",
+      "name": "Pepperoni",
+      "price": 1600,
+      "description": "Classic pepperoni with mozzarella",
+      "modifierGroups": [
+        "mg1",
+        "mg3"
+      ],
+      "available": true,
+      "image": "/images/pepperoni.webp"
+    },
+    {
+      "id": "mi13",
+      "categoryId": "cat3",
+      "name": "BBQ Chicken",
+      "price": 1700,
+      "description": "BBQ sauce, chicken, red onion",
+      "modifierGroups": [
+        "mg1",
+        "mg3"
+      ],
+      "available": true,
+      "image": "/images/bbq_chicken_pizza.webp"
+    },
+    {
+      "id": "mi14",
+      "categoryId": "cat3",
+      "name": "Four Cheese",
+      "price": 1500,
+      "description": "Mozzarella, gorgonzola, gouda, parmesan",
+      "modifierGroups": [
+        "mg1"
+      ],
+      "available": true,
+      "image": "/images/four_cheese.webp"
+    },
+    {
+      "id": "mi15",
+      "categoryId": "cat4",
+      "name": "Spaghetti Bolognese",
+      "price": 1400,
+      "description": "Slow-cooked beef ragu",
+      "modifierGroups": [
+        "mg2",
+        "mg3"
+      ],
+      "available": true,
+      "image": "/images/bolognese.webp"
+    },
+    {
+      "id": "mi16",
+      "categoryId": "cat4",
+      "name": "Fettuccine Alfredo",
+      "price": 1300,
+      "description": "Creamy parmesan sauce",
+      "modifierGroups": [
+        "mg3"
+      ],
+      "available": true,
+      "image": "/images/alfredo.webp"
+    },
+    {
+      "id": "mi17",
+      "categoryId": "cat4",
+      "name": "Penne Arrabiata",
+      "price": 1200,
+      "description": "Spicy tomato sauce",
+      "modifierGroups": [
+        "mg2",
+        "mg3"
+      ],
+      "available": true,
+      "image": "/images/arrabiata.webp"
+    },
+    {
+      "id": "mi18",
+      "categoryId": "cat4",
+      "name": "Carbonara",
+      "price": 1500,
+      "description": "Pancetta, egg, pecorino",
+      "modifierGroups": [
+        "mg3"
+      ],
+      "available": true,
+      "image": "/images/carbonara.png",
+      "featured": true
+    },
+    {
+      "id": "mi19",
+      "categoryId": "cat5",
+      "name": "Classic Burger",
+      "price": 1400,
+      "description": "Beef patty, lettuce, tomato, pickles",
+      "modifierGroups": [
+        "mg4",
+        "mg3"
+      ],
+      "available": true,
+      "image": "/images/classic_burger.webp"
+    },
+    {
+      "id": "mi20",
+      "categoryId": "cat5",
+      "name": "Cheese Burger",
+      "price": 1500,
+      "description": "With cheddar & special sauce",
+      "modifierGroups": [
+        "mg4",
+        "mg3"
+      ],
+      "available": true,
+      "image": "/images/cheese_burger.webp"
+    },
+    {
+      "id": "mi21",
+      "categoryId": "cat5",
+      "name": "Chicken Burger",
+      "price": 1400,
+      "description": "Grilled chicken with mayo",
+      "modifierGroups": [
+        "mg3"
+      ],
+      "available": true,
+      "image": "/images/chicken_burger.webp"
+    },
+    {
+      "id": "mi22",
+      "categoryId": "cat5",
+      "name": "Veggie Burger",
+      "price": 1300,
+      "description": "Plant-based patty with avocado",
+      "modifierGroups": [
+        "mg3"
+      ],
+      "available": true,
+      "image": "/images/veggie_burger.webp"
+    },
+    {
+      "id": "mi23",
+      "categoryId": "cat6",
+      "name": "Tiramisu",
+      "price": 900,
+      "description": "Classic Italian coffee dessert",
+      "modifierGroups": [],
+      "available": true,
+      "image": "/images/tiramisu.webp"
+    },
+    {
+      "id": "mi24",
+      "categoryId": "cat6",
+      "name": "Chocolate Lava Cake",
+      "price": 1000,
+      "description": "Warm center with vanilla ice cream",
+      "modifierGroups": [],
+      "available": true,
+      "image": "/images/lava_cake.webp"
+    },
+    {
+      "id": "mi25",
+      "categoryId": "cat6",
+      "name": "Cheesecake",
+      "price": 850,
+      "description": "New York style with berry compote",
+      "modifierGroups": [],
+      "available": true,
+      "image": "/images/cheesecake.webp"
+    },
+    {
+      "id": "mi26",
+      "categoryId": "cat6",
+      "name": "Gelato",
+      "price": 650,
+      "description": "Three scoops, ask for flavors",
+      "modifierGroups": [],
+      "available": true,
+      "image": "/images/gelato.webp"
+    },
+    {
+      "id": "mi27",
+      "categoryId": "cat7",
+      "name": "Coca-Cola",
+      "price": 350,
+      "description": "",
+      "modifierGroups": [
+        "mg5"
+      ],
+      "available": true,
+      "image": "/images/cola.webp"
+    },
+    {
+      "id": "mi28",
+      "categoryId": "cat7",
+      "name": "Fresh Juice",
+      "price": 500,
+      "description": "Orange, apple, or mango",
+      "modifierGroups": [
+        "mg5"
+      ],
+      "available": true,
+      "image": "/images/juice.webp"
+    },
+    {
+      "id": "mi29",
+      "categoryId": "cat7",
+      "name": "Sparkling Water",
+      "price": 300,
+      "description": "500ml",
+      "modifierGroups": [],
+      "available": true,
+      "image": "/images/sparkling_water.webp"
+    },
+    {
+      "id": "mi30",
+      "categoryId": "cat7",
+      "name": "Coffee",
+      "price": 400,
+      "description": "Espresso, latte, or cappuccino",
+      "modifierGroups": [
+        "mg5"
+      ],
+      "available": true,
+      "image": "/images/coffee.webp"
+    },
+    {
+      "id": "mi31",
+      "categoryId": "cat7",
+      "name": "Iced Tea",
+      "price": 400,
+      "description": "Lemon or peach",
+      "modifierGroups": [
+        "mg5"
+      ],
+      "available": true,
+      "image": "/images/iced_tea.webp"
+    },
+    {
+      "id": "mi32",
+      "categoryId": "cat7",
+      "name": "Beer (Draft)",
+      "price": 600,
+      "description": "Ask for available taps",
+      "modifierGroups": [
+        "mg5"
+      ],
+      "available": true,
+      "image": "/images/beer.webp"
+    },
+    {
+      "id": "mi33",
+      "categoryId": "cat7",
+      "name": "House Wine",
+      "price": 800,
+      "description": "Red or white, by the glass",
+      "modifierGroups": [],
+      "available": true,
+      "image": "/images/wine.webp"
+    },
+    {
+      "id": "mi34",
+      "categoryId": "cat8",
+      "name": "French Fries",
+      "price": 450,
+      "description": "Crispy golden fries",
+      "modifierGroups": [
+        "mg1"
+      ],
+      "available": true,
+      "image": "/images/fries.webp"
+    },
+    {
+      "id": "mi35",
+      "categoryId": "cat8",
+      "name": "Onion Rings",
+      "price": 500,
+      "description": "Beer-battered",
+      "modifierGroups": [],
+      "available": true,
+      "image": "/images/onion_rings.webp"
+    },
+    {
+      "id": "mi36",
+      "categoryId": "cat8",
+      "name": "Coleslaw",
+      "price": 350,
+      "description": "Creamy house-made",
+      "modifierGroups": [],
+      "available": true,
+      "image": "/images/coleslaw.webp"
+    },
+    {
+      "id": "mi37",
+      "categoryId": "cat8",
+      "name": "Mashed Potatoes",
+      "price": 400,
+      "description": "Buttery & smooth",
+      "modifierGroups": [],
+      "available": true,
+      "image": "/images/mashed_potatoes.webp"
+    },
+    {
+      "id": "mi38",
+      "categoryId": "cat8",
+      "name": "Grilled Vegetables",
+      "price": 500,
+      "description": "Seasonal selection",
+      "modifierGroups": [],
+      "available": true,
+      "image": "/images/grilled_veg.webp"
+    }
+  ],
+  "tables": [
+    {
+      "id": "t1",
+      "name": "Table 1",
+      "section": "Main Floor",
+      "capacity": 2,
+      "status": "occupied",
+      "sessionId": "mm5lgnhgnfhmmb",
+      "waiterId": "u1"
+    },
+    {
+      "id": "t2",
+      "name": "Table 2",
+      "section": "Main Floor",
+      "capacity": 2,
+      "status": "occupied",
+      "sessionId": "mm5lwyt2ivwgbk",
+      "waiterId": "u2"
+    },
+    {
+      "id": "t3",
+      "name": "Table 3",
+      "section": "Main Floor",
+      "capacity": 4,
+      "status": "occupied",
+      "sessionId": "mm5mcrqwf1wtkl",
+      "waiterId": "u2"
+    },
+    {
+      "id": "t4",
+      "name": "Table 4",
+      "section": "Main Floor",
+      "capacity": 4,
+      "status": "available",
+      "sessionId": null,
+      "waiterId": null
+    },
+    {
+      "id": "t5",
+      "name": "Table 5",
+      "section": "Main Floor",
+      "capacity": 6,
+      "status": "available",
+      "sessionId": null,
+      "waiterId": null
+    },
+    {
+      "id": "t6",
+      "name": "Table 6",
+      "section": "Main Floor",
+      "capacity": 6,
+      "status": "available",
+      "sessionId": null,
+      "waiterId": null
+    },
+    {
+      "id": "t7",
+      "name": "Table 7",
+      "section": "Patio",
+      "capacity": 4,
+      "status": "available",
+      "sessionId": null,
+      "waiterId": null
+    },
+    {
+      "id": "t8",
+      "name": "Table 8",
+      "section": "Patio",
+      "capacity": 4,
+      "status": "available",
+      "sessionId": null,
+      "waiterId": null
+    },
+    {
+      "id": "t9",
+      "name": "Table 9",
+      "section": "Patio",
+      "capacity": 2,
+      "status": "available",
+      "sessionId": null,
+      "waiterId": null
+    },
+    {
+      "id": "t10",
+      "name": "Table 10",
+      "section": "VIP Room",
+      "capacity": 8,
+      "status": "available",
+      "sessionId": null,
+      "waiterId": null
+    },
+    {
+      "id": "t11",
+      "name": "Table 11",
+      "section": "VIP Room",
+      "capacity": 10,
+      "status": "available",
+      "sessionId": null,
+      "waiterId": null
+    },
+    {
+      "id": "t12",
+      "name": "Table 12",
+      "section": "Bar",
+      "capacity": 2,
+      "status": "available",
+      "sessionId": null,
+      "waiterId": null
+    }
+  ],
+  "sessions": [
+    {
+      "id": "mm5hbyx37sji5n",
+      "tableId": "t2",
+      "openedAt": "2026-02-27T22:44:24.328Z",
+      "closedAt": "2026-02-27T22:46:43.797Z",
+      "waiterId": "u2",
+      "guestCount": 2
+    },
+    {
+      "id": "mm5hg7msoypnu3",
+      "tableId": "t5",
+      "openedAt": "2026-02-27T22:47:42.244Z",
+      "closedAt": "2026-02-27T22:49:53.409Z",
+      "waiterId": "u2",
+      "guestCount": 6
+    },
+    {
+      "id": "mm5hjzhg1458af",
+      "tableId": "t3",
+      "openedAt": "2026-02-27T22:50:38.308Z",
+      "closedAt": "2026-02-27T23:16:00.981Z",
+      "waiterId": "u2",
+      "guestCount": 4
+    },
+    {
+      "id": "mm5ihw9okmqeoi",
+      "tableId": "t9",
+      "openedAt": "2026-02-27T23:17:00.444Z",
+      "closedAt": "2026-02-27T23:19:07.190Z",
+      "waiterId": "u2",
+      "guestCount": 2
+    },
+    {
+      "id": "mm5ilujbwzpw48",
+      "tableId": "t1",
+      "openedAt": "2026-02-27T23:20:04.823Z",
+      "closedAt": "2026-02-27T23:22:54.509Z",
+      "waiterId": "u2",
+      "guestCount": 2
+    },
+    {
+      "id": "mm5in7wq5jsqtu",
+      "tableId": "t3",
+      "openedAt": "2026-02-27T23:21:08.810Z",
+      "closedAt": "2026-02-27T23:22:45.959Z",
+      "waiterId": "u2",
+      "guestCount": 4
+    },
+    {
+      "id": "mm5kqik6coa5k0",
+      "tableId": "t8",
+      "openedAt": "2026-02-28T00:19:41.815Z",
+      "closedAt": "2026-02-28T00:21:59.878Z",
+      "waiterId": "u2",
+      "guestCount": 4
+    },
+    {
+      "id": "mm5kv8lip4xbf1",
+      "tableId": "t3",
+      "openedAt": "2026-02-28T00:23:22.182Z",
+      "closedAt": "2026-02-28T00:23:55.640Z",
+      "waiterId": "u2",
+      "guestCount": 4
+    },
+    {
+      "id": "mm5lgnhgnfhmmb",
+      "tableId": "t1",
+      "openedAt": "2026-02-28T00:40:01.252Z",
+      "closedAt": null,
+      "waiterId": "u1",
+      "guestCount": 2
+    },
+    {
+      "id": "mm5lwyt2ivwgbk",
+      "tableId": "t2",
+      "openedAt": "2026-02-28T00:52:42.422Z",
+      "closedAt": null,
+      "waiterId": "u2",
+      "guestCount": 2
+    },
+    {
+      "id": "mm5mcrqwf1wtkl",
+      "tableId": "t3",
+      "openedAt": "2026-02-28T01:04:59.768Z",
+      "closedAt": null,
+      "waiterId": "u2",
+      "guestCount": 4
+    }
+  ],
+  "orders": [
+    {
+      "id": "mm5hcpug7n3ra1",
+      "sessionId": "mm5hbyx37sji5n",
+      "tableId": "t2",
+      "items": [
+        {
+          "id": "mm5hcpugsbt8dt",
+          "menuItemId": "mi9",
+          "name": "Fish & Chips",
+          "mods": [],
+          "seat": "",
+          "notes": "",
+          "qty": 1,
+          "price": 1600,
+          "status": "ready",
+          "statusLog": [
+            {
+              "status": "queued",
+              "at": "2026-02-27T22:44:59.224Z"
+            },
+            {
+              "status": "cooking",
+              "at": "2026-02-27T22:45:27.091Z"
+            },
+            {
+              "status": "ready",
+              "at": "2026-02-27T22:45:33.099Z"
+            }
+          ]
+        },
+        {
+          "id": "mm5hcpugc03mxw",
+          "menuItemId": "mi13",
+          "name": "BBQ Chicken",
+          "mods": [
+            {
+              "id": "mg1-m",
+              "name": "Medium",
+              "price": 200
+            },
+            {
+              "id": "mg3-egg",
+              "name": "Fried Egg",
+              "price": 150
+            }
+          ],
+          "seat": "",
+          "notes": "",
+          "qty": 1,
+          "price": 2050,
+          "status": "ready",
+          "statusLog": [
+            {
+              "status": "queued",
+              "at": "2026-02-27T22:44:59.224Z"
+            },
+            {
+              "status": "cooking",
+              "at": "2026-02-27T22:45:27.091Z"
+            },
+            {
+              "status": "ready",
+              "at": "2026-02-27T22:45:34.109Z"
+            }
+          ]
+        },
+        {
+          "id": "mm5hcpug7bcrvs",
+          "menuItemId": "mi28",
+          "name": "Fresh Juice",
+          "mods": [
+            {
+              "id": "mg5-l",
+              "name": "Large",
+              "price": 150
+            }
+          ],
+          "seat": "",
+          "notes": "",
+          "qty": 1,
+          "price": 650,
+          "status": "ready",
+          "statusLog": [
+            {
+              "status": "queued",
+              "at": "2026-02-27T22:44:59.224Z"
+            },
+            {
+              "status": "cooking",
+              "at": "2026-02-27T22:45:27.091Z"
+            },
+            {
+              "status": "ready",
+              "at": "2026-02-27T22:45:34.952Z"
+            }
+          ]
+        },
+        {
+          "id": "mm5hcpug00iiyu",
+          "menuItemId": "mi35",
+          "name": "Onion Rings",
+          "mods": [],
+          "seat": "",
+          "notes": "",
+          "qty": 1,
+          "price": 500,
+          "status": "ready",
+          "statusLog": [
+            {
+              "status": "queued",
+              "at": "2026-02-27T22:44:59.224Z"
+            },
+            {
+              "status": "cooking",
+              "at": "2026-02-27T22:45:27.091Z"
+            },
+            {
+              "status": "ready",
+              "at": "2026-02-27T22:45:36.705Z"
+            }
+          ]
+        }
+      ],
+      "createdAt": "2026-02-27T22:44:59.224Z",
+      "status": "completed"
+    },
+    {
+      "id": "mm5hg9zx15n7t6",
+      "sessionId": "mm5hg7msoypnu3",
+      "tableId": "t5",
+      "items": [
+        {
+          "id": "mm5hg9zxo8pgv5",
+          "menuItemId": "mi4",
+          "name": "Soup of the Day",
+          "mods": [],
+          "seat": "",
+          "notes": "",
+          "qty": 1,
+          "price": 700,
+          "status": "ready",
+          "statusLog": [
+            {
+              "status": "queued",
+              "at": "2026-02-27T22:47:45.309Z"
+            },
+            {
+              "status": "cooking",
+              "at": "2026-02-27T22:49:37.971Z"
+            },
+            {
+              "status": "ready",
+              "at": "2026-02-27T22:49:40.919Z"
+            }
+          ]
+        }
+      ],
+      "createdAt": "2026-02-27T22:47:45.309Z",
+      "status": "completed"
+    },
+    {
+      "id": "mm5hk4tef3i8ez",
+      "sessionId": "mm5hjzhg1458af",
+      "tableId": "t3",
+      "items": [
+        {
+          "id": "mm5hk4tersqc87",
+          "menuItemId": "mi22",
+          "name": "Veggie Burger",
+          "mods": [],
+          "seat": "",
+          "notes": "",
+          "qty": 1,
+          "price": 1300,
+          "status": "queued",
+          "statusLog": [
+            {
+              "status": "queued",
+              "at": "2026-02-27T22:50:45.218Z"
+            }
+          ]
+        },
+        {
+          "id": "mm5hk4teh40e0n",
+          "menuItemId": "mi31",
+          "name": "Iced Tea",
+          "mods": [],
+          "seat": "",
+          "notes": "",
+          "qty": 1,
+          "price": 400,
+          "status": "queued",
+          "statusLog": [
+            {
+              "status": "queued",
+              "at": "2026-02-27T22:50:45.218Z"
+            }
+          ]
+        }
+      ],
+      "createdAt": "2026-02-27T22:50:45.218Z",
+      "status": "completed"
+    },
+    {
+      "id": "mm5iik8dlzym6k",
+      "sessionId": "mm5ihw9okmqeoi",
+      "tableId": "t9",
+      "items": [
+        {
+          "id": "mm5iik8dkp1f0x",
+          "menuItemId": "mi2",
+          "name": "Calamari Fritti",
+          "mods": [],
+          "seat": "",
+          "notes": "",
+          "qty": 1,
+          "price": 1100,
+          "status": "ready",
+          "statusLog": [
+            {
+              "status": "queued",
+              "at": "2026-02-27T23:17:31.501Z"
+            },
+            {
+              "status": "ready",
+              "at": "2026-02-27T23:18:55.605Z"
+            }
+          ]
+        },
+        {
+          "id": "mm5iik8dl8vd3x",
+          "menuItemId": "mi3",
+          "name": "Caesar Salad",
+          "mods": [],
+          "seat": "",
+          "notes": "",
+          "qty": 1,
+          "price": 950,
+          "status": "ready",
+          "statusLog": [
+            {
+              "status": "queued",
+              "at": "2026-02-27T23:17:31.501Z"
+            },
+            {
+              "status": "ready",
+              "at": "2026-02-27T23:18:55.605Z"
+            }
+          ]
+        },
+        {
+          "id": "mm5iik8dgcxx7l",
+          "menuItemId": "mi5",
+          "name": "Garlic Bread",
+          "mods": [],
+          "seat": "",
+          "notes": "",
+          "qty": 1,
+          "price": 550,
+          "status": "ready",
+          "statusLog": [
+            {
+              "status": "queued",
+              "at": "2026-02-27T23:17:31.501Z"
+            },
+            {
+              "status": "ready",
+              "at": "2026-02-27T23:18:55.605Z"
+            }
+          ]
+        },
+        {
+          "id": "mm5iik8d8vjurr",
+          "menuItemId": "mi13",
+          "name": "BBQ Chicken",
+          "mods": [
+            {
+              "id": "mg3-mushroom",
+              "name": "Mushrooms",
+              "price": 100
+            }
+          ],
+          "seat": "",
+          "notes": "",
+          "qty": 1,
+          "price": 1800,
+          "status": "ready",
+          "statusLog": [
+            {
+              "status": "queued",
+              "at": "2026-02-27T23:17:31.501Z"
+            },
+            {
+              "status": "ready",
+              "at": "2026-02-27T23:18:55.605Z"
+            }
+          ]
+        },
+        {
+          "id": "mm5iik8dzzq3r2",
+          "menuItemId": "mi21",
+          "name": "Chicken Burger",
+          "mods": [
+            {
+              "id": "mg3-mushroom",
+              "name": "Mushrooms",
+              "price": 100
+            },
+            {
+              "id": "mg3-egg",
+              "name": "Fried Egg",
+              "price": 150
+            },
+            {
+              "id": "mg3-bacon",
+              "name": "Bacon",
+              "price": 200
+            }
+          ],
+          "seat": "",
+          "notes": "",
+          "qty": 1,
+          "price": 1850,
+          "status": "ready",
+          "statusLog": [
+            {
+              "status": "queued",
+              "at": "2026-02-27T23:17:31.501Z"
+            },
+            {
+              "status": "ready",
+              "at": "2026-02-27T23:18:55.605Z"
+            }
+          ]
+        },
+        {
+          "id": "mm5iik8d2hy9me",
+          "menuItemId": "mi24",
+          "name": "Chocolate Lava Cake",
+          "mods": [],
+          "seat": "",
+          "notes": "",
+          "qty": 1,
+          "price": 1000,
+          "status": "ready",
+          "statusLog": [
+            {
+              "status": "queued",
+              "at": "2026-02-27T23:17:31.501Z"
+            },
+            {
+              "status": "ready",
+              "at": "2026-02-27T23:18:55.605Z"
+            }
+          ]
+        },
+        {
+          "id": "mm5iik8d7fl7in",
+          "menuItemId": "mi25",
+          "name": "Cheesecake",
+          "mods": [],
+          "seat": "",
+          "notes": "",
+          "qty": 1,
+          "price": 850,
+          "status": "ready",
+          "statusLog": [
+            {
+              "status": "queued",
+              "at": "2026-02-27T23:17:31.501Z"
+            },
+            {
+              "status": "ready",
+              "at": "2026-02-27T23:18:55.605Z"
+            }
+          ]
+        }
+      ],
+      "createdAt": "2026-02-27T23:17:31.501Z",
+      "status": "completed"
+    },
+    {
+      "id": "mm5imu49rski5w",
+      "sessionId": "mm5ilujbwzpw48",
+      "tableId": "t1",
+      "items": [
+        {
+          "id": "mm5imu49d88m60",
+          "menuItemId": "mi12",
+          "name": "Pepperoni",
+          "mods": [
+            {
+              "id": "mg1-l",
+              "name": "Large",
+              "price": 400
+            },
+            {
+              "id": "mg3-bacon",
+              "name": "Bacon",
+              "price": 200
+            }
+          ],
+          "seat": "",
+          "notes": "",
+          "qty": 1,
+          "price": 2200,
+          "status": "ready",
+          "statusLog": [
+            {
+              "status": "queued",
+              "at": "2026-02-27T23:20:50.937Z"
+            },
+            {
+              "status": "cooking",
+              "at": "2026-02-27T23:21:45.544Z"
+            },
+            {
+              "status": "ready",
+              "at": "2026-02-27T23:21:52.344Z"
+            }
+          ]
+        },
+        {
+          "id": "mm5imu49hie2ty",
+          "menuItemId": "mi6",
+          "name": "Grilled Salmon",
+          "mods": [],
+          "seat": "",
+          "notes": "",
+          "qty": 1,
+          "price": 2200,
+          "status": "ready",
+          "statusLog": [
+            {
+              "status": "queued",
+              "at": "2026-02-27T23:20:50.937Z"
+            },
+            {
+              "status": "cooking",
+              "at": "2026-02-27T23:21:50.308Z"
+            },
+            {
+              "status": "ready",
+              "at": "2026-02-27T23:21:53.207Z"
+            }
+          ]
+        },
+        {
+          "id": "mm5imu49ysarct",
+          "menuItemId": "mi25",
+          "name": "Cheesecake",
+          "mods": [],
+          "seat": "",
+          "notes": "",
+          "qty": 1,
+          "price": 850,
+          "status": "ready",
+          "statusLog": [
+            {
+              "status": "queued",
+              "at": "2026-02-27T23:20:50.937Z"
+            },
+            {
+              "status": "cooking",
+              "at": "2026-02-27T23:21:51.630Z"
+            },
+            {
+              "status": "ready",
+              "at": "2026-02-27T23:21:55.156Z"
+            }
+          ]
+        }
+      ],
+      "createdAt": "2026-02-27T23:20:50.937Z",
+      "status": "completed"
+    },
+    {
+      "id": "mm5ine64fwln3i",
+      "sessionId": "mm5in7wq5jsqtu",
+      "tableId": "t3",
+      "items": [
+        {
+          "id": "mm5ine64z36tq5",
+          "menuItemId": "mi5",
+          "name": "Garlic Bread",
+          "mods": [
+            {
+              "id": "mg3-mushroom",
+              "name": "Mushrooms",
+              "price": 100
+            },
+            {
+              "id": "mg3-bacon",
+              "name": "Bacon",
+              "price": 200
+            }
+          ],
+          "seat": "",
+          "notes": "",
+          "qty": 1,
+          "price": 850,
+          "status": "ready",
+          "statusLog": [
+            {
+              "status": "queued",
+              "at": "2026-02-27T23:21:16.924Z"
+            },
+            {
+              "status": "ready",
+              "at": "2026-02-27T23:22:13.050Z"
+            }
+          ]
+        }
+      ],
+      "createdAt": "2026-02-27T23:21:16.924Z",
+      "status": "completed"
+    },
+    {
+      "id": "mm5inkxfk03zmi",
+      "sessionId": "mm5in7wq5jsqtu",
+      "tableId": "t3",
+      "items": [
+        {
+          "id": "mm5inkxfvcxnzf",
+          "menuItemId": "mi17",
+          "name": "Penne Arrabiata",
+          "mods": [
+            {
+              "id": "mg2-medium",
+              "name": "Medium",
+              "price": 0
+            }
+          ],
+          "seat": "",
+          "notes": "",
+          "qty": 1,
+          "price": 1200,
+          "status": "ready",
+          "statusLog": [
+            {
+              "status": "queued",
+              "at": "2026-02-27T23:21:25.683Z"
+            },
+            {
+              "status": "ready",
+              "at": "2026-02-27T23:22:10.646Z"
+            }
+          ]
+        },
+        {
+          "id": "mm5inkxfpia253",
+          "menuItemId": "mi21",
+          "name": "Chicken Burger",
+          "mods": [],
+          "seat": "",
+          "notes": "",
+          "qty": 1,
+          "price": 1400,
+          "status": "ready",
+          "statusLog": [
+            {
+              "status": "queued",
+              "at": "2026-02-27T23:21:25.683Z"
+            },
+            {
+              "status": "ready",
+              "at": "2026-02-27T23:22:10.646Z"
+            }
+          ]
+        }
+      ],
+      "createdAt": "2026-02-27T23:21:25.683Z",
+      "status": "completed"
+    },
+    {
+      "id": "mm5kr4ic6fcvpn",
+      "sessionId": "mm5kqik6coa5k0",
+      "tableId": "t8",
+      "items": [
+        {
+          "id": "mm5kr4icrnb0ke",
+          "menuItemId": "mi2",
+          "name": "Calamari Fritti",
+          "mods": [],
+          "seat": "",
+          "notes": "",
+          "qty": 1,
+          "price": 1100,
+          "status": "ready",
+          "statusLog": [
+            {
+              "status": "queued",
+              "at": "2026-02-28T00:20:10.260Z"
+            },
+            {
+              "status": "cooking",
+              "at": "2026-02-28T00:20:32.580Z"
+            },
+            {
+              "status": "ready",
+              "at": "2026-02-28T00:20:59.814Z"
+            }
+          ]
+        },
+        {
+          "id": "mm5kr4icga2a8g",
+          "menuItemId": "mi3",
+          "name": "Caesar Salad",
+          "mods": [
+            {
+              "id": "mg3-mushroom",
+              "name": "Mushrooms",
+              "price": 100
+            }
+          ],
+          "seat": "",
+          "notes": "",
+          "qty": 1,
+          "price": 1050,
+          "status": "ready",
+          "statusLog": [
+            {
+              "status": "queued",
+              "at": "2026-02-28T00:20:10.260Z"
+            },
+            {
+              "status": "cooking",
+              "at": "2026-02-28T00:20:41.800Z"
+            },
+            {
+              "status": "ready",
+              "at": "2026-02-28T00:21:02.811Z"
+            }
+          ]
+        },
+        {
+          "id": "mm5kr4ic66g9gk",
+          "menuItemId": "mi25",
+          "name": "Cheesecake",
+          "mods": [],
+          "seat": "",
+          "notes": "",
+          "qty": 1,
+          "price": 850,
+          "status": "ready",
+          "statusLog": [
+            {
+              "status": "queued",
+              "at": "2026-02-28T00:20:10.260Z"
+            },
+            {
+              "status": "cooking",
+              "at": "2026-02-28T00:20:52.929Z"
+            },
+            {
+              "status": "ready",
+              "at": "2026-02-28T00:21:05.926Z"
+            }
+          ]
+        },
+        {
+          "id": "mm5kr4ica5jy1w",
+          "menuItemId": "mi24",
+          "name": "Chocolate Lava Cake",
+          "mods": [],
+          "seat": "",
+          "notes": "",
+          "qty": 1,
+          "price": 1000,
+          "status": "ready",
+          "statusLog": [
+            {
+              "status": "queued",
+              "at": "2026-02-28T00:20:10.260Z"
+            },
+            {
+              "status": "cooking",
+              "at": "2026-02-28T00:20:36.858Z"
+            },
+            {
+              "status": "ready",
+              "at": "2026-02-28T00:21:08.561Z"
+            }
+          ]
+        },
+        {
+          "id": "mm5kr4ichg1fcj",
+          "menuItemId": "mi23",
+          "name": "Tiramisu",
+          "mods": [],
+          "seat": "",
+          "notes": "",
+          "qty": 1,
+          "price": 900,
+          "status": "ready",
+          "statusLog": [
+            {
+              "status": "queued",
+              "at": "2026-02-28T00:20:10.260Z"
+            },
+            {
+              "status": "cooking",
+              "at": "2026-02-28T00:20:46.654Z"
+            },
+            {
+              "status": "ready",
+              "at": "2026-02-28T00:21:10.786Z"
+            }
+          ]
+        },
+        {
+          "id": "mm5kr4iceuqz1x",
+          "menuItemId": "mi16",
+          "name": "Fettuccine Alfredo",
+          "mods": [
+            {
+              "id": "mg3-cheese",
+              "name": "Extra Cheese",
+              "price": 150
+            },
+            {
+              "id": "mg3-bacon",
+              "name": "Bacon",
+              "price": 200
+            }
+          ],
+          "seat": "",
+          "notes": "",
+          "qty": 1,
+          "price": 1650,
+          "status": "ready",
+          "statusLog": [
+            {
+              "status": "queued",
+              "at": "2026-02-28T00:20:10.260Z"
+            },
+            {
+              "status": "cooking",
+              "at": "2026-02-28T00:20:55.669Z"
+            },
+            {
+              "status": "ready",
+              "at": "2026-02-28T00:21:13.823Z"
+            }
+          ]
+        }
+      ],
+      "createdAt": "2026-02-28T00:20:10.260Z",
+      "status": "completed"
+    },
+    {
+      "id": "mm5kudqclx0pkx",
+      "sessionId": "mm5kqik6coa5k0",
+      "tableId": "t8",
+      "items": [
+        {
+          "id": "mm5kudqc6vbr4g",
+          "menuItemId": "mi2",
+          "name": "Calamari Fritti",
+          "mods": [],
+          "seat": "",
+          "notes": "",
+          "qty": 1,
+          "price": 1100,
+          "status": "ready",
+          "statusLog": [
+            {
+              "status": "queued",
+              "at": "2026-02-28T00:22:42.180Z"
+            },
+            {
+              "status": "ready",
+              "at": "2026-02-28T00:22:57.378Z"
+            }
+          ]
+        }
+      ],
+      "createdAt": "2026-02-28T00:22:42.180Z",
+      "status": "active"
+    },
+    {
+      "id": "mm5kuyh8624tj5",
+      "sessionId": "mm5kqik6coa5k0",
+      "tableId": "t8",
+      "items": [
+        {
+          "id": "mm5kuyh8rscym7",
+          "menuItemId": "mi2",
+          "name": "Calamari Fritti",
+          "mods": [],
+          "seat": "",
+          "notes": "",
+          "qty": 1,
+          "price": 1100,
+          "status": "ready",
+          "statusLog": [
+            {
+              "status": "queued",
+              "at": "2026-02-28T00:23:09.068Z"
+            },
+            {
+              "status": "cooking",
+              "at": "2026-02-28T00:23:18.505Z"
+            },
+            {
+              "status": "ready",
+              "at": "2026-02-28T00:23:19.177Z"
+            }
+          ]
+        },
+        {
+          "id": "mm5kuyh8tqvarj",
+          "menuItemId": "mi2",
+          "name": "Calamari Fritti",
+          "mods": [],
+          "seat": "",
+          "notes": "",
+          "qty": 1,
+          "price": 1100,
+          "status": "ready",
+          "statusLog": [
+            {
+              "status": "queued",
+              "at": "2026-02-28T00:23:09.068Z"
+            },
+            {
+              "status": "cooking",
+              "at": "2026-02-28T00:23:18.505Z"
+            },
+            {
+              "status": "ready",
+              "at": "2026-02-28T00:23:19.177Z"
+            }
+          ]
+        },
+        {
+          "id": "mm5kuyh8nlg6sd",
+          "menuItemId": "mi5",
+          "name": "Garlic Bread",
+          "mods": [],
+          "seat": "",
+          "notes": "",
+          "qty": 1,
+          "price": 550,
+          "status": "ready",
+          "statusLog": [
+            {
+              "status": "queued",
+              "at": "2026-02-28T00:23:09.068Z"
+            },
+            {
+              "status": "cooking",
+              "at": "2026-02-28T00:23:18.505Z"
+            },
+            {
+              "status": "ready",
+              "at": "2026-02-28T00:23:19.177Z"
+            }
+          ]
+        }
+      ],
+      "createdAt": "2026-02-28T00:23:09.068Z",
+      "status": "active"
+    },
+    {
+      "id": "mm5kvjcny8690y",
+      "sessionId": "mm5kv8lip4xbf1",
+      "tableId": "t3",
+      "items": [
+        {
+          "id": "mm5kvjcnxg6o52",
+          "menuItemId": "mi3",
+          "name": "Caesar Salad",
+          "mods": [],
+          "seat": "",
+          "notes": "",
+          "qty": 1,
+          "price": 950,
+          "status": "ready",
+          "statusLog": [
+            {
+              "status": "queued",
+              "at": "2026-02-28T00:23:36.119Z"
+            },
+            {
+              "status": "cooking",
+              "at": "2026-02-28T00:23:48.877Z"
+            },
+            {
+              "status": "ready",
+              "at": "2026-02-28T00:23:50.693Z"
+            }
+          ]
+        },
+        {
+          "id": "mm5kvjcnsc4y0e",
+          "menuItemId": "mi4",
+          "name": "Soup of the Day",
+          "mods": [],
+          "seat": "",
+          "notes": "",
+          "qty": 1,
+          "price": 700,
+          "status": "ready",
+          "statusLog": [
+            {
+              "status": "queued",
+              "at": "2026-02-28T00:23:36.119Z"
+            },
+            {
+              "status": "cooking",
+              "at": "2026-02-28T00:23:48.877Z"
+            },
+            {
+              "status": "ready",
+              "at": "2026-02-28T00:23:50.693Z"
+            }
+          ]
+        }
+      ],
+      "createdAt": "2026-02-28T00:23:36.119Z",
+      "status": "completed"
+    }
+  ],
+  "bills": [
+    {
+      "id": "mm5heyj9m5uqof",
+      "sessionId": "mm5hbyx37sji5n",
+      "subtotal": 4800,
+      "tax": 480,
+      "serviceCharge": 240,
+      "discount": 0,
+      "total": 5520,
+      "payments": [
+        {
+          "id": "mm5heyj9m889p7",
+          "method": "cash",
+          "amount": 5520
+        }
+      ],
+      "closedAt": "2026-02-27T22:46:43.797Z"
+    },
+    {
+      "id": "mm5hj0u9myqe2p",
+      "sessionId": "mm5hg7msoypnu3",
+      "subtotal": 700,
+      "tax": 70,
+      "serviceCharge": 35,
+      "discount": 0,
+      "total": 805,
+      "payments": [
+        {
+          "id": "mm5hj0u9jmzvf3",
+          "method": "cash",
+          "amount": 805
+        }
+      ],
+      "closedAt": "2026-02-27T22:49:53.409Z"
+    },
+    {
+      "id": "mm5igmdwoq755y",
+      "sessionId": "mm5hjzhg1458af",
+      "subtotal": 1700,
+      "tax": 170,
+      "serviceCharge": 85,
+      "discount": 0,
+      "total": 1955,
+      "payments": [
+        {
+          "id": "mm5igmdwuinrk2",
+          "method": "card",
+          "amount": 1955
+        }
+      ],
+      "closedAt": "2026-02-27T23:16:00.980Z"
+    },
+    {
+      "id": "mm5ikm2bloyeit",
+      "sessionId": "mm5ihw9okmqeoi",
+      "subtotal": 8100,
+      "tax": 810,
+      "serviceCharge": 405,
+      "discount": 0,
+      "total": 9315,
+      "payments": [
+        {
+          "id": "mm5ikm2bsg8150",
+          "method": "cash",
+          "amount": 9315
+        }
+      ],
+      "closedAt": "2026-02-27T23:19:07.187Z"
+    },
+    {
+      "id": "mm5ipav88w07py",
+      "sessionId": "mm5in7wq5jsqtu",
+      "subtotal": 3450,
+      "tax": 345,
+      "serviceCharge": 173,
+      "discount": 0,
+      "total": 3968,
+      "payments": [
+        {
+          "id": "mm5ipav8grjc3h",
+          "method": "cash",
+          "amount": 3968
+        }
+      ],
+      "closedAt": "2026-02-27T23:22:45.956Z"
+    },
+    {
+      "id": "mm5iphgquq6yqc",
+      "sessionId": "mm5ilujbwzpw48",
+      "subtotal": 5250,
+      "tax": 525,
+      "serviceCharge": 263,
+      "discount": 0,
+      "total": 6038,
+      "payments": [
+        {
+          "id": "mm5iphgqc1vyr1",
+          "method": "cash",
+          "amount": 6038
+        }
+      ],
+      "closedAt": "2026-02-27T23:22:54.506Z"
+    },
+    {
+      "id": "mm5kth35uo261u",
+      "sessionId": "mm5kqik6coa5k0",
+      "subtotal": 6550,
+      "tax": 655,
+      "serviceCharge": 328,
+      "discount": 0,
+      "total": 7533,
+      "payments": [
+        {
+          "id": "mm5kth352o9qie",
+          "method": "card",
+          "amount": 7533
+        }
+      ],
+      "closedAt": "2026-02-28T00:21:59.873Z"
+    },
+    {
+      "id": "mm5kvyetmi19r7",
+      "sessionId": "mm5kv8lip4xbf1",
+      "subtotal": 1650,
+      "tax": 165,
+      "serviceCharge": 83,
+      "discount": 0,
+      "total": 1898,
+      "payments": [
+        {
+          "id": "mm5kvyetib2r7f",
+          "method": "card",
+          "amount": 1898
+        }
+      ],
+      "closedAt": "2026-02-28T00:23:55.637Z"
+    }
+  ],
+  "auditLog": [
+    {
+      "id": "mm5h0ylj",
+      "userId": "u1",
+      "action": "LOGIN",
+      "details": "Alex logged in",
+      "timestamp": "2026-02-27T22:35:50.695Z"
+    },
+    {
+      "id": "mm5hbxt6",
+      "userId": "u2",
+      "action": "LOGIN",
+      "details": "Maria logged in",
+      "timestamp": "2026-02-27T22:44:22.890Z"
+    },
+    {
+      "id": "mm5hbxxt",
+      "userId": "u2",
+      "action": "LOGIN",
+      "details": "Maria logged in",
+      "timestamp": "2026-02-27T22:44:23.057Z"
+    },
+    {
+      "id": "mm5hbyx70hc0b0",
+      "userId": "u2",
+      "action": "TABLE_OPENED",
+      "details": "Opened Table 2",
+      "timestamp": "2026-02-27T22:44:24.331Z"
+    },
+    {
+      "id": "mm5hcpuh5obxtn",
+      "userId": "u2",
+      "action": "ORDER_SENT",
+      "details": "Sent 4 items for Table 2",
+      "timestamp": "2026-02-27T22:44:59.225Z"
+    },
+    {
+      "id": "mm5hctjn",
+      "userId": "u1",
+      "action": "LOGOUT",
+      "details": "Alex logged out",
+      "timestamp": "2026-02-27T22:45:04.019Z"
+    },
+    {
+      "id": "mm5hcx3s",
+      "userId": "u4",
+      "action": "LOGIN",
+      "details": "Chef K logged in",
+      "timestamp": "2026-02-27T22:45:08.632Z"
+    },
+    {
+      "id": "mm5hdy6l",
+      "userId": "u4",
+      "action": "LOGOUT",
+      "details": "Chef K logged out",
+      "timestamp": "2026-02-27T22:45:56.685Z"
+    },
+    {
+      "id": "mm5he25e",
+      "userId": "u5",
+      "action": "LOGIN",
+      "details": "Sam logged in",
+      "timestamp": "2026-02-27T22:46:01.826Z"
+    },
+    {
+      "id": "mm5he2af",
+      "userId": "u5",
+      "action": "LOGIN",
+      "details": "Sam logged in",
+      "timestamp": "2026-02-27T22:46:02.007Z"
+    },
+    {
+      "id": "mm5heyjb6znso6",
+      "userId": "u5",
+      "action": "PAYMENT",
+      "details": "Table 2 paid $55.20 (cash)",
+      "timestamp": "2026-02-27T22:46:43.799Z"
+    },
+    {
+      "id": "mm5hf3dj",
+      "userId": "u5",
+      "action": "LOGOUT",
+      "details": "Sam logged out",
+      "timestamp": "2026-02-27T22:46:50.071Z"
+    },
+    {
+      "id": "mm5hf4lp",
+      "userId": "u1",
+      "action": "LOGIN",
+      "details": "Alex logged in",
+      "timestamp": "2026-02-27T22:46:51.661Z"
+    },
+    {
+      "id": "mm5hg7mvccmjiy",
+      "userId": "u2",
+      "action": "TABLE_OPENED",
+      "details": "Opened Table 5",
+      "timestamp": "2026-02-27T22:47:42.247Z"
+    },
+    {
+      "id": "mm5hg9zxu81lf8",
+      "userId": "u2",
+      "action": "ORDER_SENT",
+      "details": "Sent 1 items for Table 5",
+      "timestamp": "2026-02-27T22:47:45.309Z"
+    },
+    {
+      "id": "mm5hgebn",
+      "userId": "u2",
+      "action": "LOGOUT",
+      "details": "Maria logged out",
+      "timestamp": "2026-02-27T22:47:50.915Z"
+    },
+    {
+      "id": "mm5hgfvk",
+      "userId": "u1",
+      "action": "LOGIN",
+      "details": "Alex logged in",
+      "timestamp": "2026-02-27T22:47:52.928Z"
+    },
+    {
+      "id": "mm5hgizw",
+      "userId": "u1",
+      "action": "LOGOUT",
+      "details": "Alex logged out",
+      "timestamp": "2026-02-27T22:47:56.972Z"
+    },
+    {
+      "id": "mm5hgp04",
+      "userId": "u1",
+      "action": "LOGIN",
+      "details": "Alex logged in",
+      "timestamp": "2026-02-27T22:48:04.756Z"
+    },
+    {
+      "id": "mm5hgrur",
+      "userId": "u1",
+      "action": "LOGOUT",
+      "details": "Alex logged out",
+      "timestamp": "2026-02-27T22:48:08.451Z"
+    },
+    {
+      "id": "mm5hguan",
+      "userId": "u4",
+      "action": "LOGIN",
+      "details": "Chef K logged in",
+      "timestamp": "2026-02-27T22:48:11.615Z"
+    },
+    {
+      "id": "mm5hgufp",
+      "userId": "u4",
+      "action": "LOGIN",
+      "details": "Chef K logged in",
+      "timestamp": "2026-02-27T22:48:11.797Z"
+    },
+    {
+      "id": "mm5hgwl0",
+      "userId": "u1",
+      "action": "LOGOUT",
+      "details": "Alex logged out",
+      "timestamp": "2026-02-27T22:48:14.580Z"
+    },
+    {
+      "id": "mm5hgxuq",
+      "userId": "u5",
+      "action": "LOGIN",
+      "details": "Sam logged in",
+      "timestamp": "2026-02-27T22:48:16.226Z"
+    },
+    {
+      "id": "mm5hhccy",
+      "userId": "u5",
+      "action": "LOGOUT",
+      "details": "Sam logged out",
+      "timestamp": "2026-02-27T22:48:35.026Z"
+    },
+    {
+      "id": "mm5hheb5",
+      "userId": "u5",
+      "action": "LOGIN",
+      "details": "Sam logged in",
+      "timestamp": "2026-02-27T22:48:37.553Z"
+    },
+    {
+      "id": "mm5hhmoi",
+      "userId": "u5",
+      "action": "LOGOUT",
+      "details": "Sam logged out",
+      "timestamp": "2026-02-27T22:48:48.402Z"
+    },
+    {
+      "id": "mm5hho0f",
+      "userId": "u1",
+      "action": "LOGIN",
+      "details": "Alex logged in",
+      "timestamp": "2026-02-27T22:48:50.127Z"
+    },
+    {
+      "id": "mm5hhy6m",
+      "userId": "u1",
+      "action": "LOGOUT",
+      "details": "Alex logged out",
+      "timestamp": "2026-02-27T22:49:03.310Z"
+    },
+    {
+      "id": "mm5hi0m3",
+      "userId": "u4",
+      "action": "LOGIN",
+      "details": "Chef K logged in",
+      "timestamp": "2026-02-27T22:49:06.459Z"
+    },
+    {
+      "id": "mm5hi42k",
+      "userId": "u4",
+      "action": "LOGOUT",
+      "details": "Chef K logged out",
+      "timestamp": "2026-02-27T22:49:10.940Z"
+    },
+    {
+      "id": "mm5hi60p",
+      "userId": "u4",
+      "action": "LOGIN",
+      "details": "Chef K logged in",
+      "timestamp": "2026-02-27T22:49:13.465Z"
+    },
+    {
+      "id": "mm5hi9ct",
+      "userId": "u4",
+      "action": "LOGOUT",
+      "details": "Chef K logged out",
+      "timestamp": "2026-02-27T22:49:17.789Z"
+    },
+    {
+      "id": "mm5hic18",
+      "userId": "u4",
+      "action": "LOGOUT",
+      "details": "Chef K logged out",
+      "timestamp": "2026-02-27T22:49:21.260Z"
+    },
+    {
+      "id": "mm5hidi5",
+      "userId": "u1",
+      "action": "LOGIN",
+      "details": "Alex logged in",
+      "timestamp": "2026-02-27T22:49:23.165Z"
+    },
+    {
+      "id": "mm5higdg",
+      "userId": "u1",
+      "action": "LOGOUT",
+      "details": "Alex logged out",
+      "timestamp": "2026-02-27T22:49:26.884Z"
+    },
+    {
+      "id": "mm5hihnk",
+      "userId": "u5",
+      "action": "LOGIN",
+      "details": "Sam logged in",
+      "timestamp": "2026-02-27T22:49:28.544Z"
+    },
+    {
+      "id": "mm5hihqx",
+      "userId": "u5",
+      "action": "LOGIN",
+      "details": "Sam logged in",
+      "timestamp": "2026-02-27T22:49:28.665Z"
+    },
+    {
+      "id": "mm5hinsn",
+      "userId": "u4",
+      "action": "LOGIN",
+      "details": "Chef K logged in",
+      "timestamp": "2026-02-27T22:49:36.503Z"
+    },
+    {
+      "id": "mm5hinws",
+      "userId": "u4",
+      "action": "LOGIN",
+      "details": "Chef K logged in",
+      "timestamp": "2026-02-27T22:49:36.652Z"
+    },
+    {
+      "id": "mm5hj0ubn90iq9",
+      "userId": "u5",
+      "action": "PAYMENT",
+      "details": "Table 5 paid $8.05 (cash)",
+      "timestamp": "2026-02-27T22:49:53.411Z"
+    },
+    {
+      "id": "mm5hj5w4",
+      "userId": "u5",
+      "action": "LOGOUT",
+      "details": "Sam logged out",
+      "timestamp": "2026-02-27T22:49:59.956Z"
+    },
+    {
+      "id": "mm5hj7fo",
+      "userId": "u1",
+      "action": "LOGIN",
+      "details": "Alex logged in",
+      "timestamp": "2026-02-27T22:50:01.956Z"
+    },
+    {
+      "id": "mm5hj7jz",
+      "userId": "u1",
+      "action": "LOGIN",
+      "details": "Alex logged in",
+      "timestamp": "2026-02-27T22:50:02.111Z"
+    },
+    {
+      "id": "mm5hjac0",
+      "userId": "u1",
+      "action": "LOGOUT",
+      "details": "Alex logged out",
+      "timestamp": "2026-02-27T22:50:05.712Z"
+    },
+    {
+      "id": "mm5hjbrl",
+      "userId": "u2",
+      "action": "LOGIN",
+      "details": "Maria logged in",
+      "timestamp": "2026-02-27T22:50:07.569Z"
+    },
+    {
+      "id": "mm5hjx36",
+      "userId": "u2",
+      "action": "LOGOUT",
+      "details": "Maria logged out",
+      "timestamp": "2026-02-27T22:50:35.202Z"
+    },
+    {
+      "id": "mm5hjyn9",
+      "userId": "u2",
+      "action": "LOGIN",
+      "details": "Maria logged in",
+      "timestamp": "2026-02-27T22:50:37.221Z"
+    },
+    {
+      "id": "mm5hjyrg",
+      "userId": "u2",
+      "action": "LOGIN",
+      "details": "Maria logged in",
+      "timestamp": "2026-02-27T22:50:37.372Z"
+    },
+    {
+      "id": "mm5hjzhiqex99d",
+      "userId": "u2",
+      "action": "TABLE_OPENED",
+      "details": "Opened Table 3",
+      "timestamp": "2026-02-27T22:50:38.310Z"
+    },
+    {
+      "id": "mm5hk4tekwikzz",
+      "userId": "u2",
+      "action": "ORDER_SENT",
+      "details": "Sent 2 items for Table 3",
+      "timestamp": "2026-02-27T22:50:45.218Z"
+    },
+    {
+      "id": "mm5hks9q",
+      "userId": "u4",
+      "action": "LOGOUT",
+      "details": "Chef K logged out",
+      "timestamp": "2026-02-27T22:51:15.614Z"
+    },
+    {
+      "id": "mm5hl8ob",
+      "userId": "u2",
+      "action": "LOGOUT",
+      "details": "Maria logged out",
+      "timestamp": "2026-02-27T22:51:36.875Z"
+    },
+    {
+      "id": "mm5hlabn",
+      "userId": "u1",
+      "action": "LOGIN",
+      "details": "Alex logged in",
+      "timestamp": "2026-02-27T22:51:39.011Z"
+    },
+    {
+      "id": "mm5hlagb",
+      "userId": "u1",
+      "action": "LOGIN",
+      "details": "Alex logged in",
+      "timestamp": "2026-02-27T22:51:39.179Z"
+    },
+    {
+      "id": "mm5hmm13",
+      "userId": "u1",
+      "action": "LOGIN",
+      "details": "Alex logged in",
+      "timestamp": "2026-02-27T22:52:40.839Z"
+    },
+    {
+      "id": "mm5hmoxt",
+      "userId": "u1",
+      "action": "LOGOUT",
+      "details": "Alex logged out",
+      "timestamp": "2026-02-27T22:52:44.609Z"
+    },
+    {
+      "id": "mm5icu5a",
+      "userId": "u1",
+      "action": "LOGOUT",
+      "details": "Alex logged out",
+      "timestamp": "2026-02-27T23:13:04.414Z"
+    },
+    {
+      "id": "mm5icwzw",
+      "userId": "u2",
+      "action": "LOGIN",
+      "details": "Maria logged in",
+      "timestamp": "2026-02-27T23:13:08.108Z"
+    },
+    {
+      "id": "mm5ightw",
+      "userId": "u5",
+      "action": "LOGIN",
+      "details": "Sam logged in",
+      "timestamp": "2026-02-27T23:15:55.076Z"
+    },
+    {
+      "id": "mm5igme0txk4vl",
+      "userId": "u5",
+      "action": "PAYMENT",
+      "details": "Table 3 paid $19.55 (card)",
+      "timestamp": "2026-02-27T23:16:00.984Z"
+    },
+    {
+      "id": "mm5igqkx",
+      "userId": "u5",
+      "action": "LOGOUT",
+      "details": "Sam logged out",
+      "timestamp": "2026-02-27T23:16:06.417Z"
+    },
+    {
+      "id": "mm5igubo",
+      "userId": "u5",
+      "action": "LOGIN",
+      "details": "Sam logged in",
+      "timestamp": "2026-02-27T23:16:11.268Z"
+    },
+    {
+      "id": "mm5ihno3",
+      "userId": "u4",
+      "action": "LOGIN",
+      "details": "Chef K logged in",
+      "timestamp": "2026-02-27T23:16:49.299Z"
+    },
+    {
+      "id": "mm5ihw9sy016un",
+      "userId": "u2",
+      "action": "TABLE_OPENED",
+      "details": "Opened Table 9",
+      "timestamp": "2026-02-27T23:17:00.448Z"
+    },
+    {
+      "id": "mm5iik8f7oph34",
+      "userId": "u2",
+      "action": "ORDER_SENT",
+      "details": "Sent 7 items for Table 9",
+      "timestamp": "2026-02-27T23:17:31.503Z"
+    },
+    {
+      "id": "mm5ik9hv",
+      "userId": "u2",
+      "action": "LOGOUT",
+      "details": "Maria logged out",
+      "timestamp": "2026-02-27T23:18:50.899Z"
+    },
+    {
+      "id": "mm5ikav5",
+      "userId": "u4",
+      "action": "LOGIN",
+      "details": "Chef K logged in",
+      "timestamp": "2026-02-27T23:18:52.673Z"
+    },
+    {
+      "id": "mm5ikb4j",
+      "userId": "u4",
+      "action": "LOGIN",
+      "details": "Chef K logged in",
+      "timestamp": "2026-02-27T23:18:53.011Z"
+    },
+    {
+      "id": "mm5ikm2ju0nen9",
+      "userId": "u5",
+      "action": "PAYMENT",
+      "details": "Table 9 paid $93.15 (cash)",
+      "timestamp": "2026-02-27T23:19:07.195Z"
+    },
+    {
+      "id": "mm5ilujgo84czx",
+      "userId": "u2",
+      "action": "TABLE_OPENED",
+      "details": "Opened Table 1",
+      "timestamp": "2026-02-27T23:20:04.828Z"
+    },
+    {
+      "id": "mm5imu4cz8cuw5",
+      "userId": "u2",
+      "action": "ORDER_SENT",
+      "details": "Sent 3 items for Table 1",
+      "timestamp": "2026-02-27T23:20:50.940Z"
+    },
+    {
+      "id": "mm5in7wv59yvi0",
+      "userId": "u2",
+      "action": "TABLE_OPENED",
+      "details": "Opened Table 3",
+      "timestamp": "2026-02-27T23:21:08.815Z"
+    },
+    {
+      "id": "mm5ine68mdocvf",
+      "userId": "u2",
+      "action": "ORDER_SENT",
+      "details": "Sent 1 items for Table 3",
+      "timestamp": "2026-02-27T23:21:16.928Z"
+    },
+    {
+      "id": "mm5inkxic1ic65",
+      "userId": "u2",
+      "action": "ORDER_SENT",
+      "details": "Sent 2 items for Table 3",
+      "timestamp": "2026-02-27T23:21:25.686Z"
+    },
+    {
+      "id": "mm5ipavgw60x7g",
+      "userId": "u5",
+      "action": "PAYMENT",
+      "details": "Table 3 paid $39.68 (cash)",
+      "timestamp": "2026-02-27T23:22:45.964Z"
+    },
+    {
+      "id": "mm5iphgxrhxfg8",
+      "userId": "u5",
+      "action": "PAYMENT",
+      "details": "Table 1 paid $60.38 (cash)",
+      "timestamp": "2026-02-27T23:22:54.513Z"
+    },
+    {
+      "id": "mm5kqim2wtrw2j",
+      "userId": "u2",
+      "action": "TABLE_OPENED",
+      "details": "Opened Table 8",
+      "timestamp": "2026-02-28T00:19:41.882Z"
+    },
+    {
+      "id": "mm5kr4igez0ftb",
+      "userId": "u2",
+      "action": "ORDER_SENT",
+      "details": "Sent 6 items for Table 8",
+      "timestamp": "2026-02-28T00:20:10.264Z"
+    },
+    {
+      "id": "mm5kth3l8e9qfo",
+      "userId": "u5",
+      "action": "PAYMENT",
+      "details": "Table 8 paid $75.33 (card)",
+      "timestamp": "2026-02-28T00:21:59.889Z"
+    },
+    {
+      "id": "mm5kudqg7keicn",
+      "userId": "u2",
+      "action": "ORDER_SENT",
+      "details": "Sent 1 items for Table 8",
+      "timestamp": "2026-02-28T00:22:42.184Z"
+    },
+    {
+      "id": "mm5kuyhev64ig4",
+      "userId": "u2",
+      "action": "ORDER_SENT",
+      "details": "Sent 3 items for Table 8",
+      "timestamp": "2026-02-28T00:23:09.074Z"
+    },
+    {
+      "id": "mm5kv8lp9kbbhi",
+      "userId": "u2",
+      "action": "TABLE_OPENED",
+      "details": "Opened Table 3",
+      "timestamp": "2026-02-28T00:23:22.189Z"
+    },
+    {
+      "id": "mm5kvjcs28chai",
+      "userId": "u2",
+      "action": "ORDER_SENT",
+      "details": "Sent 2 items for Table 3",
+      "timestamp": "2026-02-28T00:23:36.124Z"
+    },
+    {
+      "id": "mm5kvyf3id99up",
+      "userId": "u5",
+      "action": "PAYMENT",
+      "details": "Table 3 paid $18.98 (card)",
+      "timestamp": "2026-02-28T00:23:55.647Z"
+    },
+    {
+      "id": "mm5lclcm",
+      "userId": "u4",
+      "action": "LOGOUT",
+      "details": "Chef K logged out",
+      "timestamp": "2026-02-28T00:36:51.862Z"
+    },
+    {
+      "id": "mm5lcn5c",
+      "userId": "u1",
+      "action": "LOGIN",
+      "details": "Alex logged in",
+      "timestamp": "2026-02-28T00:36:54.192Z"
+    },
+    {
+      "id": "mm5leisc",
+      "userId": "u1",
+      "action": "LOGIN",
+      "details": "Alex logged in",
+      "timestamp": "2026-02-28T00:38:21.852Z"
+    },
+    {
+      "id": "mm5lgnhst4u8be",
+      "userId": "u1",
+      "action": "TABLE_OPENED",
+      "details": "Opened Table 1",
+      "timestamp": "2026-02-28T00:40:01.264Z"
+    },
+    {
+      "id": "mm5liaf0",
+      "userId": "u1",
+      "action": "LOGOUT",
+      "details": "Alex logged out",
+      "timestamp": "2026-02-28T00:41:17.628Z"
+    },
+    {
+      "id": "mm5liqkc",
+      "userId": "u2",
+      "action": "LOGIN",
+      "details": "Maria logged in",
+      "timestamp": "2026-02-28T00:41:38.556Z"
+    },
+    {
+      "id": "mm5llrmx",
+      "userId": "u2",
+      "action": "LOGOUT",
+      "details": "Maria logged out",
+      "timestamp": "2026-02-28T00:43:59.913Z"
+    },
+    {
+      "id": "mm5lm7yr",
+      "userId": "u4",
+      "action": "LOGIN",
+      "details": "Chef K logged in",
+      "timestamp": "2026-02-28T00:44:21.075Z"
+    },
+    {
+      "id": "mm5lovj9",
+      "userId": "u1",
+      "action": "LOGIN",
+      "details": "Alex logged in",
+      "timestamp": "2026-02-28T00:46:24.933Z"
+    },
+    {
+      "id": "mm5lr06qbvxe3c",
+      "userId": "u1",
+      "userName": "Alex",
+      "action": "Sent order #mm5l to KDS for Table 1",
+      "at": "2026-02-28T00:48:04.274Z"
+    },
+    {
+      "id": "mm5lr84p",
+      "userId": "u1",
+      "action": "LOGOUT",
+      "details": "Alex logged out",
+      "timestamp": "2026-02-28T00:48:14.569Z"
+    },
+    {
+      "id": "mm5lrksb",
+      "userId": "u4",
+      "action": "LOGIN",
+      "details": "Chef K logged in",
+      "timestamp": "2026-02-28T00:48:30.971Z"
+    },
+    {
+      "id": "mm5lsstu",
+      "userId": "u4",
+      "action": "LOGOUT",
+      "details": "Chef K logged out",
+      "timestamp": "2026-02-28T00:49:28.050Z"
+    },
+    {
+      "id": "mm5lt22i",
+      "userId": "u2",
+      "action": "LOGIN",
+      "details": "Maria logged in",
+      "timestamp": "2026-02-28T00:49:40.026Z"
+    },
+    {
+      "id": "mm5ltai0dta0xr",
+      "userId": "u2",
+      "userName": "Maria",
+      "action": "Sent order #mm5l to KDS for Table 1",
+      "at": "2026-02-28T00:49:50.952Z"
+    },
+    {
+      "id": "mm5lte6r",
+      "userId": "u2",
+      "action": "LOGOUT",
+      "details": "Maria logged out",
+      "timestamp": "2026-02-28T00:49:55.731Z"
+    },
+    {
+      "id": "mm5ltp9p",
+      "userId": "u4",
+      "action": "LOGIN",
+      "details": "Chef K logged in",
+      "timestamp": "2026-02-28T00:50:10.093Z"
+    },
+    {
+      "id": "mm5lu0jh",
+      "userId": "u4",
+      "action": "LOGOUT",
+      "details": "Chef K logged out",
+      "timestamp": "2026-02-28T00:50:24.702Z"
+    },
+    {
+      "id": "mm5luay7",
+      "userId": "u1",
+      "action": "LOGIN",
+      "details": "Alex logged in",
+      "timestamp": "2026-02-28T00:50:38.191Z"
+    },
+    {
+      "id": "mm5lwkmw",
+      "userId": "u1",
+      "action": "LOGOUT",
+      "details": "Alex logged out",
+      "timestamp": "2026-02-28T00:52:24.056Z"
+    },
+    {
+      "id": "mm5lwup7",
+      "userId": "u2",
+      "action": "LOGIN",
+      "details": "Maria logged in",
+      "timestamp": "2026-02-28T00:52:37.099Z"
+    },
+    {
+      "id": "mm5lwyta3l34k8",
+      "userId": "u2",
+      "action": "TABLE_OPENED",
+      "details": "Opened Table 2",
+      "timestamp": "2026-02-28T00:52:42.431Z"
+    },
+    {
+      "id": "mm5lxe92f7u2wl",
+      "userId": "u2",
+      "userName": "Maria",
+      "action": "Order Sent",
+      "details": "Sent order #mm5lxe90 to KDS for Table 1",
+      "timestamp": "2026-02-28T00:53:02.438Z"
+    },
+    {
+      "id": "mm5lxhrgi7j3n2",
+      "userId": "u2",
+      "userName": "Maria",
+      "action": "Order Sent",
+      "details": "Sent order #mm5lxhrg to KDS for Table 1",
+      "timestamp": "2026-02-28T00:53:06.988Z"
+    },
+    {
+      "id": "mm5ly2ha2pa0p5",
+      "userId": "u2",
+      "userName": "Maria",
+      "action": "Order Sent",
+      "details": "Sent order #mm5ly2ha to KDS for Table 1",
+      "timestamp": "2026-02-28T00:53:33.838Z"
+    },
+    {
+      "id": "mm5lyeultu5lsw",
+      "userId": "u2",
+      "userName": "Maria",
+      "action": "Order Sent",
+      "details": "Sent order #mm5lyeul to KDS for Table 1",
+      "timestamp": "2026-02-28T00:53:49.869Z"
+    },
+    {
+      "id": "mm5lyjw6",
+      "userId": "u2",
+      "action": "LOGOUT",
+      "details": "Maria logged out",
+      "timestamp": "2026-02-28T00:53:56.406Z"
+    },
+    {
+      "id": "mm5lymsu",
+      "userId": "u4",
+      "action": "LOGIN",
+      "details": "Chef K logged in",
+      "timestamp": "2026-02-28T00:54:00.174Z"
+    },
+    {
+      "id": "mm5lyx07",
+      "userId": "u4",
+      "action": "LOGOUT",
+      "details": "Chef K logged out",
+      "timestamp": "2026-02-28T00:54:13.399Z"
+    },
+    {
+      "id": "mm5lz08d",
+      "userId": "u2",
+      "action": "LOGIN",
+      "details": "Maria logged in",
+      "timestamp": "2026-02-28T00:54:17.581Z"
+    },
+    {
+      "id": "mm5lzjic46ueir",
+      "userId": "u2",
+      "userName": "Maria",
+      "action": "Order Sent",
+      "details": "Sent order #mm5lzjic to KDS for Table 1",
+      "timestamp": "2026-02-28T00:54:42.564Z"
+    },
+    {
+      "id": "mm5lzm12",
+      "userId": "u2",
+      "action": "LOGOUT",
+      "details": "Maria logged out",
+      "timestamp": "2026-02-28T00:54:45.830Z"
+    },
+    {
+      "id": "mm5lztjy",
+      "userId": "u4",
+      "action": "LOGIN",
+      "details": "Chef K logged in",
+      "timestamp": "2026-02-28T00:54:55.582Z"
+    },
+    {
+      "id": "mm5m01ke",
+      "userId": "u4",
+      "action": "LOGOUT",
+      "details": "Chef K logged out",
+      "timestamp": "2026-02-28T00:55:05.966Z"
+    },
+    {
+      "id": "mm5m08k5",
+      "userId": "u1",
+      "action": "LOGIN",
+      "details": "Alex logged in",
+      "timestamp": "2026-02-28T00:55:15.029Z"
+    },
+    {
+      "id": "mm5m0dpu",
+      "userId": "u1",
+      "action": "LOGOUT",
+      "details": "Alex logged out",
+      "timestamp": "2026-02-28T00:55:21.714Z"
+    },
+    {
+      "id": "mm5m0gqx",
+      "userId": "u4",
+      "action": "LOGIN",
+      "details": "Chef K logged in",
+      "timestamp": "2026-02-28T00:55:25.641Z"
+    },
+    {
+      "id": "mm5m3asg",
+      "userId": "u4",
+      "action": "LOGOUT",
+      "details": "Chef K logged out",
+      "timestamp": "2026-02-28T00:57:37.888Z"
+    },
+    {
+      "id": "mm5m3qrv",
+      "userId": "u1",
+      "action": "LOGIN",
+      "details": "Alex logged in",
+      "timestamp": "2026-02-28T00:57:58.603Z"
+    },
+    {
+      "id": "mm5m49k5",
+      "userId": "u1",
+      "action": "LOGOUT",
+      "details": "Alex logged out",
+      "timestamp": "2026-02-28T00:58:22.949Z"
+    },
+    {
+      "id": "mm5m4oc9",
+      "userId": "u2",
+      "action": "LOGIN",
+      "details": "Maria logged in",
+      "timestamp": "2026-02-28T00:58:42.105Z"
+    },
+    {
+      "id": "mm5m53wp3gdkdr",
+      "userId": "u2",
+      "userName": "Maria",
+      "action": "Order Sent",
+      "details": "Sent order #mm5m53wo to KDS for Table 1",
+      "timestamp": "2026-02-28T00:59:02.281Z"
+    },
+    {
+      "id": "mm5m5a7e",
+      "userId": "u2",
+      "action": "LOGOUT",
+      "details": "Maria logged out",
+      "timestamp": "2026-02-28T00:59:10.442Z"
+    },
+    {
+      "id": "mm5m5i76",
+      "userId": "u4",
+      "action": "LOGIN",
+      "details": "Chef K logged in",
+      "timestamp": "2026-02-28T00:59:20.802Z"
+    },
+    {
+      "id": "mm5m5w4t",
+      "userId": "u4",
+      "action": "LOGOUT",
+      "details": "Chef K logged out",
+      "timestamp": "2026-02-28T00:59:38.861Z"
+    },
+    {
+      "id": "mm5m64oc",
+      "userId": "u2",
+      "action": "LOGIN",
+      "details": "Maria logged in",
+      "timestamp": "2026-02-28T00:59:49.932Z"
+    },
+    {
+      "id": "mm5m6n2j0dciiw",
+      "userId": "u2",
+      "userName": "Maria",
+      "action": "Order Sent",
+      "details": "Sent order #mm5m6n2j to KDS for Table 1",
+      "timestamp": "2026-02-28T01:00:13.771Z"
+    },
+    {
+      "id": "mm5m6psh",
+      "userId": "u2",
+      "action": "LOGOUT",
+      "details": "Maria logged out",
+      "timestamp": "2026-02-28T01:00:17.297Z"
+    },
+    {
+      "id": "mm5m71o5",
+      "userId": "u4",
+      "action": "LOGIN",
+      "details": "Chef K logged in",
+      "timestamp": "2026-02-28T01:00:32.693Z"
+    },
+    {
+      "id": "mm5m8n7y",
+      "userId": "u4",
+      "action": "LOGOUT",
+      "details": "Chef K logged out",
+      "timestamp": "2026-02-28T01:01:47.278Z"
+    },
+    {
+      "id": "mm5m97gh",
+      "userId": "u1",
+      "action": "LOGIN",
+      "details": "Alex logged in",
+      "timestamp": "2026-02-28T01:02:13.505Z"
+    },
+    {
+      "id": "mm5m9g5k",
+      "userId": "u1",
+      "action": "LOGOUT",
+      "details": "Alex logged out",
+      "timestamp": "2026-02-28T01:02:24.776Z"
+    },
+    {
+      "id": "mm5m9shv",
+      "userId": "u4",
+      "action": "LOGIN",
+      "details": "Chef K logged in",
+      "timestamp": "2026-02-28T01:02:40.771Z"
+    },
+    {
+      "id": "mm5ma5ig",
+      "userId": "u4",
+      "action": "LOGOUT",
+      "details": "Chef K logged out",
+      "timestamp": "2026-02-28T01:02:57.640Z"
+    },
+    {
+      "id": "mm5magml",
+      "userId": "u1",
+      "action": "LOGIN",
+      "details": "Alex logged in",
+      "timestamp": "2026-02-28T01:03:12.045Z"
+    },
+    {
+      "id": "mm5mc2lr",
+      "userId": "u4",
+      "action": "LOGOUT",
+      "details": "Chef K logged out",
+      "timestamp": "2026-02-28T01:04:27.183Z"
+    },
+    {
+      "id": "mm5mc6h0",
+      "userId": "u2",
+      "action": "LOGIN",
+      "details": "Maria logged in",
+      "timestamp": "2026-02-28T01:04:32.196Z"
+    },
+    {
+      "id": "mm5mchhanh72gq",
+      "userId": "u2",
+      "userName": "Maria",
+      "action": "Order Sent",
+      "details": "Sent order #mm5mchh9 to KDS for Table 2",
+      "timestamp": "2026-02-28T01:04:46.462Z"
+    },
+    {
+      "id": "mm5mcmgzlt0wve",
+      "userId": "u2",
+      "userName": "Maria",
+      "action": "Order Sent",
+      "details": "Sent order #mm5mcmgz to KDS for Table 2",
+      "timestamp": "2026-02-28T01:04:52.931Z"
+    },
+    {
+      "id": "mm5mcrr0rbz3qr",
+      "userId": "u2",
+      "action": "TABLE_OPENED",
+      "details": "Opened Table 3",
+      "timestamp": "2026-02-28T01:04:59.772Z"
+    },
+    {
+      "id": "mm5mcuapeabtta",
+      "userId": "u2",
+      "userName": "Maria",
+      "action": "Order Sent",
+      "details": "Sent order #mm5mcuap to KDS for Table 3",
+      "timestamp": "2026-02-28T01:05:03.073Z"
+    },
+    {
+      "id": "mm5md03q",
+      "userId": "u2",
+      "action": "LOGOUT",
+      "details": "Maria logged out",
+      "timestamp": "2026-02-28T01:05:10.598Z"
+    },
+    {
+      "id": "mm5md1n5",
+      "userId": "u4",
+      "action": "LOGIN",
+      "details": "Chef K logged in",
+      "timestamp": "2026-02-28T01:05:12.593Z"
+    },
+    {
+      "id": "mm5mdj4g",
+      "userId": "u4",
+      "action": "LOGOUT",
+      "details": "Chef K logged out",
+      "timestamp": "2026-02-28T01:05:35.248Z"
+    },
+    {
+      "id": "mm5mdkl9",
+      "userId": "u1",
+      "action": "LOGIN",
+      "details": "Alex logged in",
+      "timestamp": "2026-02-28T01:05:37.149Z"
+    },
+    {
+      "id": "mm5mf2cu",
+      "userId": "u4",
+      "action": "LOGIN",
+      "details": "Chef K logged in",
+      "timestamp": "2026-02-28T01:06:46.830Z"
+    },
+    {
+      "id": "mm5mgij5",
+      "userId": "u4",
+      "action": "LOGIN",
+      "details": "Chef K logged in",
+      "timestamp": "2026-02-28T01:07:54.449Z"
+    }
+  ]
+}
