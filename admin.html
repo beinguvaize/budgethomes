@@ -5,21 +5,36 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Admin · Budget Homes</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet" />
   <style>
+    /* ═══════════════════════════════════════════════
+       TOKENS
+    ═══════════════════════════════════════════════ */
     :root {
-      --ink: #0d0d0d;
-      --paper: #f5f2eb;
-      --gold: #b8942a;
-      --gold-light: #d4a93a;
-      --gold-pale: #f5edda;
-      --rule: #d6cdb8;
-      --success: #2d6a4f;
-      --success-bg: #d8f3dc;
-      --error: #9b2226;
-      --error-bg: #fde8e8;
-      --mono: 'DM Mono', monospace;
-      --serif: 'Cormorant Garamond', Georgia, serif;
+      --ink:          #0d0d0d;
+      --ink-soft:     #444;
+      --paper:        #f5f2eb;
+      --paper-dark:   #edeade;
+      --white:        #ffffff;
+      --gold:         #b8942a;
+      --gold-light:   #d4a93a;
+      --gold-pale:    #faf4e6;
+      --rule:         #d6cdb8;
+      --rule-soft:    #e8e3d8;
+      --success:      #2d6a4f;
+      --success-bg:   #eaf7f0;
+      --error:        #9b2226;
+      --error-bg:     #fdf0f0;
+      --warn:         #7d4e00;
+      --warn-bg:      #fff8e6;
+      --blue:         #1a56db;
+      --blue-bg:      #eff6ff;
+      --sidebar-w:    240px;
+      --header-h:     56px;
+      --radius:       2px;
+      --mono:         'DM Mono', monospace;
+      --serif:        'Cormorant Garamond', Georgia, serif;
+      --transition:   0.18s ease;
     }
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -29,729 +44,897 @@
       background: var(--paper);
       color: var(--ink);
       min-height: 100vh;
-      display: flex;
-      flex-direction: column;
+      font-size: 14px;
+      line-height: 1.5;
     }
 
-    /* ── Login Screen ── */
+    /* ═══════════════════════════════════════════════
+       SCROLLBAR
+    ═══════════════════════════════════════════════ */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--paper-dark); }
+    ::-webkit-scrollbar-thumb { background: var(--rule); border-radius: 3px; }
+    ::-webkit-scrollbar-thumb:hover { background: var(--gold); }
+
+    /* ═══════════════════════════════════════════════
+       LOGIN SCREEN
+    ═══════════════════════════════════════════════ */
     #loginScreen {
-      flex: 1;
+      min-height: 100vh;
       display: flex;
       align-items: center;
       justify-content: center;
       padding: 2rem;
       background:
-        repeating-linear-gradient(0deg, transparent, transparent 39px, var(--rule) 39px, var(--rule) 40px),
-        repeating-linear-gradient(90deg, transparent, transparent 39px, var(--rule) 40px, var(--rule) 41px);
+        radial-gradient(ellipse at 20% 50%, rgba(184,148,42,0.06) 0%, transparent 60%),
+        radial-gradient(ellipse at 80% 20%, rgba(184,148,42,0.04) 0%, transparent 50%),
+        repeating-linear-gradient(0deg, transparent, transparent 39px, var(--rule-soft) 39px, var(--rule-soft) 40px),
+        repeating-linear-gradient(90deg, transparent, transparent 39px, var(--rule-soft) 40px, var(--rule-soft) 41px),
+        var(--paper);
+    }
+
+    .login-wrap {
+      width: 100%;
+      max-width: 400px;
+    }
+
+    .login-brand {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+    .login-brand-logo {
+      font-family: var(--serif);
+      font-size: 2.4rem;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      line-height: 1;
+    }
+    .login-brand-logo span { color: var(--gold); }
+    .login-brand-sub {
+      font-size: 0.68rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: #aaa;
+      margin-top: 0.3rem;
     }
 
     .login-card {
-      background: white;
+      background: var(--white);
       border: 1.5px solid var(--ink);
-      padding: 3rem 2.5rem;
-      width: 100%;
-      max-width: 380px;
-      box-shadow: 6px 6px 0 var(--ink);
+      box-shadow: 5px 5px 0 var(--ink);
+      padding: 2.25rem 2rem;
       position: relative;
     }
 
-    .login-card::before {
-      content: 'RESTRICTED';
+    .login-card-label {
       position: absolute;
-      top: -12px;
-      left: 20px;
+      top: -11px;
+      left: 18px;
       background: var(--gold);
-      color: white;
-      font-size: 0.6rem;
-      font-weight: 500;
-      letter-spacing: 0.15em;
+      color: var(--white);
+      font-size: 0.58rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
       padding: 2px 10px;
+      font-weight: 500;
     }
 
-    .login-logo {
-      font-family: var(--serif);
-      font-size: 2rem;
-      font-weight: 600;
-      letter-spacing: 0.02em;
-      margin-bottom: 0.25rem;
-    }
-    .login-logo span { color: var(--gold); }
-
-    .login-sub {
-      font-size: 0.72rem;
-      letter-spacing: 0.08em;
-      color: #777;
-      margin-bottom: 2rem;
-      text-transform: uppercase;
-    }
-
-    .field-label {
+    /* ── Shared form elements ── */
+    .f-label {
       display: block;
-      font-size: 0.68rem;
-      letter-spacing: 0.12em;
+      font-size: 0.65rem;
+      letter-spacing: 0.14em;
       text-transform: uppercase;
-      color: #555;
-      margin-bottom: 0.4rem;
+      color: var(--ink-soft);
+      margin-bottom: 0.35rem;
+      margin-top: 1rem;
     }
+    .f-label:first-child { margin-top: 0; }
 
-    input[type="password"] {
+    .f-input {
       width: 100%;
-      border: 1.5px solid var(--ink);
+      border: 1.5px solid var(--rule);
       background: var(--paper);
       font-family: var(--mono);
-      font-size: 0.9rem;
-      padding: 0.65rem 0.9rem;
+      font-size: 0.88rem;
+      padding: 0.6rem 0.85rem;
       outline: none;
-      transition: border-color 0.15s;
-      letter-spacing: 0.1em;
-    }
-    input[type="password"]:focus { border-color: var(--gold); background: white; }
-
-    .login-err {
-      font-size: 0.72rem;
-      color: var(--error);
-      margin-top: 0.5rem;
-      min-height: 1.2em;
-    }
-
-    .btn-login {
+      color: var(--ink);
+      transition: border-color var(--transition), background var(--transition);
+      border-radius: var(--radius);
       display: block;
-      width: 100%;
-      margin-top: 1.5rem;
-      background: var(--ink);
-      color: white;
+    }
+    .f-input:focus { border-color: var(--gold); background: var(--white); }
+    .f-input.error { border-color: var(--error); }
+
+    .f-error {
+      font-size: 0.7rem;
+      color: var(--error);
+      min-height: 1.4em;
+      margin-top: 0.4rem;
+      letter-spacing: 0.03em;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.65rem 1.4rem;
       border: none;
-      font-family: var(--mono);
-      font-size: 0.78rem;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      padding: 0.75rem;
       cursor: pointer;
-      transition: background 0.15s, transform 0.1s;
+      transition: background var(--transition), box-shadow var(--transition), transform 0.1s, opacity var(--transition);
+      border-radius: var(--radius);
+      white-space: nowrap;
+      font-weight: 500;
     }
-    .btn-login:hover { background: var(--gold); }
-    .btn-login:active { transform: scale(0.98); }
+    .btn:active:not(:disabled) { transform: scale(0.97); }
+    .btn:disabled { opacity: 0.45; cursor: not-allowed; }
 
-    /* ── Admin Panel ── */
-    #adminPanel { display: none; flex: 1; flex-direction: column; }
-    #adminPanel.active { display: flex; }
+    .btn-primary { background: var(--ink); color: var(--white); width: 100%; margin-top: 1.25rem; padding: 0.75rem; }
+    .btn-primary:hover:not(:disabled) { background: #222; }
 
-    header.admin-header {
-      background: var(--ink);
-      color: white;
-      padding: 0 2rem;
-      height: 56px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      position: sticky;
-      top: 0;
-      z-index: 100;
-    }
+    .btn-gold { background: var(--gold); color: var(--white); }
+    .btn-gold:hover:not(:disabled) { background: var(--gold-light); box-shadow: 0 2px 12px rgba(184,148,42,0.35); }
 
-    .header-brand {
-      font-family: var(--serif);
-      font-size: 1.25rem;
-      font-weight: 600;
-    }
-    .header-brand span { color: var(--gold-light); }
-
-    .header-actions {
-      display: flex;
-      align-items: center;
-      gap: 1.5rem;
-    }
-
-    .header-tag {
-      font-size: 0.65rem;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      color: #aaa;
-    }
-
-    .btn-logout {
+    .btn-ghost {
       background: transparent;
-      border: 1px solid #555;
-      color: #bbb;
-      font-family: var(--mono);
+      border: 1.5px solid var(--rule);
+      color: var(--ink-soft);
+    }
+    .btn-ghost:hover:not(:disabled) { border-color: var(--ink); color: var(--ink); }
+
+    .btn-danger { background: transparent; border: 1.5px solid var(--rule); color: var(--error); }
+    .btn-danger:hover:not(:disabled) { background: var(--error-bg); border-color: var(--error); }
+
+    .btn-text {
+      background: transparent;
+      border: none;
+      color: #aaa;
       font-size: 0.68rem;
+      padding: 0.3rem 0;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      letter-spacing: 0.04em;
+      text-transform: none;
+    }
+    .btn-text:hover { color: var(--gold); }
+
+    /* ── Forgot / Reset card ── */
+    #resetCard { display: none; }
+    .card-title {
+      font-family: var(--serif);
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin-bottom: 1.25rem;
+    }
+
+    /* ═══════════════════════════════════════════════
+       LAYOUT — SIDEBAR + MAIN
+    ═══════════════════════════════════════════════ */
+    #appShell { display: none; min-height: 100vh; }
+    #appShell.active { display: flex; flex-direction: column; }
+
+    /* Top bar */
+    .topbar {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      height: var(--header-h);
+      background: var(--ink);
+      display: flex;
+      align-items: center;
+      padding: 0 1.25rem;
+      z-index: 200;
+      gap: 1rem;
+    }
+
+    .topbar-brand {
+      font-family: var(--serif);
+      font-size: 1.35rem;
+      font-weight: 600;
+      color: var(--white);
+      margin-right: auto;
+    }
+    .topbar-brand span { color: var(--gold-light); }
+
+    .topbar-badge {
+      font-size: 0.58rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: #666;
+      display: none;
+    }
+
+    .topbar-btn {
+      background: transparent;
+      border: 1px solid #3a3a3a;
+      color: #999;
+      font-family: var(--mono);
+      font-size: 0.65rem;
       letter-spacing: 0.1em;
       text-transform: uppercase;
       padding: 0.35rem 0.9rem;
       cursor: pointer;
-      transition: border-color 0.15s, color 0.15s;
+      transition: border-color var(--transition), color var(--transition);
+      border-radius: var(--radius);
     }
-    .btn-logout:hover { border-color: var(--gold); color: var(--gold-light); }
+    .topbar-btn:hover { border-color: var(--gold); color: var(--gold-light); }
 
-    .admin-body {
-      flex: 1;
-      padding: 2.5rem 2rem;
-      max-width: 820px;
-      margin: 0 auto;
-      width: 100%;
+    /* Sidebar */
+    .sidebar {
+      position: fixed;
+      top: var(--header-h);
+      left: 0;
+      width: var(--sidebar-w);
+      bottom: 0;
+      background: var(--white);
+      border-right: 1.5px solid var(--rule-soft);
+      overflow-y: auto;
+      z-index: 100;
+      padding: 1.5rem 0;
     }
 
-    .page-title {
+    .nav-group-label {
+      font-size: 0.58rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: #bbb;
+      padding: 0.5rem 1.25rem 0.3rem;
+      margin-top: 0.75rem;
+    }
+
+    .nav-item {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+      padding: 0.65rem 1.25rem;
+      font-size: 0.78rem;
+      color: var(--ink-soft);
+      cursor: pointer;
+      transition: background var(--transition), color var(--transition);
+      border-left: 3px solid transparent;
+      letter-spacing: 0.02em;
+    }
+    .nav-item:hover { background: var(--paper); color: var(--ink); }
+    .nav-item.active { background: var(--gold-pale); color: var(--gold); border-left-color: var(--gold); font-weight: 500; }
+    .nav-item svg { flex-shrink: 0; opacity: 0.7; }
+    .nav-item.active svg { opacity: 1; }
+
+    .nav-divider { height: 1px; background: var(--rule-soft); margin: 0.75rem 1rem; }
+
+    /* Main content */
+    .main-content {
+      margin-left: var(--sidebar-w);
+      margin-top: var(--header-h);
+      padding: 2rem 2.5rem;
+      min-height: calc(100vh - var(--header-h));
+      max-width: 960px;
+    }
+
+    /* ── Page header ── */
+    .page-header { margin-bottom: 2rem; }
+    .page-header h1 {
       font-family: var(--serif);
-      font-size: 2.2rem;
+      font-size: 2rem;
       font-weight: 400;
       font-style: italic;
       color: var(--ink);
-      margin-bottom: 0.25rem;
+      line-height: 1.15;
     }
-    .page-desc {
-      font-size: 0.72rem;
-      color: #777;
-      letter-spacing: 0.06em;
-      margin-bottom: 2.5rem;
+    .page-header p {
+      font-size: 0.75rem;
+      color: #888;
+      margin-top: 0.3rem;
+      letter-spacing: 0.04em;
     }
 
-    /* ── Toast ── */
-    #saveToast {
-      position: fixed;
-      bottom: 2rem;
-      left: 50%;
-      transform: translateX(-50%) translateY(80px);
-      background: var(--ink);
-      color: white;
-      font-size: 0.78rem;
-      letter-spacing: 0.08em;
-      padding: 0.75rem 1.5rem;
-      border-left: 3px solid var(--gold);
-      box-shadow: 4px 4px 0 var(--gold);
-      transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-      white-space: nowrap;
-      z-index: 999;
-    }
-    #saveToast.show { transform: translateX(-50%) translateY(0); }
-
-    /* ── Price Cards ── */
+    /* ── Section rule ── */
     .section-rule {
       display: flex;
       align-items: center;
-      gap: 1rem;
-      margin-bottom: 1.25rem;
+      gap: 0.75rem;
+      margin: 2rem 0 1.25rem;
     }
-    .section-rule-label {
-      font-size: 0.65rem;
-      letter-spacing: 0.2em;
+    .section-rule span {
+      font-size: 0.6rem;
+      letter-spacing: 0.22em;
       text-transform: uppercase;
       color: var(--gold);
       white-space: nowrap;
+      font-weight: 500;
     }
-    .section-rule-line {
+    .section-rule::after {
+      content: '';
       flex: 1;
       height: 1px;
-      background: var(--rule);
+      background: var(--rule-soft);
     }
 
+    /* ── Alert boxes ── */
+    .alert {
+      padding: 0.75rem 1rem;
+      border-radius: var(--radius);
+      font-size: 0.75rem;
+      line-height: 1.6;
+      margin-bottom: 1rem;
+      border-left: 3px solid;
+    }
+    .alert-warn  { background: var(--warn-bg);    color: var(--warn);    border-color: #d4850a; }
+    .alert-ok    { background: var(--success-bg); color: var(--success); border-color: var(--success); }
+    .alert-error { background: var(--error-bg);   color: var(--error);   border-color: var(--error); }
+    .alert-info  { background: var(--blue-bg);    color: var(--blue);    border-color: var(--blue); }
+
+    /* ── Cards / panels ── */
+    .panel {
+      background: var(--white);
+      border: 1.5px solid var(--rule-soft);
+      padding: 1.5rem;
+      margin-bottom: 1.25rem;
+      border-radius: var(--radius);
+    }
+
+    .panel-title {
+      font-size: 0.65rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1rem;
+      font-weight: 500;
+    }
+
+    /* ═══════════════════════════════════════════════
+       PAGE: DASHBOARD
+    ═══════════════════════════════════════════════ */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .stat-card {
+      background: var(--white);
+      border: 1.5px solid var(--rule-soft);
+      padding: 1.25rem 1.5rem;
+      border-radius: var(--radius);
+      position: relative;
+      overflow: hidden;
+    }
+    .stat-card::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 3px;
+      background: var(--gold);
+      transform: scaleX(0);
+      transition: transform 0.4s ease;
+      transform-origin: left;
+    }
+    .stat-card:hover::after { transform: scaleX(1); }
+
+    .stat-label { font-size: 0.65rem; letter-spacing: 0.12em; text-transform: uppercase; color: #aaa; margin-bottom: 0.4rem; }
+    .stat-value { font-family: var(--serif); font-size: 2rem; font-weight: 600; line-height: 1; color: var(--ink); }
+    .stat-value small { font-size: 0.9rem; font-family: var(--mono); color: #888; margin-left: 2px; }
+    .stat-unit  { font-size: 0.68rem; color: #aaa; margin-top: 0.25rem; }
+
+    .activity-list { list-style: none; }
+    .activity-item {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.65rem 0;
+      border-bottom: 1px solid var(--rule-soft);
+      font-size: 0.75rem;
+    }
+    .activity-item:last-child { border-bottom: none; }
+    .activity-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--rule); flex-shrink: 0; }
+    .activity-dot.ok { background: var(--success); }
+    .activity-dot.warn { background: #d4850a; }
+    .activity-time { color: #aaa; font-size: 0.68rem; margin-left: auto; white-space: nowrap; }
+
+    /* ═══════════════════════════════════════════════
+       PAGE: PRICES
+    ═══════════════════════════════════════════════ */
     .price-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
       gap: 1rem;
-      margin-bottom: 2.5rem;
+      margin-bottom: 1.5rem;
     }
 
     .price-card {
-      border: 1.5px solid var(--rule);
-      background: white;
-      padding: 1.4rem 1.25rem 1.25rem;
+      background: var(--white);
+      border: 1.5px solid var(--rule-soft);
+      padding: 1.25rem;
+      border-radius: var(--radius);
       position: relative;
-      transition: border-color 0.15s, box-shadow 0.15s;
+      transition: border-color var(--transition), box-shadow var(--transition);
     }
-    .price-card:hover {
-      border-color: var(--gold);
-      box-shadow: 3px 3px 0 var(--gold-pale);
-    }
-    .price-card.pg-card {
-      border-color: var(--gold);
-      background: var(--gold-pale);
-    }
+    .price-card:hover { border-color: var(--gold); box-shadow: 3px 3px 0 var(--gold-pale); }
+    .price-card.pg { border-color: rgba(184,148,42,0.4); background: var(--gold-pale); }
 
-    .card-badge {
+    .price-card-badge {
       position: absolute;
-      top: -1px;
-      left: 1rem;
+      top: -1px; left: 1rem;
       transform: translateY(-50%);
       background: var(--ink);
-      color: white;
-      font-size: 0.6rem;
-      font-weight: 500;
+      color: var(--white);
+      font-size: 0.58rem;
       letter-spacing: 0.14em;
       padding: 2px 8px;
+      text-transform: uppercase;
     }
-    .pg-card .card-badge { background: var(--gold); }
+    .price-card.pg .price-card-badge { background: var(--gold); }
 
-    .card-name {
+    .price-card-name {
       font-family: var(--serif);
-      font-size: 1.05rem;
+      font-size: 1rem;
       font-weight: 600;
       margin-top: 0.5rem;
-      margin-bottom: 0.2rem;
+      margin-bottom: 0.15rem;
     }
-    .card-type {
-      font-size: 0.65rem;
-      letter-spacing: 0.1em;
-      color: #888;
-      text-transform: uppercase;
-      margin-bottom: 1rem;
-    }
+    .price-card-type { font-size: 0.62rem; color: #999; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.85rem; }
 
-    .price-input-wrap {
+    .price-input-row {
       display: flex;
-      align-items: center;
+      align-items: stretch;
       border: 1.5px solid var(--ink);
       background: var(--paper);
+      border-radius: var(--radius);
       overflow: hidden;
-      transition: border-color 0.15s;
+      transition: border-color var(--transition);
     }
-    .price-input-wrap:focus-within { border-color: var(--gold); background: white; }
+    .price-input-row:focus-within { border-color: var(--gold); background: var(--white); }
 
-    .currency-sym {
+    .price-sym {
+      display: flex;
+      align-items: center;
       padding: 0 0.6rem;
       font-family: var(--serif);
       font-size: 1.1rem;
       font-weight: 600;
       color: var(--gold);
-      border-right: 1px solid var(--rule);
+      border-right: 1px solid var(--rule-soft);
       user-select: none;
+      background: transparent;
     }
 
-    input[type="number"] {
+    .price-num {
       flex: 1;
       border: none;
       background: transparent;
       font-family: var(--mono);
       font-size: 1.05rem;
       font-weight: 500;
-      padding: 0.55rem 0.7rem;
+      padding: 0.5rem 0.6rem;
       outline: none;
       color: var(--ink);
       -moz-appearance: textfield;
+      min-width: 0;
     }
-    input[type="number"]::-webkit-inner-spin-button,
-    input[type="number"]::-webkit-outer-spin-button { -webkit-appearance: none; }
+    .price-num::-webkit-inner-spin-button,
+    .price-num::-webkit-outer-spin-button { -webkit-appearance: none; }
 
-    .price-unit {
+    .price-suffix {
+      display: flex;
+      align-items: center;
       padding: 0 0.6rem;
-      font-size: 0.62rem;
-      letter-spacing: 0.08em;
-      color: #999;
-      border-left: 1px solid var(--rule);
-      white-space: nowrap;
+      font-size: 0.6rem;
+      color: #aaa;
+      border-left: 1px solid var(--rule-soft);
       user-select: none;
+      white-space: nowrap;
     }
 
-    /* ── Notes section ── */
-    .notes-box {
-      border: 1.5px solid var(--rule);
-      background: white;
-      padding: 1.5rem;
-      margin-bottom: 2.5rem;
-    }
-    .notes-title {
-      font-size: 0.65rem;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--gold);
-      margin-bottom: 0.75rem;
-    }
-    .notes-box textarea {
-      width: 100%;
-      border: 1.5px solid var(--rule);
-      background: var(--paper);
-      font-family: var(--mono);
-      font-size: 0.8rem;
-      padding: 0.65rem 0.9rem;
-      resize: vertical;
-      min-height: 80px;
-      outline: none;
-      color: var(--ink);
-      line-height: 1.5;
-      transition: border-color 0.15s;
-    }
-    .notes-box textarea:focus { border-color: var(--gold); background: white; }
-
-    /* ── Save Bar ── */
-    .save-bar {
+    /* ── Action bar ── */
+    .action-bar {
       display: flex;
       align-items: center;
       justify-content: space-between;
       gap: 1rem;
-      padding: 1rem 1.5rem;
-      background: white;
-      border: 1.5px solid var(--rule);
-      margin-bottom: 2rem;
+      padding: 1rem 1.25rem;
+      background: var(--white);
+      border: 1.5px solid var(--rule-soft);
+      border-radius: var(--radius);
+      margin-bottom: 1.5rem;
+      flex-wrap: wrap;
     }
+    .action-bar-left { display: flex; align-items: center; gap: 0.75rem; }
+    .action-bar-right { display: flex; align-items: center; gap: 0.75rem; }
 
-    .save-info {
+    .status-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
       font-size: 0.68rem;
       color: #888;
-      letter-spacing: 0.05em;
+      letter-spacing: 0.04em;
     }
-    .save-info strong { color: var(--ink); }
+    .status-dot {
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      background: var(--rule);
+      flex-shrink: 0;
+      transition: background 0.3s;
+    }
+    .status-dot.saved { background: var(--success); }
+    .status-dot.dirty { background: #d4850a; }
 
-    .btn-save {
+    /* ── Starting from panel ── */
+    .starting-from-row {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    /* ═══════════════════════════════════════════════
+       PAGE: GALLERY
+    ═══════════════════════════════════════════════ */
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .gallery-card {
+      border: 1.5px solid var(--rule-soft);
+      background: var(--white);
+      border-radius: var(--radius);
+      overflow: hidden;
+      position: relative;
+      transition: border-color var(--transition), box-shadow var(--transition);
+      cursor: pointer;
+    }
+    .gallery-card:hover { border-color: var(--gold); box-shadow: 3px 3px 0 var(--gold-pale); }
+
+    .gallery-card-num {
+      position: absolute;
+      top: 8px; left: 8px;
+      background: rgba(0,0,0,0.75);
+      color: var(--white);
+      font-size: 0.58rem;
+      letter-spacing: 0.12em;
+      padding: 2px 8px;
+      z-index: 2;
+      border-radius: 2px;
+    }
+
+    .gallery-card-remove {
+      position: absolute;
+      top: 8px; right: 8px;
+      background: var(--error);
+      color: var(--white);
+      border: none;
+      width: 24px; height: 24px;
+      font-size: 0.8rem;
+      cursor: pointer;
+      z-index: 2;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 2px;
+      opacity: 0;
+      transition: opacity var(--transition);
+    }
+    .gallery-card:hover .gallery-card-remove { opacity: 1; }
+
+    .gallery-thumb {
+      width: 100%;
+      aspect-ratio: 4/3;
+      overflow: hidden;
+      background: var(--paper-dark);
+      position: relative;
+    }
+    .gallery-thumb img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.3s ease;
+    }
+    .gallery-card:hover .gallery-thumb img { transform: scale(1.04); }
+
+    .gallery-thumb-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(0,0,0,0.42);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transition: opacity var(--transition);
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      color: var(--white);
+      text-transform: uppercase;
+    }
+    .gallery-card:hover .gallery-thumb-overlay { opacity: 1; }
+
+    .gallery-card-body {
+      padding: 0.65rem 0.75rem;
+    }
+    .gallery-alt-label {
+      font-size: 0.58rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #bbb;
+      display: block;
+      margin-bottom: 0.25rem;
+    }
+    .gallery-alt-input {
+      width: 100%;
+      border: 1px solid var(--rule-soft);
+      background: var(--paper);
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      padding: 0.35rem 0.5rem;
+      outline: none;
+      color: var(--ink);
+      transition: border-color var(--transition);
+      border-radius: var(--radius);
+    }
+    .gallery-alt-input:focus { border-color: var(--gold); background: var(--white); }
+
+    .gallery-add-card {
+      border: 2px dashed var(--rule);
+      background: transparent;
+      border-radius: var(--radius);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      aspect-ratio: 4/3;
+      cursor: pointer;
+      color: #bbb;
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.06em;
+      gap: 0.5rem;
+      transition: all var(--transition);
+      min-height: 140px;
+    }
+    .gallery-add-card:hover { border-color: var(--gold); color: var(--gold); background: var(--gold-pale); }
+
+    /* ── Drag hint ── */
+    .drag-hint {
+      font-size: 0.65rem;
+      color: #bbb;
+      letter-spacing: 0.06em;
+      margin-bottom: 0.75rem;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    /* ── drag-over style ── */
+    .gallery-card.drag-over { outline: 2px solid var(--gold); outline-offset: 2px; }
+
+    /* ═══════════════════════════════════════════════
+       PAGE: PUBLISH
+    ═══════════════════════════════════════════════ */
+    .github-panel {
+      background: var(--white);
+      border: 1.5px solid var(--rule-soft);
+      border-radius: var(--radius);
+      overflow: hidden;
+      margin-bottom: 1.25rem;
+    }
+    .github-panel-head {
+      background: var(--ink);
+      padding: 1rem 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+    .github-panel-head-title {
+      font-family: var(--serif);
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: var(--white);
+    }
+    .github-panel-head-sub {
+      font-size: 0.68rem;
+      color: #888;
+      margin-left: auto;
+    }
+    .github-panel-body { padding: 1.5rem; }
+
+    .github-fields {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.75rem;
+    }
+    .github-field { display: flex; flex-direction: column; gap: 0.3rem; }
+    .github-field.full { grid-column: 1 / -1; }
+    .github-field .f-label { margin-top: 0; }
+
+    .token-wrap { position: relative; }
+    .token-toggle {
+      position: absolute;
+      right: 0.6rem;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: #aaa;
+      padding: 2px;
+      font-size: 0.7rem;
+    }
+    .token-toggle:hover { color: var(--gold); }
+    .token-wrap .f-input { padding-right: 2.5rem; }
+
+    .connection-test {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-top: 1rem;
+      flex-wrap: wrap;
+    }
+    .connection-result {
+      font-size: 0.72rem;
+      letter-spacing: 0.03em;
+    }
+    .connection-result.ok    { color: var(--success); }
+    .connection-result.error { color: var(--error); }
+
+    /* ── Publish action panel ── */
+    .publish-panel {
+      background: var(--ink);
+      border-radius: var(--radius);
+      padding: 1.75rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+      position: relative;
+      overflow: hidden;
+    }
+    .publish-panel::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: repeating-linear-gradient(
+        -55deg,
+        transparent, transparent 15px,
+        rgba(255,255,255,0.015) 15px, rgba(255,255,255,0.015) 30px
+      );
+    }
+
+    .publish-info { position: relative; z-index: 1; }
+    .publish-title { font-family: var(--serif); font-size: 1.3rem; font-weight: 600; color: var(--white); margin-bottom: 0.25rem; }
+    .publish-sub   { font-size: 0.7rem; color: #666; letter-spacing: 0.04em; }
+    .publish-sub strong { color: var(--gold-light); }
+
+    .btn-publish {
+      position: relative;
+      z-index: 1;
       background: var(--gold);
-      color: white;
+      color: var(--white);
       border: none;
       font-family: var(--mono);
       font-size: 0.78rem;
       font-weight: 500;
       letter-spacing: 0.12em;
       text-transform: uppercase;
-      padding: 0.7rem 2rem;
+      padding: 0.9rem 2.25rem;
       cursor: pointer;
-      transition: background 0.15s, transform 0.1s, box-shadow 0.15s;
+      transition: background var(--transition), box-shadow var(--transition), transform 0.1s;
+      border-radius: var(--radius);
+      white-space: nowrap;
+      min-width: 200px;
     }
-    .btn-save:hover {
-      background: #9a7a1e;
-      box-shadow: 3px 3px 0 var(--ink);
-    }
-    .btn-save:active { transform: scale(0.97); }
+    .btn-publish:hover:not(:disabled) { background: var(--gold-light); box-shadow: 0 0 24px rgba(184,148,42,0.45); }
+    .btn-publish:active:not(:disabled) { transform: scale(0.97); }
+    .btn-publish:disabled { opacity: 0.4; cursor: not-allowed; }
 
-    .btn-reset {
-      background: transparent;
-      border: 1.5px solid var(--rule);
-      color: #888;
+    .publish-result {
+      font-size: 0.72rem;
+      margin-top: 0.6rem;
+      letter-spacing: 0.04em;
+      min-height: 1.2em;
+    }
+    .publish-result.ok    { color: #6fcf97; }
+    .publish-result.error { color: #eb5757; }
+    .publish-result.info  { color: #a0aec0; }
+
+    /* ── Publish log ── */
+    .publish-log {
+      background: #111;
+      border-radius: var(--radius);
+      padding: 1rem 1.25rem;
+      margin-top: 1.25rem;
+      font-size: 0.72rem;
+      color: #6fcf97;
       font-family: var(--mono);
-      font-size: 0.7rem;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      padding: 0.7rem 1.25rem;
-      cursor: pointer;
-      transition: border-color 0.15s, color 0.15s;
+      line-height: 1.8;
+      max-height: 200px;
+      overflow-y: auto;
+      display: none;
     }
-    .btn-reset:hover { border-color: var(--error); color: var(--error); }
+    .publish-log.active { display: block; }
+    .log-line { display: block; }
+    .log-line.err { color: #eb5757; }
+    .log-line.dim { color: #555; }
+    .log-line.ok  { color: #6fcf97; }
 
-    /* ── Status indicator ── */
-    .status-dot {
+    .spinner {
       display: inline-block;
-      width: 7px;
-      height: 7px;
+      width: 11px; height: 11px;
+      border: 2px solid rgba(255,255,255,0.2);
+      border-top-color: currentColor;
       border-radius: 50%;
-      background: #ccc;
-      margin-right: 5px;
+      animation: spin 0.7s linear infinite;
       vertical-align: middle;
     }
-    .status-dot.saved { background: var(--success); }
+    @keyframes spin { to { transform: rotate(360deg); } }
 
-    /* ── Preview pane ── */
-    .preview-box {
-      border: 1.5px dashed var(--rule);
-      padding: 1.5rem;
-      background: #fafafa;
-      margin-bottom: 3rem;
-    }
-    .preview-title {
-      font-size: 0.65rem;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: #aaa;
-      margin-bottom: 1rem;
-    }
-    .preview-list {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.5rem 1.5rem;
-    }
-    .preview-item {
-      font-size: 0.78rem;
-      color: #555;
-    }
-    .preview-item strong {
-      color: var(--ink);
-      font-weight: 500;
-    }
-    .preview-price {
-      color: var(--gold);
-      font-weight: 500;
-    }
+    /* ═══════════════════════════════════════════════
+       PAGE: SETTINGS (Password)
+    ═══════════════════════════════════════════════ */
+    .settings-section { max-width: 480px; }
 
-    /* ── Instructions ── */
-    .howto {
-      border-top: 1px solid var(--rule);
-      padding-top: 1.5rem;
-      margin-bottom: 3rem;
-    }
-    .howto-title {
-      font-family: var(--serif);
-      font-size: 1.1rem;
-      font-style: italic;
-      margin-bottom: 0.75rem;
-    }
-    .howto p {
-      font-size: 0.75rem;
-      line-height: 1.7;
-      color: #666;
-      margin-bottom: 0.5rem;
-    }
-    .howto code {
-      background: var(--paper);
-      border: 1px solid var(--rule);
-      padding: 1px 6px;
-      font-family: var(--mono);
-      font-size: 0.72rem;
-    }
-
-    /* ── Forgot password link ── */
-    .btn-forgot {
-      display: block;
-      width: 100%;
-      margin-top: 0.75rem;
-      background: transparent;
-      border: none;
-      font-family: var(--mono);
-      font-size: 0.7rem;
-      color: #aaa;
-      cursor: pointer;
-      letter-spacing: 0.05em;
-      text-decoration: underline;
-      text-underline-offset: 3px;
-      padding: 0.25rem 0;
-    }
-    .btn-forgot:hover { color: var(--gold); }
-
-    /* ── Change password header button ── */
-    .btn-changepw {
-      background: transparent;
-      border: 1px solid #444;
-      color: #ccc;
-      font-family: var(--mono);
-      font-size: 0.68rem;
-      letter-spacing: 0.08em;
-      padding: 0.35rem 0.9rem;
-      cursor: pointer;
-      transition: border-color 0.15s, color 0.15s;
-    }
-    .btn-changepw:hover { border-color: var(--gold-light); color: var(--gold-light); }
-
-    /* ── Modal ── */
+    /* ═══════════════════════════════════════════════
+       MODALS
+    ═══════════════════════════════════════════════ */
     .modal-backdrop {
       position: fixed;
       inset: 0;
-      background: rgba(0,0,0,0.65);
-      z-index: 500;
-      display: flex;
+      background: rgba(0,0,0,0.6);
+      z-index: 900;
+      display: none;
       align-items: center;
       justify-content: center;
       padding: 1.5rem;
-      backdrop-filter: blur(2px);
+      backdrop-filter: blur(3px);
     }
-    .modal-card {
-      background: white;
+    .modal-backdrop.open { display: flex; }
+
+    .modal {
+      background: var(--white);
       border: 1.5px solid var(--ink);
-      padding: 2rem 2rem 1.75rem;
-      width: 100%;
-      max-width: 400px;
       box-shadow: 6px 6px 0 var(--ink);
-      animation: modalIn 0.2s ease;
+      padding: 2rem;
+      width: 100%;
+      max-width: 460px;
+      border-radius: var(--radius);
+      animation: modalIn 0.2s cubic-bezier(0.34,1.56,0.64,1);
     }
+    .modal.wide { max-width: 540px; }
     @keyframes modalIn {
-      from { opacity: 0; transform: translateY(12px); }
-      to   { opacity: 1; transform: translateY(0); }
+      from { opacity: 0; transform: translateY(16px) scale(0.97); }
+      to   { opacity: 1; transform: translateY(0) scale(1); }
     }
+
     .modal-title {
       font-family: var(--serif);
       font-size: 1.3rem;
       font-weight: 600;
       margin-bottom: 1.25rem;
     }
-    .modal-input {
-      width: 100%;
-      border: 1.5px solid var(--ink);
-      background: var(--paper);
-      font-family: var(--mono);
-      font-size: 0.88rem;
-      padding: 0.65rem 0.9rem;
-      outline: none;
-      transition: border-color 0.15s;
-      display: block;
-    }
-    .modal-input:focus { border-color: var(--gold); background: white; }
     .modal-actions {
       display: flex;
       gap: 0.75rem;
       justify-content: flex-end;
-      margin-top: 1.25rem;
+      margin-top: 1.5rem;
     }
 
-    /* ── Recovery key display ── */
-    .recovery-key-box {
-      background: var(--ink);
-      color: var(--gold-light);
-      font-family: var(--mono);
-      font-size: 1.1rem;
-      font-weight: 500;
-      letter-spacing: 0.18em;
-      text-align: center;
-      padding: 1rem;
-      border: 2px solid var(--gold);
-      margin-bottom: 0.75rem;
-      user-select: all;
-    }
-    .btn-copy {
-      display: block;
-      width: 100%;
-      background: transparent;
-      border: 1.5px solid var(--rule);
-      font-family: var(--mono);
-      font-size: 0.72rem;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      padding: 0.5rem;
-      cursor: pointer;
-      color: #888;
-      transition: border-color 0.15s, color 0.15s;
-    }
-    .btn-copy:hover { border-color: var(--gold); color: var(--gold); }
-
-    /* ── Gallery Manager ── */
-    .gallery-admin-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-      gap: 1rem;
+    /* ── Tabs (for photo edit modal) ── */
+    .tabs-nav {
+      display: flex;
+      border-bottom: 1.5px solid var(--rule-soft);
       margin-bottom: 1.25rem;
+      gap: 0;
     }
-
-    .gallery-admin-card {
-      border: 1.5px solid var(--rule);
-      background: white;
-      position: relative;
-      overflow: hidden;
-      transition: border-color 0.15s, box-shadow 0.15s;
-    }
-    .gallery-admin-card:hover { border-color: var(--gold); box-shadow: 3px 3px 0 var(--gold-pale); }
-
-    .gallery-admin-card .card-num {
-      position: absolute;
-      top: 8px;
-      left: 8px;
-      background: var(--ink);
-      color: white;
-      font-size: 0.6rem;
-      letter-spacing: 0.12em;
-      padding: 2px 7px;
-      z-index: 2;
-    }
-
-    .gallery-admin-card .card-remove {
-      position: absolute;
-      top: 8px;
-      right: 8px;
-      background: var(--error);
-      color: white;
-      border: none;
-      width: 24px;
-      height: 24px;
-      font-size: 0.8rem;
-      cursor: pointer;
-      z-index: 2;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      opacity: 0;
-      transition: opacity 0.15s;
-    }
-    .gallery-admin-card:hover .card-remove { opacity: 1; }
-
-    .gallery-thumb-wrap {
-      width: 100%;
-      aspect-ratio: 4/3;
-      overflow: hidden;
-      background: #eee;
-      cursor: pointer;
-      position: relative;
-    }
-    .gallery-thumb-wrap img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-      transition: opacity 0.2s;
-    }
-    .gallery-thumb-wrap .thumb-overlay {
-      position: absolute;
-      inset: 0;
-      background: rgba(0,0,0,0.45);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      opacity: 0;
-      transition: opacity 0.15s;
-      font-size: 0.7rem;
-      letter-spacing: 0.1em;
-      color: white;
-      text-transform: uppercase;
-    }
-    .gallery-thumb-wrap:hover .thumb-overlay { opacity: 1; }
-
-    .gallery-card-body {
-      padding: 0.75rem;
-    }
-    .gallery-alt-input {
-      width: 100%;
-      border: 1px solid var(--rule);
-      background: var(--paper);
+    .tab-btn {
       font-family: var(--mono);
       font-size: 0.7rem;
-      padding: 0.4rem 0.55rem;
-      outline: none;
-      color: var(--ink);
-      transition: border-color 0.15s;
-    }
-    .gallery-alt-input:focus { border-color: var(--gold); background: white; }
-    .gallery-alt-label {
-      font-size: 0.6rem;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: #aaa;
-      margin-bottom: 0.3rem;
-      display: block;
-    }
-
-    .gallery-add-btn {
-      border: 1.5px dashed var(--rule);
-      background: transparent;
-      width: 100%;
-      aspect-ratio: 4/3;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      color: #bbb;
-      font-family: var(--mono);
-      font-size: 0.72rem;
-      letter-spacing: 0.08em;
-      gap: 0.5rem;
-      transition: border-color 0.15s, color 0.15s, background 0.15s;
-    }
-    .gallery-add-btn:hover { border-color: var(--gold); color: var(--gold); background: var(--gold-pale); }
-    .gallery-add-btn svg { opacity: 0.5; }
-    .gallery-add-btn:hover svg { opacity: 1; }
-
-    .gallery-save-bar {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 1rem;
-      padding: 1rem 1.5rem;
-      background: white;
-      border: 1.5px solid var(--rule);
-      margin-bottom: 2.5rem;
-    }
-
-    /* ── Edit Photo Modal ── */
-    .modal-card.wide { max-width: 520px; }
-    .edit-tabs {
-      display: flex;
-      border-bottom: 1.5px solid var(--rule);
-      margin-bottom: 1.25rem;
-    }
-    .edit-tab {
-      font-family: var(--mono);
-      font-size: 0.72rem;
       letter-spacing: 0.1em;
       text-transform: uppercase;
       padding: 0.5rem 1.1rem;
@@ -761,27 +944,24 @@
       color: #aaa;
       border-bottom: 2px solid transparent;
       margin-bottom: -1.5px;
-      transition: color 0.15s;
+      transition: color var(--transition), border-color var(--transition);
     }
-    .edit-tab.active { color: var(--gold); border-bottom-color: var(--gold); }
-
+    .tab-btn.active { color: var(--gold); border-bottom-color: var(--gold); }
     .tab-pane { display: none; }
     .tab-pane.active { display: block; }
 
-    .upload-drop-zone {
+    .drop-zone {
       border: 2px dashed var(--rule);
       background: var(--paper);
       padding: 2rem 1rem;
       text-align: center;
       cursor: pointer;
-      transition: border-color 0.15s, background 0.15s;
+      transition: all var(--transition);
       position: relative;
+      border-radius: var(--radius);
     }
-    .upload-drop-zone:hover, .upload-drop-zone.drag-over {
-      border-color: var(--gold);
-      background: var(--gold-pale);
-    }
-    .upload-drop-zone input[type="file"] {
+    .drop-zone:hover, .drop-zone.drag-over { border-color: var(--gold); background: var(--gold-pale); }
+    .drop-zone input[type="file"] {
       position: absolute;
       inset: 0;
       opacity: 0;
@@ -789,1243 +969,1282 @@
       width: 100%;
       height: 100%;
     }
-    .drop-label {
-      font-size: 0.75rem;
-      color: #888;
-      line-height: 1.7;
-    }
-    .drop-label strong { color: var(--ink); display: block; font-size: 0.85rem; margin-bottom: 0.25rem; }
+    .drop-zone-text { font-size: 0.75rem; color: #888; line-height: 1.7; pointer-events: none; }
+    .drop-zone-text strong { display: block; font-size: 0.88rem; color: var(--ink); margin-bottom: 0.2rem; }
 
-    .preview-thumb {
+    .img-preview {
       width: 100%;
       max-height: 180px;
       object-fit: cover;
       display: none;
       margin-top: 0.75rem;
-      border: 1px solid var(--rule);
+      border: 1.5px solid var(--rule-soft);
+      border-radius: var(--radius);
     }
-    .preview-thumb.show { display: block; }
+    .img-preview.show { display: block; }
 
-    /* ── GitHub Publish Bar ── */
-    .publish-bar {
+    /* ── Recovery key display ── */
+    .recovery-box {
       background: var(--ink);
-      border: 1.5px solid var(--ink);
-      padding: 1.25rem 1.5rem;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 1rem;
-      margin-bottom: 2.5rem;
-      position: relative;
-      overflow: hidden;
-    }
-    .publish-bar::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: repeating-linear-gradient(
-        -45deg, transparent, transparent 10px,
-        rgba(184,148,42,0.04) 10px, rgba(184,148,42,0.04) 20px
-      );
-    }
-    .publish-info { position: relative; }
-    .publish-info-title {
-      font-family: var(--serif);
-      font-size: 1rem;
-      font-weight: 600;
-      color: white;
-      margin-bottom: 0.2rem;
-    }
-    .publish-info-sub {
-      font-size: 0.68rem;
-      color: #888;
-      letter-spacing: 0.05em;
-    }
-    .publish-info-sub strong { color: var(--gold-light); }
-
-    .btn-publish {
-      position: relative;
-      background: var(--gold);
-      color: white;
-      border: none;
+      color: var(--gold-light);
       font-family: var(--mono);
-      font-size: 0.8rem;
+      font-size: 1.2rem;
       font-weight: 500;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      padding: 0.85rem 2rem;
-      cursor: pointer;
-      transition: background 0.15s, box-shadow 0.15s, transform 0.1s;
-      white-space: nowrap;
-      min-width: 180px;
-    }
-    .btn-publish:hover:not(:disabled) {
-      background: var(--gold-light);
-      box-shadow: 0 0 20px rgba(184,148,42,0.4);
-    }
-    .btn-publish:active:not(:disabled) { transform: scale(0.97); }
-    .btn-publish:disabled { opacity: 0.5; cursor: not-allowed; }
-
-    .publish-spinner {
-      display: inline-block;
-      width: 12px; height: 12px;
-      border: 2px solid rgba(255,255,255,0.3);
-      border-top-color: white;
-      border-radius: 50%;
-      animation: spin 0.7s linear infinite;
-      margin-right: 6px;
-      vertical-align: middle;
-    }
-    @keyframes spin { to { transform: rotate(360deg); } }
-
-    .publish-result {
-      font-size: 0.72rem;
-      margin-top: 0.5rem;
-      letter-spacing: 0.05em;
-      min-height: 1.2em;
-    }
-    .publish-result.ok  { color: #6fcf97; }
-    .publish-result.err { color: #eb5757; }
-
-    /* ── GitHub Settings box ── */
-    .github-settings {
-      border: 1.5px solid var(--rule);
-      background: white;
-      padding: 1.5rem;
-      margin-bottom: 2rem;
-    }
-    .github-settings-title {
-      font-size: 0.65rem;
       letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--gold);
-      margin-bottom: 1rem;
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
+      text-align: center;
+      padding: 1.1rem;
+      border: 2px solid var(--gold);
+      margin: 1rem 0 0.75rem;
+      border-radius: var(--radius);
+      user-select: all;
     }
-    .github-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 0.75rem;
-    }
-    .github-field { display: flex; flex-direction: column; gap: 0.3rem; }
-    .github-field.full { grid-column: 1 / -1; }
-    .github-input {
-      border: 1.5px solid var(--rule);
-      background: var(--paper);
-      font-family: var(--mono);
-      font-size: 0.8rem;
-      padding: 0.55rem 0.75rem;
-      outline: none;
-      transition: border-color 0.15s;
-      color: var(--ink);
-    }
-    .github-input:focus { border-color: var(--gold); background: white; }
-    .github-save-row {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-top: 0.9rem;
-      gap: 1rem;
-    }
-    .github-status {
-      font-size: 0.7rem;
-      color: #888;
-    }
-    .github-status.ok { color: var(--success); }
 
-    /* responsive */
-    @media (max-width: 480px) {
-      .admin-body { padding: 1.5rem 1rem; }
+    /* ═══════════════════════════════════════════════
+       TOAST
+    ═══════════════════════════════════════════════ */
+    #toast {
+      position: fixed;
+      bottom: 1.75rem;
+      left: 50%;
+      transform: translateX(-50%) translateY(80px);
+      background: var(--ink);
+      color: var(--white);
+      font-size: 0.75rem;
+      letter-spacing: 0.06em;
+      padding: 0.75rem 1.5rem;
+      border-left: 3px solid var(--gold);
+      box-shadow: 4px 4px 0 var(--gold);
+      transition: transform 0.35s cubic-bezier(0.34,1.56,0.64,1);
+      z-index: 999;
+      border-radius: var(--radius);
+      white-space: nowrap;
+    }
+    #toast.show { transform: translateX(-50%) translateY(0); }
+    #toast.ok   { border-color: var(--success); }
+    #toast.err  { border-color: var(--error); }
+
+    /* ═══════════════════════════════════════════════
+       HAMBURGER (mobile)
+    ═══════════════════════════════════════════════ */
+    .sidebar-toggle {
+      display: none;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      padding: 6px;
+      flex-direction: column;
+      gap: 5px;
+      margin-right: 0.5rem;
+    }
+    .sidebar-toggle span {
+      display: block;
+      width: 20px;
+      height: 2px;
+      background: var(--white);
+      transition: all 0.2s;
+    }
+
+    /* ── Hidden pages ── */
+    .page { display: none; }
+    .page.active { display: block; }
+
+    /* ═══════════════════════════════════════════════
+       RESPONSIVE
+    ═══════════════════════════════════════════════ */
+    @media (max-width: 768px) {
+      :root { --sidebar-w: 0px; }
+
+      .sidebar {
+        transform: translateX(-240px);
+        width: 240px;
+        transition: transform 0.25s ease;
+        box-shadow: none;
+      }
+      .sidebar.open { transform: translateX(0); box-shadow: 4px 0 20px rgba(0,0,0,0.12); }
+
+      .main-content { margin-left: 0; padding: 1.5rem 1rem; }
+      .sidebar-toggle { display: flex; }
+      .topbar-badge { display: none; }
+      .github-fields { grid-template-columns: 1fr; }
+      .github-field.full { grid-column: 1; }
+      .action-bar { flex-direction: column; align-items: stretch; }
+      .action-bar-right { flex-wrap: wrap; }
+      .publish-panel { flex-direction: column; }
+      .btn-publish { width: 100%; }
       .price-grid { grid-template-columns: 1fr 1fr; }
-      .gallery-admin-grid { grid-template-columns: 1fr 1fr; }
-      .save-bar { flex-direction: column; align-items: stretch; }
-      .publish-bar { flex-direction: column; align-items: stretch; }
-      .github-grid { grid-template-columns: 1fr; }
-      .header-tag { display: none; }
-      .btn-changepw { display: none; }
+      .gallery-grid { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 420px) {
+      .price-grid { grid-template-columns: 1fr; }
+      .gallery-grid { grid-template-columns: 1fr 1fr; }
+      .stats-grid { grid-template-columns: 1fr 1fr; }
     }
   </style>
 </head>
 <body>
 
-<!-- ══════════════ LOGIN ══════════════ -->
+<!-- ════════════════════════════════════════════════
+  LOGIN SCREEN
+════════════════════════════════════════════════ -->
 <div id="loginScreen">
+  <div class="login-wrap">
+    <div class="login-brand">
+      <div class="login-brand-logo">Budget <span>Homes</span></div>
+      <div class="login-brand-sub">Admin Panel</div>
+    </div>
 
-  <!-- Normal login -->
-  <div class="login-card" id="loginCard">
-    <div class="login-logo">Budget <span>Homes</span></div>
-    <div class="login-sub">Admin · Price Manager</div>
-    <label class="field-label" for="pwInput">Password</label>
-    <input type="password" id="pwInput" placeholder="Enter admin password" autocomplete="current-password" />
-    <div class="login-err" id="loginErr"></div>
-    <button class="btn-login" id="loginBtn">Unlock Panel</button>
-    <button class="btn-forgot" id="forgotBtn">Forgot password?</button>
+    <!-- Login card -->
+    <div class="login-card" id="loginCard">
+      <div class="login-card-label">Secure Access</div>
+      <label class="f-label" for="pwInput">Password</label>
+      <input class="f-input" type="password" id="pwInput" placeholder="Enter admin password" autocomplete="current-password" />
+      <div class="f-error" id="loginErr"></div>
+      <button class="btn btn-primary" id="loginBtn">Unlock Panel →</button>
+      <div style="text-align:center;margin-top:0.75rem;">
+        <button class="btn btn-text" id="forgotBtn">Forgot password?</button>
+      </div>
+    </div>
+
+    <!-- Reset password card -->
+    <div class="login-card" id="resetCard">
+      <div class="login-card-label">Reset Password</div>
+      <p style="font-size:0.72rem;color:#888;line-height:1.7;margin-bottom:1rem;">Enter your recovery key to set a new password.</p>
+      <label class="f-label" for="recoveryInput">Recovery Key</label>
+      <input class="f-input" type="text" id="recoveryInput" placeholder="XXXX-XXXX-XXXX" autocomplete="off" style="letter-spacing:0.12em;" />
+      <label class="f-label" for="newPwReset">New Password</label>
+      <input class="f-input" type="password" id="newPwReset" placeholder="Min 6 characters" />
+      <label class="f-label" for="confirmPwReset">Confirm Password</label>
+      <input class="f-input" type="password" id="confirmPwReset" placeholder="Re-enter password" />
+      <div class="f-error" id="resetErr"></div>
+      <button class="btn btn-primary" id="doResetBtn">Set New Password →</button>
+      <div style="text-align:center;margin-top:0.75rem;">
+        <button class="btn btn-text" id="backLoginBtn">← Back to login</button>
+      </div>
+    </div>
   </div>
-
-  <!-- Forgot / Reset password using recovery key -->
-  <div class="login-card" id="resetCard" style="display:none;">
-    <div class="login-logo">Budget <span>Homes</span></div>
-    <div class="login-sub">Reset Password</div>
-    <p style="font-size:0.72rem;color:#777;margin-bottom:1.25rem;line-height:1.6;">
-      Enter your <strong>recovery key</strong> to set a new password.<br/>
-      Your recovery key is shown once when you first set up the admin panel.
-    </p>
-    <label class="field-label" for="recoveryInput">Recovery Key</label>
-    <input type="text" id="recoveryInput" placeholder="xxxx-xxxx-xxxx" autocomplete="off" style="width:100%;border:1.5px solid var(--ink);background:var(--paper);font-family:var(--mono);font-size:0.9rem;padding:0.65rem 0.9rem;outline:none;letter-spacing:0.1em;margin-bottom:1rem;" />
-    <label class="field-label" for="newPwInput">New Password</label>
-    <input type="password" id="newPwInput" placeholder="Enter new password" style="width:100%;border:1.5px solid var(--ink);background:var(--paper);font-family:var(--mono);font-size:0.9rem;padding:0.65rem 0.9rem;outline:none;letter-spacing:0.08em;margin-bottom:0.4rem;" />
-    <label class="field-label" for="confirmPwInput" style="margin-top:0.75rem;">Confirm New Password</label>
-    <input type="password" id="confirmPwInput" placeholder="Re-enter new password" style="width:100%;border:1.5px solid var(--ink);background:var(--paper);font-family:var(--mono);font-size:0.9rem;padding:0.65rem 0.9rem;outline:none;letter-spacing:0.08em;" />
-    <div class="login-err" id="resetErr"></div>
-    <button class="btn-login" id="doResetBtn" style="margin-top:1.25rem;">Set New Password</button>
-    <button class="btn-forgot" id="backToLoginBtn">← Back to login</button>
-  </div>
-
 </div>
 
-<!-- ══════════════ ADMIN PANEL ══════════════ -->
-<div id="adminPanel">
-  <header class="admin-header">
-    <div class="header-brand">Budget <span>Homes</span></div>
-    <div class="header-actions">
-      <span class="header-tag">Price Manager</span>
-      <button class="btn-changepw" id="changePwBtn">🔑 Change Password</button>
-      <button class="btn-logout" id="logoutBtn">Log out</button>
-    </div>
+<!-- ════════════════════════════════════════════════
+  APP SHELL
+════════════════════════════════════════════════ -->
+<div id="appShell">
+
+  <!-- Top bar -->
+  <header class="topbar">
+    <button class="sidebar-toggle" id="sidebarToggle" aria-label="Toggle sidebar">
+      <span></span><span></span><span></span>
+    </button>
+    <div class="topbar-brand">Budget <span>Homes</span></div>
+    <span class="topbar-badge" id="topbarBadge"></span>
+    <button class="topbar-btn" id="changePwTopBtn">🔑 Password</button>
+    <button class="topbar-btn" id="logoutBtn">Log out</button>
   </header>
 
-  <main class="admin-body">
-    <h1 class="page-title">Manage Prices</h1>
-    <p class="page-desc">Update room &amp; PG pricing. Changes apply to the website automatically.</p>
-
-    <!-- Nightly Rates -->
-    <div class="section-rule">
-      <span class="section-rule-label">Nightly Rates</span>
-      <div class="section-rule-line"></div>
+  <!-- Sidebar -->
+  <nav class="sidebar" id="sidebar">
+    <div class="nav-group-label">Main</div>
+    <div class="nav-item active" data-page="dashboard">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+      Dashboard
     </div>
-
-    <div class="price-grid" id="nightlyGrid">
-      <!-- Cards injected by JS -->
+    <div class="nav-item" data-page="prices">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+      Prices
     </div>
-
-    <!-- PG Rate -->
-    <div class="section-rule">
-      <span class="section-rule-label">Paying Guest Rate</span>
-      <div class="section-rule-line"></div>
+    <div class="nav-item" data-page="gallery">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+      Gallery
     </div>
-
-    <div class="price-grid" id="pgGrid"></div>
-
-    <!-- Starting From note (hero/booking section) -->
-    <div class="section-rule">
-      <span class="section-rule-label">Website Display</span>
-      <div class="section-rule-line"></div>
+    <div class="nav-divider"></div>
+    <div class="nav-group-label">Deploy</div>
+    <div class="nav-item" data-page="publish">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><polyline points="16 16 12 12 8 16"/><line x1="12" y1="12" x2="12" y2="21"/><path d="M20.39 18.39A5 5 0 0 0 18 9h-1.26A8 8 0 1 0 3 16.3"/></svg>
+      Publish
     </div>
+    <div class="nav-divider"></div>
+    <div class="nav-group-label">Account</div>
+    <div class="nav-item" data-page="settings">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+      Settings
+    </div>
+  </nav>
 
-    <div class="notes-box">
-      <div class="notes-title">Hero &amp; Booking Section — "Starting From" Price</div>
-      <p style="font-size:0.72rem;color:#888;margin-bottom:0.75rem;">
-        This price appears in the hero text and "Book Directly &amp; Save" section. Usually set to your lowest nightly rate.
-      </p>
-      <div class="price-input-wrap" style="max-width:240px;">
-        <span class="currency-sym">₹</span>
-        <input type="number" id="startingFrom" min="100" step="50" />
-        <span class="price-unit">/ night · from</span>
+  <!-- Main content area -->
+  <main class="main-content">
+
+    <!-- ── DASHBOARD ── -->
+    <div class="page active" id="page-dashboard">
+      <div class="page-header">
+        <h1>Dashboard</h1>
+        <p>Overview of Budget Homes — Edappally, Kochi</p>
+      </div>
+
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-label">Lowest Rate</div>
+          <div class="stat-value" id="dash-lowest">₹<span>—</span></div>
+          <div class="stat-unit">per night</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">PG Rate</div>
+          <div class="stat-value" id="dash-pg">₹<span>—</span></div>
+          <div class="stat-unit">per month</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Gallery Photos</div>
+          <div class="stat-value" id="dash-photos"><span>—</span></div>
+          <div class="stat-unit">photos in gallery</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Last Published</div>
+          <div class="stat-value" id="dash-publish" style="font-size:1rem;margin-top:0.25rem;">—</div>
+          <div class="stat-unit">via GitHub</div>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-title">Recent Activity</div>
+        <ul class="activity-list" id="activityList">
+          <li class="activity-item">
+            <span class="activity-dot"></span>
+            <span>No activity yet — make your first change</span>
+          </li>
+        </ul>
+      </div>
+
+      <div class="alert alert-info">
+        <strong>How it works:</strong> Update prices or gallery photos, then go to <strong>Publish</strong> to push changes directly to GitHub. Vercel auto-deploys in ~15 seconds and every device worldwide sees the update instantly.
       </div>
     </div>
 
-    <!-- Admin notes -->
-    <div class="notes-box">
-      <div class="notes-title">Private Admin Notes</div>
-      <textarea id="adminNotes" placeholder="e.g. Peak season pricing active until Jan 31…"></textarea>
-    </div>
-
-    <!-- Save bar -->
-    <div class="save-bar">
-      <div class="save-info">
-        <span class="status-dot" id="statusDot"></span>
-        <span id="saveStatus">No unsaved changes</span>
+    <!-- ── PRICES ── -->
+    <div class="page" id="page-prices">
+      <div class="page-header">
+        <h1>Room Prices</h1>
+        <p>Set nightly rates for all 5 units and monthly PG rate</p>
       </div>
-      <div style="display:flex;gap:0.75rem;align-items:center;">
-        <button class="btn-reset" id="resetBtn">Reset to Defaults</button>
-        <button class="btn-save" id="saveBtn">✦ Save All Prices</button>
+
+      <div class="action-bar">
+        <div class="action-bar-left">
+          <span class="status-pill">
+            <span class="status-dot" id="priceStatusDot"></span>
+            <span id="priceStatusText">No unsaved changes</span>
+          </span>
+        </div>
+        <div class="action-bar-right">
+          <button class="btn btn-ghost" id="priceResetBtn">Reset Defaults</button>
+          <button class="btn btn-gold" id="priceSaveBtn">✦ Save Prices</button>
+        </div>
+      </div>
+
+      <div class="section-rule"><span>Nightly Rates</span></div>
+      <div class="price-grid" id="nightlyGrid"></div>
+
+      <div class="section-rule"><span>Paying Guest (Monthly)</span></div>
+      <div class="price-grid" id="pgGrid"></div>
+
+      <div class="section-rule"><span>Starting From — Website Display</span></div>
+      <div class="panel">
+        <div class="panel-title">Hero &amp; Booking Section</div>
+        <p style="font-size:0.72rem;color:#888;margin-bottom:1rem;line-height:1.6;">This price appears in the hero tagline and "Book Directly" section. Usually your lowest nightly rate.</p>
+        <div class="starting-from-row">
+          <div class="price-input-row" style="max-width:220px;">
+            <span class="price-sym">₹</span>
+            <input class="price-num" type="number" id="startingFrom" min="100" step="50" />
+            <span class="price-suffix">/ night · from</span>
+          </div>
+          <span style="font-size:0.72rem;color:#aaa;">Shown as: <strong id="startingFromPreview" style="color:var(--gold);"></strong></span>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-title">Admin Notes (private)</div>
+        <textarea id="adminNotes" class="f-input" style="min-height:80px;resize:vertical;" placeholder="e.g. Peak season rates active Dec 20 – Jan 5…"></textarea>
       </div>
     </div>
 
-    <!-- Live preview -->
-    <div class="section-rule">
-      <span class="section-rule-label">Live Preview</span>
-      <div class="section-rule-line"></div>
-    </div>
-    <div class="preview-box">
-      <div class="preview-title">Current saved prices (as shown on website)</div>
-      <div class="preview-list" id="previewList"></div>
-    </div>
+    <!-- ── GALLERY ── -->
+    <div class="page" id="page-gallery">
+      <div class="page-header">
+        <h1>Gallery Photos</h1>
+        <p>Manage photos shown in the gallery section — click to edit, drag to reorder</p>
+      </div>
 
-    <!-- ═══════════════════════════════════════════════ -->
-    <!-- GALLERY MANAGER                                  -->
-    <!-- ═══════════════════════════════════════════════ -->
-    <div class="section-rule" style="margin-top:2.5rem;">
-      <span class="section-rule-label">Gallery Photos</span>
-      <div class="section-rule-line"></div>
-    </div>
-    <p class="page-desc" style="margin-bottom:1.25rem;">
-      Manage the 8 photos shown in the Gallery section. Click any photo to replace it, edit its caption, or remove it. Drag to reorder.
-    </p>
+      <div class="action-bar">
+        <div class="action-bar-left">
+          <span class="status-pill">
+            <span class="status-dot" id="galleryStatusDot"></span>
+            <span id="galleryStatusText">No unsaved changes</span>
+          </span>
+        </div>
+        <div class="action-bar-right">
+          <button class="btn btn-ghost" id="galleryResetBtn">Reset Original</button>
+          <button class="btn btn-gold" id="gallerySaveBtn">✦ Save Gallery</button>
+        </div>
+      </div>
 
-    <div class="gallery-admin-grid" id="galleryAdminGrid">
-      <!-- Cards rendered by JS -->
-    </div>
+      <div class="drag-hint">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><path d="M5 9l-3 3 3 3M9 5l3-3 3 3M15 19l-3 3-3-3M19 9l3 3-3 3M2 12h20M12 2v20"/></svg>
+        Drag cards to reorder
+      </div>
 
-    <!-- Add photo button -->
-    <div style="margin-bottom:1.25rem;" id="addPhotoWrap">
-      <button class="gallery-add-btn" id="addPhotoBtn" style="max-width:200px;aspect-ratio:unset;padding:1rem 1.5rem;width:auto;">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+      <div class="gallery-grid" id="galleryGrid"></div>
+
+      <button class="btn btn-ghost" id="addPhotoBtn" style="gap:0.5rem;">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="15" height="15"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
         Add Photo
       </button>
     </div>
 
-    <!-- Gallery Save bar -->
-    <div class="gallery-save-bar">
-      <div class="save-info">
-        <span class="status-dot" id="galleryStatusDot"></span>
-        <span id="galleryStatus">No unsaved changes</span>
+    <!-- ── PUBLISH ── -->
+    <div class="page" id="page-publish">
+      <div class="page-header">
+        <h1>Publish to Website</h1>
+        <p>Push price &amp; gallery changes directly to GitHub — Vercel deploys automatically</p>
       </div>
-      <div style="display:flex;gap:0.75rem;">
-        <button class="btn-reset" id="galleryResetBtn">Reset to Original</button>
-        <button class="btn-save" id="gallerySaveBtn">✦ Save Gallery</button>
+
+      <div class="github-panel">
+        <div class="github-panel-head">
+          <svg viewBox="0 0 24 24" fill="white" width="18" height="18"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+          <div class="github-panel-head-title">GitHub Connection</div>
+          <span class="github-panel-head-sub" id="ghConnStatus">Not configured</span>
+        </div>
+        <div class="github-panel-body">
+          <div class="github-fields">
+            <div class="github-field">
+              <label class="f-label" for="ghUser">GitHub Username</label>
+              <input class="f-input" type="text" id="ghUser" placeholder="beinguvaize" autocomplete="off" />
+            </div>
+            <div class="github-field">
+              <label class="f-label" for="ghRepo">Repository Name</label>
+              <input class="f-input" type="text" id="ghRepo" placeholder="budgethomes" autocomplete="off" />
+            </div>
+            <div class="github-field">
+              <label class="f-label" for="ghBranch">Branch</label>
+              <input class="f-input" type="text" id="ghBranch" placeholder="main" autocomplete="off" />
+            </div>
+            <div class="github-field">
+              <label class="f-label" for="ghFile">File Path</label>
+              <input class="f-input" type="text" id="ghFile" placeholder="index.html" autocomplete="off" />
+            </div>
+            <div class="github-field full">
+              <label class="f-label" for="ghToken">Personal Access Token <span style="color:#bbb;font-size:0.62rem;font-weight:300;">(stored locally on this device only)</span></label>
+              <div class="token-wrap">
+                <input class="f-input" type="password" id="ghToken" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx" autocomplete="off" />
+                <button class="token-toggle" id="tokenToggle" type="button" title="Show/hide token">👁</button>
+              </div>
+            </div>
+          </div>
+          <div class="connection-test">
+            <button class="btn btn-ghost" id="testConnBtn" style="font-size:0.7rem;padding:0.5rem 1rem;">Test Connection</button>
+            <button class="btn btn-gold" id="ghSaveBtn" style="font-size:0.7rem;padding:0.5rem 1rem;">Save Settings</button>
+            <span class="connection-result" id="connResult"></span>
+          </div>
+        </div>
       </div>
+
+      <div class="publish-panel">
+        <div class="publish-info">
+          <div class="publish-title">Save &amp; Publish Live</div>
+          <div class="publish-sub">Bakes prices into <strong>index.html</strong> → pushes to GitHub → Vercel deploys in ~15s</div>
+          <div class="publish-result" id="publishResult"></div>
+        </div>
+        <button class="btn-publish" id="publishBtn">🚀 Publish Now</button>
+      </div>
+
+      <div class="publish-log" id="publishLog"></div>
     </div>
 
-    <!-- ═══════════════════════════════════════════════ -->
-    <!-- GITHUB PUBLISH                                   -->
-    <!-- ═══════════════════════════════════════════════ -->
-    <div class="section-rule" style="margin-top:2.5rem;">
-      <span class="section-rule-label">Publish to Website</span>
-      <div class="section-rule-line"></div>
-    </div>
+    <!-- ── SETTINGS ── -->
+    <div class="page" id="page-settings">
+      <div class="page-header">
+        <h1>Settings</h1>
+        <p>Manage your admin password and recovery key</p>
+      </div>
 
-    <!-- GitHub Settings -->
-    <div class="github-settings" id="githubSettings">
-      <div class="github-settings-title">
-        <svg viewBox="0 0 24 24" fill="currentColor" width="14" height="14"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
-        GitHub Connection
-      </div>
-      <div class="github-grid">
-        <div class="github-field">
-          <span class="field-label">GitHub Username</span>
-          <input type="text" id="ghUser" class="github-input" placeholder="beinguvaize" autocomplete="off" />
+      <div class="settings-section">
+        <div class="panel">
+          <div class="panel-title">Change Password</div>
+          <label class="f-label" for="cpCurrent">Current Password</label>
+          <input class="f-input" type="password" id="cpCurrent" placeholder="Enter current password" />
+          <label class="f-label" for="cpNew">New Password</label>
+          <input class="f-input" type="password" id="cpNew" placeholder="Min 6 characters" />
+          <label class="f-label" for="cpConfirm">Confirm New Password</label>
+          <input class="f-input" type="password" id="cpConfirm" placeholder="Re-enter new password" />
+          <div class="f-error" id="cpErr"></div>
+          <div style="margin-top:1rem;">
+            <button class="btn btn-gold" id="cpSaveBtn">Update Password</button>
+          </div>
         </div>
-        <div class="github-field">
-          <span class="field-label">Repository Name</span>
-          <input type="text" id="ghRepo" class="github-input" placeholder="budgethomes" autocomplete="off" />
-        </div>
-        <div class="github-field">
-          <span class="field-label">Branch</span>
-          <input type="text" id="ghBranch" class="github-input" placeholder="main" autocomplete="off" />
-        </div>
-        <div class="github-field">
-          <span class="field-label">File path</span>
-          <input type="text" id="ghFile" class="github-input" placeholder="index.html" autocomplete="off" />
-        </div>
-        <div class="github-field full">
-          <span class="field-label">Personal Access Token <span style="color:#aaa;font-size:0.65rem;">(stored locally, never shared)</span></span>
-          <input type="password" id="ghToken" class="github-input" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx" autocomplete="off" />
-        </div>
-      </div>
-      <div class="github-save-row">
-        <span class="github-status" id="ghSettingsStatus"></span>
-        <button class="btn-save" id="ghSaveSettingsBtn" style="padding:0.6rem 1.25rem;font-size:0.72rem;">Save Settings</button>
-      </div>
-    </div>
 
-    <!-- Publish bar -->
-    <div class="publish-bar">
-      <div class="publish-info">
-        <div class="publish-info-title">Publish Live to Website</div>
-        <div class="publish-info-sub">Pushes updated <strong>index.html</strong> directly to GitHub → Vercel auto-deploys in ~10 seconds</div>
-        <div class="publish-result" id="publishResult"></div>
+        <div class="alert alert-warn">
+          <strong>⚠ Recovery Key:</strong> A new recovery key is generated every time you change your password. It will be shown immediately after saving — copy it somewhere safe. Without it you cannot reset a forgotten password.
+        </div>
       </div>
-      <button class="btn-publish" id="publishBtn">🚀 Save &amp; Publish</button>
     </div>
 
   </main>
 </div>
 
-<!-- Toast -->
-<div id="saveToast">✦ Prices saved successfully</div>
+<!-- ════════════════════════════════════════════════
+  MODALS
+════════════════════════════════════════════════ -->
 
-<!-- ══════════════ CHANGE PASSWORD MODAL ══════════════ -->
-<div id="changePwModal" class="modal-backdrop" style="display:none;">
-  <div class="modal-card">
-    <div class="modal-title">Change Password</div>
-    <label class="field-label" for="cpCurrent">Current Password</label>
-    <input type="password" id="cpCurrent" placeholder="Enter current password" class="modal-input" />
-    <label class="field-label" for="cpNew" style="margin-top:0.9rem;">New Password</label>
-    <input type="password" id="cpNew" placeholder="Min 8 characters" class="modal-input" />
-    <label class="field-label" for="cpConfirm" style="margin-top:0.9rem;">Confirm New Password</label>
-    <input type="password" id="cpConfirm" placeholder="Re-enter new password" class="modal-input" />
-    <div class="login-err" id="cpErr"></div>
-    <div class="modal-actions">
-      <button class="btn-reset" id="cpCancelBtn">Cancel</button>
-      <button class="btn-save" id="cpSaveBtn">✦ Update Password</button>
+<!-- Edit/Add Photo modal -->
+<div class="modal-backdrop" id="photoModal">
+  <div class="modal wide">
+    <div class="modal-title" id="photoModalTitle">Edit Photo</div>
+    <div class="tabs-nav">
+      <button class="tab-btn active" data-tab="upload">📁 Upload File</button>
+      <button class="tab-btn" data-tab="url">🔗 Paste URL</button>
     </div>
-  </div>
-</div>
-
-<!-- ══════════════ RECOVERY KEY MODAL ══════════════ -->
-<div id="recoveryModal" class="modal-backdrop" style="display:none;">
-  <div class="modal-card">
-    <div class="modal-title">🔐 Save Your Recovery Key</div>
-    <p style="font-size:0.75rem;color:#666;line-height:1.7;margin-bottom:1.25rem;">
-      This key lets you reset your password if you ever forget it.<br/>
-      <strong>Store it somewhere safe</strong> — it won't be shown again.
-    </p>
-    <div class="recovery-key-box" id="recoveryKeyDisplay"></div>
-    <button class="btn-copy" id="copyKeyBtn">Copy Key</button>
-    <div class="modal-actions" style="margin-top:1.25rem;">
-      <button class="btn-save" id="recoveryDoneBtn" style="width:100%;">✦ I've saved it — Continue</button>
-    </div>
-  </div>
-</div>
-
-<!-- ══════════════ EDIT PHOTO MODAL ══════════════ -->
-<div id="editPhotoModal" class="modal-backdrop" style="display:none;">
-  <div class="modal-card wide">
-    <div class="modal-title" id="editPhotoTitle">Edit Photo</div>
-
-    <div class="edit-tabs">
-      <button class="edit-tab active" data-tab="upload">📁 Upload File</button>
-      <button class="edit-tab" data-tab="url">🔗 Paste URL</button>
-    </div>
-
-    <!-- Upload tab -->
     <div class="tab-pane active" id="tab-upload">
-      <div class="upload-drop-zone" id="dropZone">
+      <div class="drop-zone" id="dropZone">
         <input type="file" id="fileInput" accept="image/*" />
-        <div class="drop-label">
+        <div class="drop-zone-text">
           <strong>Click or drag &amp; drop an image</strong>
-          JPG, PNG, WEBP — recommended 800×600px or larger
+          JPG, PNG, WEBP — 800×600px or larger recommended
         </div>
       </div>
-      <img class="preview-thumb" id="uploadPreview" src="" alt="Preview" />
+      <img class="img-preview" id="uploadPreview" src="" alt="" />
     </div>
-
-    <!-- URL tab -->
     <div class="tab-pane" id="tab-url">
-      <label class="field-label">Image URL</label>
-      <input type="text" id="urlInput" class="modal-input" placeholder="https://example.com/photo.jpg" />
-      <img class="preview-thumb" id="urlPreview" src="" alt="Preview" style="margin-top:0.75rem;" />
+      <label class="f-label" for="urlInput">Image URL</label>
+      <input class="f-input" type="text" id="urlInput" placeholder="https://example.com/photo.jpg" />
+      <img class="img-preview" id="urlPreview" src="" alt="" />
     </div>
-
-    <div style="margin-top:1.25rem;">
-      <label class="field-label" for="altInput">Caption / Alt Text</label>
-      <input type="text" id="altInput" class="modal-input" placeholder="e.g. Spacious guest bedroom" />
-    </div>
-
-    <div class="login-err" id="editPhotoErr" style="margin-top:0.5rem;"></div>
-
+    <label class="f-label" for="altInput" style="margin-top:1.25rem;">Caption / Alt Text</label>
+    <input class="f-input" type="text" id="altInput" placeholder="e.g. Spacious guest bedroom" />
+    <div class="f-error" id="photoErr"></div>
     <div class="modal-actions">
-      <button class="btn-reset" id="editPhotoCancelBtn">Cancel</button>
-      <button class="btn-save" id="editPhotoSaveBtn">✦ Apply Photo</button>
+      <button class="btn btn-ghost" id="photoCancel">Cancel</button>
+      <button class="btn btn-gold" id="photoApply">✦ Apply Photo</button>
     </div>
   </div>
 </div>
 
+<!-- Recovery key modal -->
+<div class="modal-backdrop" id="recoveryModal">
+  <div class="modal">
+    <div class="modal-title" id="recoveryModalTitle">🔐 Save Your Recovery Key</div>
+    <p style="font-size:0.75rem;color:#888;line-height:1.7;">This key lets you reset your password if you ever forget it. <strong>Store it somewhere safe</strong> — it will not be shown again.</p>
+    <div class="recovery-box" id="recoveryKeyDisplay"></div>
+    <button class="btn btn-ghost" id="copyRecoveryBtn" style="width:100%;margin-bottom:0.75rem;">Copy Key</button>
+    <button class="btn btn-gold" id="recoveryDoneBtn" style="width:100%;">✦ I've saved it — Continue</button>
+  </div>
+</div>
+
+<!-- Toast -->
+<div id="toast"></div>
+
+<!-- ════════════════════════════════════════════════
+  JAVASCRIPT
+════════════════════════════════════════════════ -->
 <script>
-  // ═══════════════════════════════════════════════════════
-  // Budget Homes Admin – Password & Price Manager
-  // ═══════════════════════════════════════════════════════
+'use strict';
+// ═══════════════════════════════════════════════════════
+// STORAGE KEYS
+// ═══════════════════════════════════════════════════════
+const KEY_AUTH     = 'bh_auth_v2';
+const KEY_PRICES   = 'bh_prices_v1';
+const KEY_GALLERY  = 'bh_gallery_v1';
+const KEY_GH       = 'bh_gh_v1';
+const KEY_ACTIVITY = 'bh_activity_v1';
+const KEY_LASTPUB  = 'bh_lastpub_v1';
 
-  const STORAGE_KEY   = 'bh_prices_v1';
-  const AUTH_KEY      = 'bh_auth_v1';   // stores { hash, recoveryHash }
+// ═══════════════════════════════════════════════════════
+// DEFAULT DATA
+// ═══════════════════════════════════════════════════════
+const DEFAULT_PRICES = {
+  unit1: { name:'Unit 1', type:'Studio Room',      price:1200, suffix:'/night' },
+  unit2: { name:'Unit 2', type:'Standard Double',  price:1500, suffix:'/night' },
+  unit3: { name:'Unit 3', type:'Deluxe Room',      price:1800, suffix:'/night' },
+  unit4: { name:'Unit 4', type:'Triple Room',      price:2200, suffix:'/night' },
+  unit5: { name:'Unit 5', type:'Family Suite',     price:2500, suffix:'/night' },
+  pg:    { name:'PG',     type:'Paying Guest',     price:7000, suffix:'/month' },
+  startingFrom: 1200,
+  notes: ''
+};
 
-  const DEFAULTS = {
-    unit1: { name: 'Unit 1', type: 'Studio Room',     price: 1200, unit: '/night' },
-    unit2: { name: 'Unit 2', type: 'Standard Double', price: 1500, unit: '/night' },
-    unit3: { name: 'Unit 3', type: 'Deluxe Room',     price: 1800, unit: '/night' },
-    unit4: { name: 'Unit 4', type: 'Triple Room',     price: 2200, unit: '/night' },
-    unit5: { name: 'Unit 5', type: 'Family Suite',    price: 2500, unit: '/night' },
-    pg:    { name: 'PG',     type: 'Paying Guest',    price: 7000, unit: '/month' },
-    startingFrom: 1200,
-    notes: ''
+const DEFAULT_GALLERY = [
+  { src:'https://lh3.googleusercontent.com/p/AF1QipNnbypKAq-OR87dILBwelmRJOE2N90kzKrIunbL=s0', alt:'Spacious guest bedroom' },
+  { src:'https://lh3.googleusercontent.com/p/AF1QipMF3Rk7-43z_Mz-OPrT1uOwUEclgGI4jVCDPqHl=s0', alt:'Budget Homes exterior front view' },
+  { src:'https://lh3.googleusercontent.com/p/AF1QipMJ--opG4jho3ivfTcc_ESvsOVB3g9SqMT0f1b6=s0', alt:'Kitchen and dining area' },
+  { src:'https://lh3.googleusercontent.com/p/AF1QipMgkh2egTjMU3CCTrWsZ-WXpjmXnFKA5324GUyB=s0', alt:'Modern bathroom with amenities' },
+  { src:'https://lh3.googleusercontent.com/p/AF1QipN8PDaZEbjXCN1sqepeeWe2gi_RjN77IGWy8dLi=s0', alt:'Interior common room' },
+  { src:'https://lh3.googleusercontent.com/p/AF1QipNwWSFtIQVWES5v355o7i1OzONmkJFeuSajs05F=s0', alt:'Property exterior detail' },
+  { src:'https://lh3.googleusercontent.com/p/AF1QipOtt4B6EYGffzpoMIK9gW3YoiaKjVXxGFElaKY4=s0', alt:'Entrance and parking area' },
+  { src:'https://lh3.googleusercontent.com/p/AF1QipNtWdil7zQ72fPIISLDNCnGjgGl7XnCyDXtAvFF=s0', alt:'Room interior setup' },
+];
+
+// ═══════════════════════════════════════════════════════
+// HELPERS
+// ═══════════════════════════════════════════════════════
+const $ = id => document.getElementById(id);
+const deep = o => JSON.parse(JSON.stringify(o));
+
+function fmt(n) { return '₹' + Number(n).toLocaleString('en-IN'); }
+
+function store(key, val) { try { localStorage.setItem(key, JSON.stringify(val)); } catch(e){} }
+function load(key, def) {
+  try { const r = localStorage.getItem(key); return r ? JSON.parse(r) : deep(def||null); }
+  catch(e) { return deep(def||null); }
+}
+
+async function sha256(text) {
+  const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(text));
+  return Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,'0')).join('');
+}
+
+function genKey() {
+  const s = () => Math.random().toString(36).slice(2,6).toUpperCase();
+  return `${s()}-${s()}-${s()}`;
+}
+
+function toast(msg, type='') {
+  const el = $('toast');
+  el.textContent = msg;
+  el.className = type ? `show ${type}` : 'show';
+  clearTimeout(el._t);
+  el._t = setTimeout(() => { el.className = ''; }, 3200);
+}
+
+function logActivity(msg, type='ok') {
+  const acts = load(KEY_ACTIVITY, []);
+  acts.unshift({ msg, type, time: new Date().toISOString() });
+  if (acts.length > 20) acts.pop();
+  store(KEY_ACTIVITY, acts);
+}
+
+// ═══════════════════════════════════════════════════════
+// AUTH
+// ═══════════════════════════════════════════════════════
+async function initAuth() {
+  if (!load(KEY_AUTH)) {
+    const key = genKey();
+    store(KEY_AUTH, {
+      hash: await sha256('budgethomes2026'),
+      recoveryHash: await sha256(key)
+    });
+    showRecoveryModal(key, true);
+  }
+}
+
+async function verifyPw(pw) {
+  const a = load(KEY_AUTH);
+  return a && (await sha256(pw)) === a.hash;
+}
+
+async function verifyRecovery(key) {
+  const a = load(KEY_AUTH);
+  return a && (await sha256(key.trim().toUpperCase())) === a.recoveryHash;
+}
+
+async function changePw(newPw) {
+  const key = genKey();
+  store(KEY_AUTH, {
+    hash: await sha256(newPw),
+    recoveryHash: await sha256(key)
+  });
+  return key;
+}
+
+// ═══════════════════════════════════════════════════════
+// LOGIN FLOW
+// ═══════════════════════════════════════════════════════
+function showLogin() {
+  $('loginScreen').style.display = '';
+  $('appShell').classList.remove('active');
+}
+
+function showApp() {
+  $('loginScreen').style.display = 'none';
+  $('appShell').classList.add('active');
+  initApp();
+}
+
+// Login
+$('loginBtn').addEventListener('click', async () => {
+  const pw = $('pwInput').value;
+  if (!pw) { $('loginErr').textContent = 'Please enter your password.'; return; }
+  if (await verifyPw(pw)) {
+    sessionStorage.setItem('bh_sess', '1');
+    $('loginErr').textContent = '';
+    showApp();
+  } else {
+    $('loginErr').textContent = 'Incorrect password.';
+    $('pwInput').value = '';
+    $('pwInput').focus();
+  }
+});
+$('pwInput').addEventListener('keydown', e => { if(e.key==='Enter') $('loginBtn').click(); });
+
+// Forgot
+$('forgotBtn').addEventListener('click', () => {
+  $('loginCard').style.display = 'none';
+  $('resetCard').style.display = '';
+  $('resetErr').textContent = '';
+});
+$('backLoginBtn').addEventListener('click', () => {
+  $('resetCard').style.display = 'none';
+  $('loginCard').style.display = '';
+  $('loginErr').textContent = '';
+});
+
+// Do reset
+$('doResetBtn').addEventListener('click', async () => {
+  const key  = $('recoveryInput').value;
+  const pw   = $('newPwReset').value;
+  const conf = $('confirmPwReset').value;
+  const err  = $('resetErr');
+
+  if (!key)          { err.textContent = 'Enter your recovery key.'; return; }
+  if (pw.length < 6) { err.textContent = 'Password must be at least 6 characters.'; return; }
+  if (pw !== conf)   { err.textContent = 'Passwords do not match.'; return; }
+  if (!await verifyRecovery(key)) { err.textContent = 'Recovery key is incorrect.'; return; }
+
+  const newKey = await changePw(pw);
+  err.textContent = '';
+  ['recoveryInput','newPwReset','confirmPwReset'].forEach(id => $(id).value = '');
+  $('resetCard').style.display = 'none';
+  $('loginCard').style.display = '';
+  showRecoveryModal(newKey, false);
+  toast('Password reset successfully', 'ok');
+});
+
+// Logout
+$('logoutBtn').addEventListener('click', () => {
+  sessionStorage.removeItem('bh_sess');
+  location.reload();
+});
+
+// Auto-login
+(async () => {
+  await initAuth();
+  if (sessionStorage.getItem('bh_sess') === '1') showApp();
+})();
+
+// ═══════════════════════════════════════════════════════
+// NAVIGATION
+// ═══════════════════════════════════════════════════════
+function navTo(page) {
+  document.querySelectorAll('.nav-item').forEach(i => i.classList.toggle('active', i.dataset.page === page));
+  document.querySelectorAll('.page').forEach(p => p.classList.toggle('active', p.id === 'page-' + page));
+  $('topbarBadge').textContent = page.charAt(0).toUpperCase() + page.slice(1);
+  // Close sidebar on mobile
+  if (window.innerWidth <= 768) $('sidebar').classList.remove('open');
+}
+
+document.querySelectorAll('.nav-item').forEach(item => {
+  item.addEventListener('click', () => navTo(item.dataset.page));
+});
+
+$('sidebarToggle').addEventListener('click', () => $('sidebar').classList.toggle('open'));
+
+// Close sidebar when clicking outside on mobile
+document.addEventListener('click', e => {
+  if (window.innerWidth <= 768 &&
+      !$('sidebar').contains(e.target) &&
+      !$('sidebarToggle').contains(e.target)) {
+    $('sidebar').classList.remove('open');
+  }
+});
+
+// ═══════════════════════════════════════════════════════
+// RECOVERY KEY MODAL
+// ═══════════════════════════════════════════════════════
+function showRecoveryModal(key, isFirst) {
+  $('recoveryModalTitle').textContent = isFirst ? '🔐 Welcome — Save Your Recovery Key' : '🔐 New Recovery Key';
+  $('recoveryKeyDisplay').textContent = key;
+  $('recoveryModal').classList.add('open');
+}
+
+$('copyRecoveryBtn').addEventListener('click', () => {
+  navigator.clipboard.writeText($('recoveryKeyDisplay').textContent).then(() => {
+    $('copyRecoveryBtn').textContent = '✓ Copied!';
+    setTimeout(() => $('copyRecoveryBtn').textContent = 'Copy Key', 2000);
+  });
+});
+
+$('recoveryDoneBtn').addEventListener('click', () => {
+  $('recoveryModal').classList.remove('open');
+});
+
+// ═══════════════════════════════════════════════════════
+// CHANGE PASSWORD (Settings page + topbar button)
+// ═══════════════════════════════════════════════════════
+$('changePwTopBtn').addEventListener('click', () => navTo('settings'));
+
+$('cpSaveBtn').addEventListener('click', async () => {
+  const cur  = $('cpCurrent').value;
+  const pw   = $('cpNew').value;
+  const conf = $('cpConfirm').value;
+  const err  = $('cpErr');
+
+  if (!await verifyPw(cur))  { err.textContent = 'Current password is incorrect.'; return; }
+  if (pw.length < 6)          { err.textContent = 'New password must be at least 6 characters.'; return; }
+  if (pw !== conf)            { err.textContent = 'Passwords do not match.'; return; }
+  if (pw === cur)             { err.textContent = 'New password must differ from current.'; return; }
+
+  const newKey = await changePw(pw);
+  err.textContent = '';
+  ['cpCurrent','cpNew','cpConfirm'].forEach(id => $(id).value = '');
+  showRecoveryModal(newKey, false);
+  logActivity('Password changed');
+  toast('Password updated successfully', 'ok');
+});
+
+// ═══════════════════════════════════════════════════════
+// APP INIT
+// ═══════════════════════════════════════════════════════
+function initApp() {
+  renderDashboard();
+  renderPrices();
+  renderGallery();
+  loadGhSettings();
+}
+
+// ═══════════════════════════════════════════════════════
+// DASHBOARD
+// ═══════════════════════════════════════════════════════
+function renderDashboard() {
+  const prices  = load(KEY_PRICES, DEFAULT_PRICES);
+  const gallery = load(KEY_GALLERY, DEFAULT_GALLERY);
+  const lastPub = load(KEY_LASTPUB);
+
+  $('dash-lowest').innerHTML = `₹<span>${Number(prices.startingFrom||prices.unit1?.price||1200).toLocaleString('en-IN')}</span>`;
+  $('dash-pg').innerHTML     = `₹<span>${Number(prices.pg?.price||7000).toLocaleString('en-IN')}</span>`;
+  $('dash-photos').innerHTML = `<span>${Array.isArray(gallery)?gallery.length:8}</span>`;
+  $('dash-publish').textContent = lastPub
+    ? new Date(lastPub).toLocaleDateString('en-IN', {day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'})
+    : 'Never';
+
+  const acts = load(KEY_ACTIVITY, []);
+  const list = $('activityList');
+  if (acts.length === 0) return;
+  list.innerHTML = acts.slice(0,8).map(a => `
+    <li class="activity-item">
+      <span class="activity-dot ${a.type}"></span>
+      <span>${a.msg}</span>
+      <span class="activity-time">${new Date(a.time).toLocaleTimeString('en-IN',{hour:'2-digit',minute:'2-digit'})}</span>
+    </li>
+  `).join('');
+}
+
+// ═══════════════════════════════════════════════════════
+// PRICES
+// ═══════════════════════════════════════════════════════
+let pricesDirty = false;
+
+function renderPrices() {
+  const prices = load(KEY_PRICES, DEFAULT_PRICES);
+  const nightlyKeys = ['unit1','unit2','unit3','unit4','unit5'];
+  const $ng = $('nightlyGrid');
+  const $pg = $('pgGrid');
+  $ng.innerHTML = '';
+  $pg.innerHTML = '';
+
+  nightlyKeys.forEach(k => $ng.appendChild(makePriceCard(k, prices[k] || DEFAULT_PRICES[k], false)));
+  $pg.appendChild(makePriceCard('pg', prices.pg || DEFAULT_PRICES.pg, true));
+
+  $('startingFrom').value = prices.startingFrom || DEFAULT_PRICES.startingFrom;
+  $('adminNotes').value   = prices.notes || '';
+  updateStartingPreview();
+
+  // Dirty listeners
+  document.querySelectorAll('.price-num').forEach(inp => inp.addEventListener('input', markPriceDirty));
+  $('startingFrom').addEventListener('input', () => { markPriceDirty(); updateStartingPreview(); });
+  $('adminNotes').addEventListener('input', markPriceDirty);
+  setPriceStatus('clean');
+}
+
+function makePriceCard(key, data, isPg) {
+  const card = document.createElement('div');
+  card.className = 'price-card' + (isPg ? ' pg' : '');
+  card.innerHTML = `
+    <div class="price-card-badge">${data.name}</div>
+    <div class="price-card-name">${data.type}</div>
+    <div class="price-card-type">${data.suffix}</div>
+    <div class="price-input-row">
+      <span class="price-sym">₹</span>
+      <input class="price-num" type="number" id="inp_${key}" value="${data.price}" min="0" step="50" />
+      <span class="price-suffix">${data.suffix}</span>
+    </div>`;
+  return card;
+}
+
+function updateStartingPreview() {
+  const val = parseInt($('startingFrom').value, 10);
+  $('startingFromPreview').textContent = isNaN(val) ? '' : fmt(val) + '/night';
+}
+
+function markPriceDirty() {
+  pricesDirty = true;
+  setPriceStatus('dirty');
+}
+
+function setPriceStatus(state) {
+  const dot  = $('priceStatusDot');
+  const text = $('priceStatusText');
+  if (state === 'saved') { dot.className='status-dot saved'; text.textContent='All prices saved · ' + new Date().toLocaleTimeString('en-IN',{hour:'2-digit',minute:'2-digit'}); }
+  else if (state === 'dirty') { dot.className='status-dot dirty'; text.textContent='Unsaved changes'; }
+  else { dot.className='status-dot'; text.textContent='No unsaved changes'; }
+}
+
+function collectPrices() {
+  const data = deep(DEFAULT_PRICES);
+  ['unit1','unit2','unit3','unit4','unit5','pg'].forEach(k => {
+    const inp = $('inp_' + k);
+    if (inp) { data[k] = Object.assign({}, DEFAULT_PRICES[k], load(KEY_PRICES, DEFAULT_PRICES)[k] || {}, { price: parseInt(inp.value,10) || DEFAULT_PRICES[k].price }); }
+  });
+  data.startingFrom = parseInt($('startingFrom').value,10) || DEFAULT_PRICES.startingFrom;
+  data.notes = $('adminNotes').value;
+  return data;
+}
+
+$('priceSaveBtn').addEventListener('click', () => {
+  const data = collectPrices();
+  store(KEY_PRICES, data);
+  pricesDirty = false;
+  setPriceStatus('saved');
+  logActivity('Prices updated');
+  renderDashboard();
+  toast('✦ Prices saved', 'ok');
+});
+
+$('priceResetBtn').addEventListener('click', () => {
+  if (!confirm('Reset all prices to original defaults?')) return;
+  ['unit1','unit2','unit3','unit4','unit5','pg'].forEach(k => {
+    const inp = $('inp_'+k);
+    if (inp) inp.value = DEFAULT_PRICES[k].price;
+  });
+  $('startingFrom').value = DEFAULT_PRICES.startingFrom;
+  $('adminNotes').value = '';
+  updateStartingPreview();
+  markPriceDirty();
+});
+
+// ═══════════════════════════════════════════════════════
+// GALLERY
+// ═══════════════════════════════════════════════════════
+let galleryPhotos = [];
+let galleryDirty  = false;
+let editingIdx    = -1;
+let pendingSrc    = '';
+
+function renderGallery() {
+  galleryPhotos = load(KEY_GALLERY, DEFAULT_GALLERY);
+  rebuildGalleryGrid();
+  setGalleryStatus('clean');
+}
+
+function rebuildGalleryGrid() {
+  const grid = $('galleryGrid');
+  grid.innerHTML = '';
+  galleryPhotos.forEach((photo, idx) => {
+    const card = document.createElement('div');
+    card.className = 'gallery-card';
+    card.draggable = true;
+    card.dataset.idx = idx;
+    card.innerHTML = `
+      <span class="gallery-card-num">Photo ${idx+1}</span>
+      <button class="gallery-card-remove" data-idx="${idx}" title="Remove">✕</button>
+      <div class="gallery-thumb">
+        <img src="${photo.src}" alt="${photo.alt||''}" loading="lazy"
+             onerror="this.style.opacity='0.3'" />
+        <div class="gallery-thumb-overlay">✎ Edit</div>
+      </div>
+      <div class="gallery-card-body">
+        <span class="gallery-alt-label">Caption</span>
+        <input class="gallery-alt-input" type="text" value="${(photo.alt||'').replace(/"/g,'&quot;')}" placeholder="Caption…" data-idx="${idx}" />
+      </div>`;
+    grid.appendChild(card);
+  });
+
+  // Click thumb to edit
+  grid.querySelectorAll('.gallery-thumb').forEach(t => {
+    t.addEventListener('click', () => openPhotoModal(parseInt(t.closest('.gallery-card').dataset.idx)));
+  });
+  // Remove button
+  grid.querySelectorAll('.gallery-card-remove').forEach(btn => {
+    btn.addEventListener('click', e => { e.stopPropagation(); removePhoto(parseInt(btn.dataset.idx)); });
+  });
+  // Caption edit
+  grid.querySelectorAll('.gallery-alt-input').forEach(inp => {
+    inp.addEventListener('input', () => {
+      galleryPhotos[parseInt(inp.dataset.idx)].alt = inp.value;
+      markGalleryDirty();
+    });
+    inp.addEventListener('click', e => e.stopPropagation());
+  });
+
+  // Drag to reorder
+  setupDrag(grid);
+}
+
+let dragSrc = null;
+function setupDrag(grid) {
+  grid.querySelectorAll('.gallery-card').forEach(card => {
+    card.addEventListener('dragstart', () => { dragSrc = parseInt(card.dataset.idx); card.style.opacity='0.4'; });
+    card.addEventListener('dragend',   () => { card.style.opacity=''; });
+    card.addEventListener('dragover',  e => { e.preventDefault(); card.classList.add('drag-over'); });
+    card.addEventListener('dragleave', () => card.classList.remove('drag-over'));
+    card.addEventListener('drop', e => {
+      e.preventDefault();
+      card.classList.remove('drag-over');
+      const to = parseInt(card.dataset.idx);
+      if (dragSrc === null || dragSrc === to) return;
+      const moved = galleryPhotos.splice(dragSrc, 1)[0];
+      galleryPhotos.splice(to, 0, moved);
+      dragSrc = null;
+      rebuildGalleryGrid();
+      markGalleryDirty();
+    });
+  });
+}
+
+function removePhoto(idx) {
+  if (galleryPhotos.length <= 1) { toast('Must keep at least one photo', 'err'); return; }
+  if (!confirm(`Remove Photo ${idx+1}?`)) return;
+  galleryPhotos.splice(idx, 1);
+  rebuildGalleryGrid();
+  markGalleryDirty();
+}
+
+function markGalleryDirty() {
+  galleryDirty = true;
+  setGalleryStatus('dirty');
+}
+
+function setGalleryStatus(state) {
+  const dot  = $('galleryStatusDot');
+  const text = $('galleryStatusText');
+  if (state==='saved') { dot.className='status-dot saved'; text.textContent='Gallery saved · '+new Date().toLocaleTimeString('en-IN',{hour:'2-digit',minute:'2-digit'}); }
+  else if (state==='dirty') { dot.className='status-dot dirty'; text.textContent='Unsaved changes'; }
+  else { dot.className='status-dot'; text.textContent='No unsaved changes'; }
+}
+
+$('gallerySaveBtn').addEventListener('click', () => {
+  store(KEY_GALLERY, galleryPhotos);
+  galleryDirty = false;
+  setGalleryStatus('saved');
+  logActivity(`Gallery saved (${galleryPhotos.length} photos)`);
+  renderDashboard();
+  toast('✦ Gallery saved', 'ok');
+});
+
+$('galleryResetBtn').addEventListener('click', () => {
+  if (!confirm('Reset gallery to original photos?')) return;
+  galleryPhotos = deep(DEFAULT_GALLERY);
+  rebuildGalleryGrid();
+  markGalleryDirty();
+});
+
+$('addPhotoBtn').addEventListener('click', () => openPhotoModal(-1));
+
+// ── Photo edit modal ──
+function openPhotoModal(idx) {
+  editingIdx = idx;
+  pendingSrc = '';
+  const isNew = idx === -1;
+  $('photoModalTitle').textContent = isNew ? 'Add New Photo' : `Edit Photo ${idx+1}`;
+  $('altInput').value = isNew ? '' : (galleryPhotos[idx]?.alt || '');
+  $('photoErr').textContent = '';
+  $('urlInput').value = '';
+  $('uploadPreview').classList.remove('show');
+  $('urlPreview').classList.remove('show');
+  $('fileInput').value = '';
+  activateTab('upload');
+  $('photoModal').classList.add('open');
+}
+
+$('photoCancel').addEventListener('click', () => $('photoModal').classList.remove('open'));
+$('photoModal').addEventListener('click', e => { if(e.target === $('photoModal')) $('photoModal').classList.remove('open'); });
+$('recoveryModal').addEventListener('click', e => { if(e.target === $('recoveryModal')) $('recoveryModal').classList.remove('open'); });
+
+// Tabs
+document.querySelectorAll('.tab-btn').forEach(btn => {
+  btn.addEventListener('click', () => activateTab(btn.dataset.tab));
+});
+function activateTab(name) {
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.toggle('active', b.dataset.tab===name));
+  document.querySelectorAll('.tab-pane').forEach(p => p.classList.toggle('active', p.id==='tab-'+name));
+  pendingSrc = '';
+}
+
+// File upload
+$('fileInput').addEventListener('change', () => handleFile($('fileInput').files[0]));
+$('dropZone').addEventListener('dragover', e => { e.preventDefault(); $('dropZone').classList.add('drag-over'); });
+$('dropZone').addEventListener('dragleave', () => $('dropZone').classList.remove('drag-over'));
+$('dropZone').addEventListener('drop', e => {
+  e.preventDefault();
+  $('dropZone').classList.remove('drag-over');
+  handleFile(e.dataTransfer.files[0]);
+});
+
+function handleFile(file) {
+  if (!file || !file.type.startsWith('image/')) { $('photoErr').textContent='Please select a valid image.'; return; }
+  const reader = new FileReader();
+  reader.onload = e => {
+    pendingSrc = e.target.result;
+    const prev = $('uploadPreview');
+    prev.src = pendingSrc;
+    prev.classList.add('show');
+    $('photoErr').textContent = '';
+  };
+  reader.readAsDataURL(file);
+}
+
+// URL input
+$('urlInput').addEventListener('input', function() {
+  const val = this.value.trim();
+  const prev = $('urlPreview');
+  if (val.startsWith('http')) {
+    prev.src = val;
+    prev.onload  = () => { prev.classList.add('show'); pendingSrc = val; $('photoErr').textContent=''; };
+    prev.onerror = () => { prev.classList.remove('show'); pendingSrc=''; $('photoErr').textContent='Cannot load image from this URL.'; };
+  } else { prev.classList.remove('show'); pendingSrc=''; }
+});
+
+// Apply photo
+$('photoApply').addEventListener('click', () => {
+  if (!pendingSrc) { $('photoErr').textContent='Please upload a photo or enter a valid URL.'; return; }
+  const alt = $('altInput').value.trim() || 'Budget Homes photo';
+  if (editingIdx === -1) {
+    galleryPhotos.push({ src: pendingSrc, alt });
+  } else {
+    galleryPhotos[editingIdx] = { src: pendingSrc, alt };
+  }
+  rebuildGalleryGrid();
+  markGalleryDirty();
+  $('photoModal').classList.remove('open');
+  toast(editingIdx === -1 ? 'Photo added' : 'Photo updated', 'ok');
+});
+
+// ═══════════════════════════════════════════════════════
+// GITHUB SETTINGS
+// ═══════════════════════════════════════════════════════
+function loadGhSettings() {
+  const s = load(KEY_GH, { user:'beinguvaize', repo:'budgethomes', branch:'main', file:'index.html', token:'' });
+  $('ghUser').value   = s.user   || '';
+  $('ghRepo').value   = s.repo   || '';
+  $('ghBranch').value = s.branch || 'main';
+  $('ghFile').value   = s.file   || 'index.html';
+  $('ghToken').value  = s.token  || '';
+  updateGhStatus();
+}
+
+function getGhSettings() {
+  return {
+    user:   $('ghUser').value.trim(),
+    repo:   $('ghRepo').value.trim(),
+    branch: $('ghBranch').value.trim() || 'main',
+    file:   $('ghFile').value.trim() || 'index.html',
+    token:  $('ghToken').value.trim(),
+  };
+}
+
+function updateGhStatus() {
+  const s = getGhSettings();
+  const ok = s.user && s.repo && s.token;
+  $('ghConnStatus').textContent = ok ? `${s.user}/${s.repo}` : 'Not configured';
+  $('ghConnStatus').style.color = ok ? '#6fcf97' : '#888';
+}
+
+$('ghSaveBtn').addEventListener('click', () => {
+  store(KEY_GH, getGhSettings());
+  updateGhStatus();
+  toast('GitHub settings saved', 'ok');
+  $('connResult').textContent = '✓ Settings saved';
+  $('connResult').className = 'connection-result ok';
+  setTimeout(() => { $('connResult').textContent=''; $('connResult').className='connection-result'; }, 3000);
+});
+
+// Show/hide token
+$('tokenToggle').addEventListener('click', () => {
+  const inp = $('ghToken');
+  inp.type = inp.type === 'password' ? 'text' : 'password';
+  $('tokenToggle').textContent = inp.type === 'password' ? '👁' : '🙈';
+});
+
+// Test connection
+$('testConnBtn').addEventListener('click', async () => {
+  const s = getGhSettings();
+  const res = $('connResult');
+  if (!s.token || !s.user || !s.repo) { res.textContent='⚠ Fill in all fields first.'; res.className='connection-result error'; return; }
+  res.textContent = 'Testing…'; res.className = 'connection-result';
+  try {
+    const r = await fetch(`https://api.github.com/repos/${s.user}/${s.repo}`, {
+      headers: { 'Authorization': `Bearer ${s.token}`, 'Accept': 'application/vnd.github+json' }
+    });
+    if (r.ok) {
+      const d = await r.json();
+      res.textContent = `✓ Connected — ${d.full_name}`;
+      res.className = 'connection-result ok';
+    } else {
+      const d = await r.json();
+      res.textContent = `✕ ${d.message || 'Auth failed'}`;
+      res.className = 'connection-result error';
+    }
+  } catch(e) {
+    res.textContent = '✕ Network error';
+    res.className = 'connection-result error';
+  }
+});
+
+// ═══════════════════════════════════════════════════════
+// PUBLISH — Inject & Push to GitHub
+// ═══════════════════════════════════════════════════════
+function addLog(msg, type='') {
+  const log = $('publishLog');
+  log.classList.add('active');
+  const line = document.createElement('span');
+  line.className = 'log-line' + (type ? ' '+type : '');
+  line.textContent = `[${new Date().toLocaleTimeString('en-IN',{hour:'2-digit',minute:'2-digit',second:'2-digit'})}] ${msg}`;
+  log.appendChild(line);
+  log.scrollTop = log.scrollHeight;
+}
+
+function injectPrices(html, prices) {
+  const keys = ['unit1','unit2','unit3','unit4','unit5','pg'];
+  let pos = 0;
+  keys.forEach(key => {
+    const p = prices[key];
+    if (!p) return;
+    const fmtd  = '₹' + Number(p.price).toLocaleString('en-IN');
+    const sfx   = p.suffix || (key==='pg'?'/month':'/night');
+    const marker = 'class="room-price">';
+    const idx   = html.indexOf(marker, pos);
+    if (idx === -1) return;
+    const start  = idx + marker.length;
+    const endTag = html.indexOf('</div>', start);
+    if (endTag === -1) return;
+    html = html.slice(0, start) + `${fmtd}<span>${sfx}</span>` + html.slice(endTag);
+    pos  = start;
+  });
+  // Starting from — hero text
+  if (prices.startingFrom) {
+    const sf = '₹' + Number(prices.startingFrom).toLocaleString('en-IN');
+    html = html.replace(/₹[\d,]+\/night(?=\.)/g, sf + '/night');
+    html = html.replace(/(<span class="amt">)₹[\d,]+(<\/span>)/, `$1${sf}$2`);
+  }
+  return html;
+}
+
+function injectGallery(html, photos) {
+  if (!Array.isArray(photos) || photos.length === 0) return html;
+  let pos = 0;
+  photos.forEach(photo => {
+    const marker = 'class="gallery-item';
+    const itemStart = html.indexOf(marker, pos);
+    if (itemStart === -1) return;
+    const imgStart  = html.indexOf('<img ', itemStart);
+    if (imgStart === -1) return;
+    const imgEnd    = html.indexOf('>', imgStart);
+    if (imgEnd === -1) return;
+    let tag = html.slice(imgStart, imgEnd + 1);
+    tag = tag
+      .replace(/src="[^"]*"/, `src="${photo.src}"`)
+      .replace(/alt="[^"]*"/, `alt="${(photo.alt||'').replace(/"/g,'&quot;')}"`);
+    html = html.slice(0, imgStart) + tag + html.slice(imgEnd + 1);
+    pos  = imgStart + tag.length;
+  });
+  return html;
+}
+
+$('publishBtn').addEventListener('click', async () => {
+  const btn     = $('publishBtn');
+  const result  = $('publishResult');
+  const s       = getGhSettings();
+  const log     = $('publishLog');
+
+  log.innerHTML = '';
+  log.classList.remove('active');
+
+  if (!s.token) {
+    result.textContent = '⚠ Enter your GitHub token in the settings above first.';
+    result.className = 'publish-result error';
+    return;
+  }
+  if (!s.user || !s.repo) {
+    result.textContent = '⚠ GitHub username and repository are required.';
+    result.className = 'publish-result error';
+    return;
+  }
+
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spinner"></span> Publishing…';
+  result.textContent = '';
+  result.className = 'publish-result info';
+
+  const apiUrl = `https://api.github.com/repos/${s.user}/${s.repo}/contents/${s.file}`;
+  const headers = {
+    'Authorization': `Bearer ${s.token}`,
+    'Accept': 'application/vnd.github+json',
+    'X-GitHub-Api-Version': '2022-11-28',
   };
 
-  // ── Crypto helpers ───────────────────────────────────────
-  async function sha256(text) {
-    const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(text));
-    return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2,'0')).join('');
-  }
-
-  function generateRecoveryKey() {
-    const seg = () => Math.random().toString(36).substring(2, 6).toUpperCase();
-    return `${seg()}-${seg()}-${seg()}`;
-  }
-
-  // ── Auth store ───────────────────────────────────────────
-  function getAuthStore() {
-    try {
-      const raw = localStorage.getItem(AUTH_KEY);
-      return raw ? JSON.parse(raw) : null;
-    } catch { return null; }
-  }
-
-  async function initAuthIfNeeded() {
-    // First-ever visit: set default password + generate recovery key
-    if (!getAuthStore()) {
-      const defaultPw      = 'budgethomes2026';
-      const recoveryKey    = generateRecoveryKey();
-      const hash           = await sha256(defaultPw);
-      const recoveryHash   = await sha256(recoveryKey);
-      localStorage.setItem(AUTH_KEY, JSON.stringify({ hash, recoveryHash }));
-      // Show the recovery key to the user on first run
-      showRecoveryModal(recoveryKey, true);
+  try {
+    addLog(`Fetching ${s.file} from ${s.user}/${s.repo}…`);
+    const getRes = await fetch(`${apiUrl}?ref=${s.branch}`, { headers });
+    if (!getRes.ok) {
+      const e = await getRes.json();
+      throw new Error(e.message || `HTTP ${getRes.status}`);
     }
-  }
+    const fileData = await getRes.json();
+    addLog('File fetched successfully.', 'ok');
 
-  async function checkPassword(pw) {
-    const store = getAuthStore();
-    if (!store) return false;
-    return (await sha256(pw)) === store.hash;
-  }
+    addLog('Injecting updated prices…');
+    let content = decodeURIComponent(escape(atob(fileData.content.replace(/\n/g,''))));
+    const prices  = load(KEY_PRICES, DEFAULT_PRICES);
+    const gallery = load(KEY_GALLERY, DEFAULT_GALLERY);
+    content = injectPrices(content, prices);
+    addLog('Prices injected.', 'ok');
 
-  async function checkRecoveryKey(key) {
-    const store = getAuthStore();
-    if (!store) return false;
-    return (await sha256(key)) === store.recoveryHash;
-  }
+    addLog('Injecting gallery photos…');
+    content = injectGallery(content, gallery);
+    addLog('Gallery injected.', 'ok');
 
-  async function updatePassword(newPw) {
-    const store        = getAuthStore();
-    store.hash         = await sha256(newPw);
-    // Generate a fresh recovery key on every password change
-    const newKey       = generateRecoveryKey();
-    store.recoveryHash = await sha256(newKey);
-    localStorage.setItem(AUTH_KEY, JSON.stringify(store));
-    return newKey;
-  }
-
-  // ── State ────────────────────────────────────────────────
-  let saved = loadSaved();
-  let dirty = false;
-
-  function loadSaved() {
-    try {
-      const raw = localStorage.getItem(STORAGE_KEY);
-      return raw ? JSON.parse(raw) : JSON.parse(JSON.stringify(DEFAULTS));
-    } catch { return JSON.parse(JSON.stringify(DEFAULTS)); }
-  }
-
-  // ── DOM refs ─────────────────────────────────────────────
-  const loginScreen  = document.getElementById('loginScreen');
-  const adminPanel   = document.getElementById('adminPanel');
-  const loginCard    = document.getElementById('loginCard');
-  const resetCard    = document.getElementById('resetCard');
-  const pwInput      = document.getElementById('pwInput');
-  const loginErr     = document.getElementById('loginErr');
-
-  // ── Boot ─────────────────────────────────────────────────
-  (async () => {
-    await initAuthIfNeeded();
-    if (sessionStorage.getItem('bh_admin_auth') === '1') showPanel();
-  })();
-
-  // ── Login ────────────────────────────────────────────────
-  document.getElementById('loginBtn').addEventListener('click', attemptLogin);
-  pwInput.addEventListener('keydown', e => { if (e.key === 'Enter') attemptLogin(); });
-
-  async function attemptLogin() {
-    const ok = await checkPassword(pwInput.value);
-    if (ok) {
-      loginErr.textContent = '';
-      sessionStorage.setItem('bh_admin_auth', '1');
-      showPanel();
-    } else {
-      loginErr.textContent = 'Incorrect password. Try again.';
-      pwInput.value = '';
-      pwInput.focus();
-    }
-  }
-
-  function showPanel() {
-    loginScreen.style.display = 'none';
-    adminPanel.classList.add('active');
-    renderCards();
-    renderPreview();
-  }
-
-  document.getElementById('logoutBtn').addEventListener('click', () => {
-    sessionStorage.removeItem('bh_admin_auth');
-    location.reload();
-  });
-
-  // ── Forgot password flow ─────────────────────────────────
-  document.getElementById('forgotBtn').addEventListener('click', () => {
-    loginCard.style.display = 'none';
-    resetCard.style.display = 'block';
-  });
-  document.getElementById('backToLoginBtn').addEventListener('click', () => {
-    resetCard.style.display = 'none';
-    loginCard.style.display = 'block';
-    document.getElementById('resetErr').textContent = '';
-  });
-
-  document.getElementById('doResetBtn').addEventListener('click', async () => {
-    const keyVal  = document.getElementById('recoveryInput').value.trim().toUpperCase();
-    const newPw   = document.getElementById('newPwInput').value;
-    const confirm = document.getElementById('confirmPwInput').value;
-    const errEl   = document.getElementById('resetErr');
-
-    if (!keyVal)         { errEl.textContent = 'Please enter your recovery key.'; return; }
-    if (newPw.length < 6){ errEl.textContent = 'Password must be at least 6 characters.'; return; }
-    if (newPw !== confirm){ errEl.textContent = 'Passwords do not match.'; return; }
-
-    const valid = await checkRecoveryKey(keyVal);
-    if (!valid) { errEl.textContent = 'Recovery key is incorrect.'; return; }
-
-    const newKey = await updatePassword(newPw);
-    errEl.textContent = '';
-    document.getElementById('recoveryInput').value = '';
-    document.getElementById('newPwInput').value    = '';
-    document.getElementById('confirmPwInput').value= '';
-    resetCard.style.display = 'none';
-    loginCard.style.display = 'block';
-    showRecoveryModal(newKey, false);
-  });
-
-  // ── Change password (from inside panel) ──────────────────
-  document.getElementById('changePwBtn').addEventListener('click', () => {
-    document.getElementById('cpCurrent').value = '';
-    document.getElementById('cpNew').value     = '';
-    document.getElementById('cpConfirm').value = '';
-    document.getElementById('cpErr').textContent = '';
-    document.getElementById('changePwModal').style.display = 'flex';
-  });
-
-  document.getElementById('cpCancelBtn').addEventListener('click', () => {
-    document.getElementById('changePwModal').style.display = 'none';
-  });
-
-  document.getElementById('cpSaveBtn').addEventListener('click', async () => {
-    const current = document.getElementById('cpCurrent').value;
-    const newPw   = document.getElementById('cpNew').value;
-    const confirm = document.getElementById('cpConfirm').value;
-    const errEl   = document.getElementById('cpErr');
-
-    if (!(await checkPassword(current))) { errEl.textContent = 'Current password is incorrect.'; return; }
-    if (newPw.length < 6)  { errEl.textContent = 'New password must be at least 6 characters.'; return; }
-    if (newPw !== confirm)  { errEl.textContent = 'New passwords do not match.'; return; }
-    if (newPw === current)  { errEl.textContent = 'New password must be different from current.'; return; }
-
-    const newKey = await updatePassword(newPw);
-    document.getElementById('changePwModal').style.display = 'none';
-    showRecoveryModal(newKey, false);
-  });
-
-  // ── Recovery key modal ───────────────────────────────────
-  function showRecoveryModal(key, isFirstTime) {
-    document.getElementById('recoveryKeyDisplay').textContent = key;
-    const modal = document.getElementById('recoveryModal');
-    const title = modal.querySelector('.modal-title');
-    title.textContent = isFirstTime ? '🔐 Welcome! Save Your Recovery Key' : '🔐 New Recovery Key Generated';
-    modal.style.display = 'flex';
-  }
-
-  document.getElementById('copyKeyBtn').addEventListener('click', () => {
-    const key = document.getElementById('recoveryKeyDisplay').textContent;
-    navigator.clipboard.writeText(key).then(() => {
-      document.getElementById('copyKeyBtn').textContent = '✓ Copied!';
-      setTimeout(() => document.getElementById('copyKeyBtn').textContent = 'Copy Key', 2000);
-    });
-  });
-
-  document.getElementById('recoveryDoneBtn').addEventListener('click', () => {
-    document.getElementById('recoveryModal').style.display = 'none';
-  });
-
-  // Close modals on backdrop click
-  document.querySelectorAll('.modal-backdrop').forEach(m => {
-    m.addEventListener('click', e => { if (e.target === m) m.style.display = 'none'; });
-  });
-
-  // ── Render price cards ───────────────────────────────────
-  function renderCards() {
-    const nightlyKeys = ['unit1','unit2','unit3','unit4','unit5'];
-    const nightlyGrid = document.getElementById('nightlyGrid');
-    const pgGrid      = document.getElementById('pgGrid');
-
-    nightlyKeys.forEach(k => nightlyGrid.appendChild(makeCard(k, false)));
-    pgGrid.appendChild(makeCard('pg', true));
-
-    document.getElementById('startingFrom').value = saved.startingFrom || DEFAULTS.startingFrom;
-    document.getElementById('adminNotes').value   = saved.notes || '';
-
-    nightlyGrid.querySelectorAll('input').forEach(inp => inp.addEventListener('input', markDirty));
-    pgGrid.querySelectorAll('input').forEach(inp => inp.addEventListener('input', markDirty));
-    document.getElementById('startingFrom').addEventListener('input', markDirty);
-    document.getElementById('adminNotes').addEventListener('input', markDirty);
-  }
-
-  function makeCard(key, isPg) {
-    const def   = DEFAULTS[key];
-    const price = (saved[key] && saved[key].price) || def.price;
-    const card  = document.createElement('div');
-    card.className = 'price-card' + (isPg ? ' pg-card' : '');
-    card.innerHTML = `
-      <div class="card-badge">${def.name}</div>
-      <div class="card-name">${def.type}</div>
-      <div class="card-type">${def.unit.trim()}</div>
-      <div class="price-input-wrap">
-        <span class="currency-sym">₹</span>
-        <input type="number" id="inp_${key}" value="${price}" min="0" step="50" />
-        <span class="price-unit">${def.unit}</span>
-      </div>`;
-    return card;
-  }
-
-  // ── Dirty tracking ───────────────────────────────────────
-  function markDirty() {
-    dirty = true;
-    document.getElementById('saveStatus').textContent = 'You have unsaved changes';
-    document.getElementById('statusDot').classList.remove('saved');
-  }
-
-  // ── Save prices ──────────────────────────────────────────
-  document.getElementById('saveBtn').addEventListener('click', saveAll);
-
-  function saveAll() {
-    const data = JSON.parse(JSON.stringify(DEFAULTS));
-    ['unit1','unit2','unit3','unit4','unit5','pg'].forEach(k => {
-      const inp = document.getElementById('inp_' + k);
-      if (inp) data[k].price = parseInt(inp.value, 10) || DEFAULTS[k].price;
-    });
-    data.startingFrom = parseInt(document.getElementById('startingFrom').value, 10) || DEFAULTS.startingFrom;
-    data.notes        = document.getElementById('adminNotes').value;
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
-    saved = data;
-    dirty = false;
-    document.getElementById('saveStatus').textContent = 'All prices saved · ' + new Date().toLocaleTimeString();
-    document.getElementById('statusDot').classList.add('saved');
-    const toast = document.getElementById('saveToast');
-    toast.classList.add('show');
-    setTimeout(() => toast.classList.remove('show'), 2800);
-    renderPreview();
-  }
-
-  // ── Reset prices ─────────────────────────────────────────
-  document.getElementById('resetBtn').addEventListener('click', () => {
-    if (!confirm('Reset all prices to original defaults?')) return;
-    ['unit1','unit2','unit3','unit4','unit5','pg'].forEach(k => {
-      const inp = document.getElementById('inp_' + k);
-      if (inp) inp.value = DEFAULTS[k].price;
-    });
-    document.getElementById('startingFrom').value = DEFAULTS.startingFrom;
-    document.getElementById('adminNotes').value   = '';
-    markDirty();
-  });
-
-  // ── Preview ──────────────────────────────────────────────
-  function renderPreview() {
-    const list = document.getElementById('previewList');
-    list.innerHTML = '';
-    ['unit1','unit2','unit3','unit4','unit5','pg'].forEach(k => {
-      const d  = saved[k] || DEFAULTS[k];
-      const el = document.createElement('div');
-      el.className = 'preview-item';
-      el.innerHTML = `<strong>${d.name} ${d.type}:</strong> <span class="preview-price">₹${d.price.toLocaleString('en-IN')}${d.unit}</span>`;
-      list.appendChild(el);
-    });
-    const sf = document.createElement('div');
-    sf.className = 'preview-item';
-    sf.innerHTML = `<strong>Starting from:</strong> <span class="preview-price">₹${(saved.startingFrom || DEFAULTS.startingFrom).toLocaleString('en-IN')}/night</span>`;
-    list.appendChild(sf);
-  }
-
-  // ═══════════════════════════════════════════════════════
-  // GALLERY MANAGER
-  // ═══════════════════════════════════════════════════════
-
-  const GALLERY_KEY = 'bh_gallery_v1';
-
-  const DEFAULT_GALLERY = [
-    { src: 'https://lh3.googleusercontent.com/p/AF1QipNnbypKAq-OR87dILBwelmRJOE2N90kzKrIunbL=s0', alt: 'Spacious guest bedroom' },
-    { src: 'https://lh3.googleusercontent.com/p/AF1QipMF3Rk7-43z_Mz-OPrT1uOwUEclgGI4jVCDPqHl=s0', alt: 'Budget Homes exterior front view' },
-    { src: 'https://lh3.googleusercontent.com/p/AF1QipMJ--opG4jho3ivfTcc_ESvsOVB3g9SqMT0f1b6=s0', alt: 'Kitchen and dining area' },
-    { src: 'https://lh3.googleusercontent.com/p/AF1QipMgkh2egTjMU3CCTrWsZ-WXpjmXnFKA5324GUyB=s0', alt: 'Modern bathroom with amenities' },
-    { src: 'https://lh3.googleusercontent.com/p/AF1QipN8PDaZEbjXCN1sqepeeWe2gi_RjN77IGWy8dLi=s0', alt: 'Interior common room' },
-    { src: 'https://lh3.googleusercontent.com/p/AF1QipNwWSFtIQVWES5v355o7i1OzONmkJFeuSajs05F=s0', alt: 'Property exterior detail' },
-    { src: 'https://lh3.googleusercontent.com/p/AF1QipOtt4B6EYGffzpoMIK9gW3YoiaKjVXxGFElaKY4=s0', alt: 'Entrance and parking area' },
-    { src: 'https://lh3.googleusercontent.com/p/AF1QipNtWdil7zQ72fPIISLDNCnGjgGl7XnCyDXtAvFF=s0', alt: 'Room interior setup' },
-  ];
-
-  let galleryPhotos = loadGallery();
-  let galleryDirty  = false;
-  let editingIndex  = -1;   // -1 = new photo
-  let pendingSrc    = '';   // staged new src before applying
-
-  function loadGallery() {
-    try {
-      const raw = localStorage.getItem(GALLERY_KEY);
-      return raw ? JSON.parse(raw) : JSON.parse(JSON.stringify(DEFAULT_GALLERY));
-    } catch { return JSON.parse(JSON.stringify(DEFAULT_GALLERY)); }
-  }
-
-  // ── Render gallery grid ──────────────────────────────────
-  function renderGalleryGrid() {
-    const grid = document.getElementById('galleryAdminGrid');
-    grid.innerHTML = '';
-
-    galleryPhotos.forEach((photo, idx) => {
-      const card = document.createElement('div');
-      card.className = 'gallery-admin-card';
-      card.draggable = true;
-      card.dataset.idx = idx;
-
-      card.innerHTML = `
-        <span class="card-num">Photo ${idx + 1}</span>
-        <button class="card-remove" title="Remove photo" data-idx="${idx}">✕</button>
-        <div class="gallery-thumb-wrap" data-idx="${idx}">
-          <img src="${photo.src}" alt="${photo.alt}" loading="lazy" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22200%22 height=%22150%22><rect width=%22200%22 height=%22150%22 fill=%22%23eee%22/><text x=%2250%25%22 y=%2250%25%22 dominant-baseline=%22middle%22 text-anchor=%22middle%22 fill=%22%23aaa%22 font-size=%2212%22>No image</text></svg>'" />
-          <div class="thumb-overlay">Click to edit</div>
-        </div>
-        <div class="gallery-card-body">
-          <span class="gallery-alt-label">Caption</span>
-          <input class="gallery-alt-input" type="text" value="${photo.alt}" placeholder="Photo caption…" data-idx="${idx}" />
-        </div>
-      `;
-
-      grid.appendChild(card);
+    addLog('Pushing to GitHub…');
+    const now = new Date().toLocaleString('en-IN', { timeZone:'Asia/Kolkata', day:'numeric', month:'short', hour:'2-digit', minute:'2-digit' });
+    const putRes = await fetch(apiUrl, {
+      method: 'PUT',
+      headers: { ...headers, 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        message: `Admin: update prices & gallery — ${now} IST`,
+        content: btoa(unescape(encodeURIComponent(content))),
+        sha: fileData.sha,
+        branch: s.branch,
+      })
     });
 
-    // Event listeners
-    grid.querySelectorAll('.gallery-thumb-wrap').forEach(wrap => {
-      wrap.addEventListener('click', () => openEditModal(parseInt(wrap.dataset.idx)));
-    });
-    grid.querySelectorAll('.card-remove').forEach(btn => {
-      btn.addEventListener('click', e => {
-        e.stopPropagation();
-        removePhoto(parseInt(btn.dataset.idx));
-      });
-    });
-    grid.querySelectorAll('.gallery-alt-input').forEach(inp => {
-      inp.addEventListener('input', () => {
-        galleryPhotos[parseInt(inp.dataset.idx)].alt = inp.value;
-        markGalleryDirty();
-      });
-    });
-
-    // Drag-to-reorder
-    setupDragReorder(grid);
-  }
-
-  // ── Drag to reorder ──────────────────────────────────────
-  let dragSrcIdx = null;
-
-  function setupDragReorder(grid) {
-    grid.querySelectorAll('.gallery-admin-card').forEach(card => {
-      card.addEventListener('dragstart', e => {
-        dragSrcIdx = parseInt(card.dataset.idx);
-        card.style.opacity = '0.4';
-      });
-      card.addEventListener('dragend', () => { card.style.opacity = ''; });
-      card.addEventListener('dragover', e => { e.preventDefault(); card.style.outline = '2px solid var(--gold)'; });
-      card.addEventListener('dragleave', () => { card.style.outline = ''; });
-      card.addEventListener('drop', e => {
-        e.preventDefault();
-        card.style.outline = '';
-        const dropIdx = parseInt(card.dataset.idx);
-        if (dragSrcIdx === null || dragSrcIdx === dropIdx) return;
-        const moved = galleryPhotos.splice(dragSrcIdx, 1)[0];
-        galleryPhotos.splice(dropIdx, 0, moved);
-        dragSrcIdx = null;
-        renderGalleryGrid();
-        markGalleryDirty();
-      });
-    });
-  }
-
-  // ── Remove photo ─────────────────────────────────────────
-  function removePhoto(idx) {
-    if (galleryPhotos.length <= 1) { alert('You must keep at least one photo.'); return; }
-    if (!confirm(`Remove Photo ${idx + 1}?`)) return;
-    galleryPhotos.splice(idx, 1);
-    renderGalleryGrid();
-    markGalleryDirty();
-  }
-
-  // ── Add photo button ─────────────────────────────────────
-  document.getElementById('addPhotoBtn').addEventListener('click', () => openEditModal(-1));
-
-  // ── Gallery dirty ────────────────────────────────────────
-  function markGalleryDirty() {
-    galleryDirty = true;
-    document.getElementById('galleryStatus').textContent = 'You have unsaved gallery changes';
-    document.getElementById('galleryStatusDot').classList.remove('saved');
-  }
-
-  // ── Save gallery ─────────────────────────────────────────
-  document.getElementById('gallerySaveBtn').addEventListener('click', () => {
-    localStorage.setItem(GALLERY_KEY, JSON.stringify(galleryPhotos));
-    galleryDirty = false;
-    document.getElementById('galleryStatus').textContent = 'Gallery saved · ' + new Date().toLocaleTimeString();
-    document.getElementById('galleryStatusDot').classList.add('saved');
-    const toast = document.getElementById('saveToast');
-    toast.textContent = '✦ Gallery saved successfully';
-    toast.classList.add('show');
-    setTimeout(() => { toast.classList.remove('show'); toast.textContent = '✦ Prices saved successfully'; }, 2800);
-  });
-
-  // ── Reset gallery ─────────────────────────────────────────
-  document.getElementById('galleryResetBtn').addEventListener('click', () => {
-    if (!confirm('Reset gallery to original photos?')) return;
-    galleryPhotos = JSON.parse(JSON.stringify(DEFAULT_GALLERY));
-    renderGalleryGrid();
-    markGalleryDirty();
-  });
-
-  // ── Edit photo modal ─────────────────────────────────────
-  function openEditModal(idx) {
-    editingIndex = idx;
-    pendingSrc   = '';
-
-    const modal    = document.getElementById('editPhotoModal');
-    const titleEl  = document.getElementById('editPhotoTitle');
-    const altInput = document.getElementById('altInput');
-    const errEl    = document.getElementById('editPhotoErr');
-    const urlInput = document.getElementById('urlInput');
-
-    titleEl.textContent = idx === -1 ? 'Add New Photo' : `Edit Photo ${idx + 1}`;
-    altInput.value      = idx === -1 ? '' : (galleryPhotos[idx].alt || '');
-    errEl.textContent   = '';
-    urlInput.value      = '';
-
-    // Reset previews
-    document.getElementById('uploadPreview').classList.remove('show');
-    document.getElementById('urlPreview').classList.remove('show');
-    document.getElementById('fileInput').value = '';
-
-    // Switch to upload tab by default
-    activateTab('upload');
-
-    modal.style.display = 'flex';
-  }
-
-  document.getElementById('editPhotoCancelBtn').addEventListener('click', () => {
-    document.getElementById('editPhotoModal').style.display = 'none';
-  });
-
-  // ── Tab switching ────────────────────────────────────────
-  document.querySelectorAll('.edit-tab').forEach(tab => {
-    tab.addEventListener('click', () => activateTab(tab.dataset.tab));
-  });
-
-  function activateTab(name) {
-    document.querySelectorAll('.edit-tab').forEach(t => t.classList.toggle('active', t.dataset.tab === name));
-    document.querySelectorAll('.tab-pane').forEach(p => p.classList.toggle('active', p.id === 'tab-' + name));
-    pendingSrc = '';
-  }
-
-  // ── File upload / drag-drop ──────────────────────────────
-  const fileInput = document.getElementById('fileInput');
-  const dropZone  = document.getElementById('dropZone');
-
-  fileInput.addEventListener('change', () => handleFile(fileInput.files[0]));
-
-  dropZone.addEventListener('dragover', e => { e.preventDefault(); dropZone.classList.add('drag-over'); });
-  dropZone.addEventListener('dragleave', () => dropZone.classList.remove('drag-over'));
-  dropZone.addEventListener('drop', e => {
-    e.preventDefault();
-    dropZone.classList.remove('drag-over');
-    handleFile(e.dataTransfer.files[0]);
-  });
-
-  function handleFile(file) {
-    if (!file || !file.type.startsWith('image/')) {
-      document.getElementById('editPhotoErr').textContent = 'Please select a valid image file.';
-      return;
-    }
-    const reader = new FileReader();
-    reader.onload = e => {
-      pendingSrc = e.target.result; // base64 data URL
-      const prev = document.getElementById('uploadPreview');
-      prev.src = pendingSrc;
-      prev.classList.add('show');
-      document.getElementById('editPhotoErr').textContent = '';
-    };
-    reader.readAsDataURL(file);
-  }
-
-  // ── URL preview ──────────────────────────────────────────
-  document.getElementById('urlInput').addEventListener('input', function () {
-    const val  = this.value.trim();
-    const prev = document.getElementById('urlPreview');
-    if (val.startsWith('http')) {
-      prev.src = val;
-      prev.onload  = () => { prev.classList.add('show'); pendingSrc = val; document.getElementById('editPhotoErr').textContent = ''; };
-      prev.onerror = () => { prev.classList.remove('show'); pendingSrc = ''; document.getElementById('editPhotoErr').textContent = 'Could not load image from this URL.'; };
-    } else {
-      prev.classList.remove('show');
-      pendingSrc = '';
-    }
-  });
-
-  // ── Apply photo ──────────────────────────────────────────
-  document.getElementById('editPhotoSaveBtn').addEventListener('click', () => {
-    const errEl = document.getElementById('editPhotoErr');
-    const alt   = document.getElementById('altInput').value.trim() || 'Budget Homes photo';
-
-    if (!pendingSrc) {
-      errEl.textContent = 'Please upload a photo or paste a valid URL first.';
-      return;
+    if (!putRes.ok) {
+      const e = await putRes.json();
+      throw new Error(e.message || `Push failed HTTP ${putRes.status}`);
     }
 
-    if (editingIndex === -1) {
-      // Add new
-      galleryPhotos.push({ src: pendingSrc, alt });
-    } else {
-      // Replace existing
-      galleryPhotos[editingIndex] = { src: pendingSrc, alt };
-    }
+    addLog('Pushed to GitHub successfully!', 'ok');
+    addLog('Vercel is deploying… live in ~15 seconds.', 'ok');
 
-    renderGalleryGrid();
-    markGalleryDirty();
-    document.getElementById('editPhotoModal').style.display = 'none';
-  });
+    const now2 = new Date().toISOString();
+    store(KEY_LASTPUB, now2);
+    logActivity('Published to GitHub → Vercel');
+    renderDashboard();
 
-  // ═══════════════════════════════════════════════════════
-  // GITHUB PUBLISH
-  // ═══════════════════════════════════════════════════════
+    result.textContent = '✓ Live! Vercel deploying — check your site in ~15 seconds.';
+    result.className = 'publish-result ok';
+    toast('🚀 Published successfully!', 'ok');
 
-  const GH_SETTINGS_KEY = 'bh_gh_settings_v1';
-
-  function loadGhSettings() {
-    try {
-      const raw = localStorage.getItem(GH_SETTINGS_KEY);
-      return raw ? JSON.parse(raw) : { user: 'beinguvaize', repo: 'budgethomes', branch: 'main', file: 'index.html', token: '' };
-    } catch { return { user: '', repo: '', branch: 'main', file: 'index.html', token: '' }; }
+  } catch(err) {
+    addLog('Error: ' + err.message, 'err');
+    result.textContent = '✕ ' + err.message;
+    result.className = 'publish-result error';
+    toast('Publish failed: ' + err.message, 'err');
+  } finally {
+    btn.disabled = false;
+    btn.textContent = '🚀 Publish Now';
   }
-
-  function saveGhSettings() {
-    const settings = {
-      user:   document.getElementById('ghUser').value.trim(),
-      repo:   document.getElementById('ghRepo').value.trim(),
-      branch: document.getElementById('ghBranch').value.trim() || 'main',
-      file:   document.getElementById('ghFile').value.trim() || 'index.html',
-      token:  document.getElementById('ghToken').value.trim(),
-    };
-    localStorage.setItem(GH_SETTINGS_KEY, JSON.stringify(settings));
-    const status = document.getElementById('ghSettingsStatus');
-    status.textContent = '✓ Settings saved';
-    status.className = 'github-status ok';
-    setTimeout(() => { status.textContent = ''; status.className = 'github-status'; }, 3000);
-    return settings;
-  }
-
-  function populateGhSettings() {
-    const s = loadGhSettings();
-    document.getElementById('ghUser').value   = s.user   || '';
-    document.getElementById('ghRepo').value   = s.repo   || '';
-    document.getElementById('ghBranch').value = s.branch || 'main';
-    document.getElementById('ghFile').value   = s.file   || 'index.html';
-    document.getElementById('ghToken').value  = s.token  || '';
-  }
-
-  document.getElementById('ghSaveSettingsBtn').addEventListener('click', saveGhSettings);
-
-  // ── Price injection into HTML string ────────────────────
-  function injectPricesIntoHtml(html, prices) {
-    if (!prices) return html;
-
-    // Room cards: match ₹X,XXX<span>/night</span> or ₹X,XXX<span>/month</span>
-    // Strategy: find each room-price div and replace the price number
-    const roomMap = {
-      unit1: { old: null, price: prices.unit1?.price, suffix: '/night' },
-      unit2: { old: null, price: prices.unit2?.price, suffix: '/night' },
-      unit3: { old: null, price: prices.unit3?.price, suffix: '/night' },
-      unit4: { old: null, price: prices.unit4?.price, suffix: '/night' },
-      unit5: { old: null, price: prices.unit5?.price, suffix: '/night' },
-      pg:    { old: null, price: prices.pg?.price,    suffix: '/month' },
-    };
-
-    // Replace room-price divs in order (they appear sequentially in the HTML)
-    const keys = ['unit1','unit2','unit3','unit4','unit5','pg'];
-    let searchFrom = 0;
-
-    keys.forEach(key => {
-      const { price, suffix } = roomMap[key];
-      if (!price) return;
-      const formatted = '₹' + Number(price).toLocaleString('en-IN');
-      // Find next .room-price div from current position
-      const marker = '<div class="room-price">';
-      const idx = html.indexOf(marker, searchFrom);
-      if (idx === -1) return;
-      // Find closing </div>
-      const closeIdx = html.indexOf('</div>', idx);
-      if (closeIdx === -1) return;
-      // Replace the content between the div tags
-      const before = html.slice(0, idx + marker.length);
-      const after  = html.slice(closeIdx);
-      html = before + `${formatted}<span>${suffix}</span>` + after;
-      searchFrom = idx + marker.length;
-    });
-
-    // Starting from — hero sub text
-    if (prices.startingFrom) {
-      const sfFormatted = '₹' + Number(prices.startingFrom).toLocaleString('en-IN');
-      html = html.replace(/₹[\d,]+\/night(?=\.)/g, sfFormatted + '/night');
-      // Booking section .amt span
-      html = html.replace(/(<span class="amt">)₹[\d,]+(<\/span>)/, `$1${sfFormatted}$2`);
-    }
-
-    return html;
-  }
-
-  // ── Gallery injection into HTML string ──────────────────
-  function injectGalleryIntoHtml(html, photos) {
-    if (!photos || !Array.isArray(photos)) return html;
-
-    // Replace each gallery-item img src and alt in order
-    let searchFrom = 0;
-    photos.forEach((photo, idx) => {
-      const itemMarker = '<div class="gallery-item';
-      const pos = html.indexOf(itemMarker, searchFrom);
-      if (pos === -1) return;
-
-      // Find the <img inside this gallery-item
-      const imgStart = html.indexOf('<img ', pos);
-      const itemEnd  = html.indexOf('</div>', pos); // end of overlay div
-      if (imgStart === -1 || imgStart > itemEnd + 200) return;
-
-      const imgTagEnd = html.indexOf('>', imgStart);
-      if (imgTagEnd === -1) return;
-
-      const oldImgTag = html.slice(imgStart, imgTagEnd + 1);
-
-      // Build new img tag preserving classes/attributes, just swap src and alt
-      let newImgTag = oldImgTag
-        .replace(/src="[^"]*"/, `src="${photo.src}"`)
-        .replace(/alt="[^"]*"/, `alt="${(photo.alt || '').replace(/"/g, '&quot;')}"`);
-
-      html = html.slice(0, imgStart) + newImgTag + html.slice(imgTagEnd + 1);
-      searchFrom = imgStart + newImgTag.length;
-    });
-
-    return html;
-  }
-
-  // ── Main publish function ────────────────────────────────
-  document.getElementById('publishBtn').addEventListener('click', publishToGitHub);
-
-  async function publishToGitHub() {
-    const btn       = document.getElementById('publishBtn');
-    const resultEl  = document.getElementById('publishResult');
-
-    const ghSettings = loadGhSettings();
-
-    // Validate settings
-    if (!ghSettings.token) {
-      resultEl.textContent = '⚠ Please enter your GitHub token in settings above.';
-      resultEl.className = 'publish-result err';
-      document.getElementById('githubSettings').scrollIntoView({ behavior: 'smooth' });
-      return;
-    }
-    if (!ghSettings.user || !ghSettings.repo) {
-      resultEl.textContent = '⚠ Please fill in GitHub username and repository name.';
-      resultEl.className = 'publish-result err';
-      return;
-    }
-
-    // First save everything locally
-    saveAll();
-    localStorage.setItem(GALLERY_KEY, JSON.stringify(galleryPhotos));
-
-    btn.disabled = true;
-    btn.innerHTML = '<span class="publish-spinner"></span> Publishing…';
-    resultEl.textContent = 'Fetching current index.html from GitHub…';
-    resultEl.className = 'publish-result';
-
-    const { user, repo, branch, file, token } = ghSettings;
-    const apiBase = `https://api.github.com/repos/${user}/${repo}/contents/${file}`;
-    const headers = {
-      'Authorization': `Bearer ${token}`,
-      'Accept': 'application/vnd.github+json',
-      'X-GitHub-Api-Version': '2022-11-28',
-    };
-
-    try {
-      // Step 1: Get current file + SHA
-      resultEl.textContent = '① Fetching current file…';
-      const getRes = await fetch(`${apiBase}?ref=${branch}`, { headers });
-      if (!getRes.ok) {
-        const err = await getRes.json();
-        throw new Error(err.message || `GitHub API error ${getRes.status}`);
-      }
-      const fileData = await getRes.json();
-      const sha      = fileData.sha;
-
-      // Step 2: Decode base64 content
-      resultEl.textContent = '② Updating prices in file…';
-      let htmlContent = decodeURIComponent(escape(atob(fileData.content.replace(/\n/g, ''))));
-
-      // Step 3: Inject prices
-      const priceData   = loadSaved();
-      const galleryData = loadGallery();
-      htmlContent = injectPricesIntoHtml(htmlContent, priceData);
-      htmlContent = injectGalleryIntoHtml(htmlContent, galleryData);
-
-      // Step 4: Encode back to base64
-      const newContent = btoa(unescape(encodeURIComponent(htmlContent)));
-
-      // Step 5: Push to GitHub
-      resultEl.textContent = '③ Pushing to GitHub…';
-      const now        = new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' });
-      const putRes     = await fetch(apiBase, {
-        method: 'PUT',
-        headers: { ...headers, 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          message: `Admin: update prices & gallery — ${now} IST`,
-          content: newContent,
-          sha,
-          branch,
-        }),
-      });
-
-      if (!putRes.ok) {
-        const err = await putRes.json();
-        throw new Error(err.message || `Push failed with status ${putRes.status}`);
-      }
-
-      resultEl.textContent = '✓ Published! Vercel is deploying — live in ~15 seconds.';
-      resultEl.className = 'publish-result ok';
-
-      // Show toast
-      const toast = document.getElementById('saveToast');
-      toast.textContent = '🚀 Published to GitHub! Going live now…';
-      toast.classList.add('show');
-      setTimeout(() => { toast.classList.remove('show'); toast.textContent = '✦ Prices saved successfully'; }, 4000);
-
-    } catch (err) {
-      console.error(err);
-      resultEl.textContent = '✕ Error: ' + err.message;
-      resultEl.className = 'publish-result err';
-    } finally {
-      btn.disabled = false;
-      btn.innerHTML = '🚀 Save &amp; Publish';
-    }
-  }
-
-  // ── Init gallery + GitHub settings when panel shows ─────
-  const panelObserver = new MutationObserver(() => {
-    if (adminPanel.classList.contains('active')) {
-      renderGalleryGrid();
-      populateGhSettings();
-      panelObserver.disconnect();
-    }
-  });
-  panelObserver.observe(adminPanel, { attributes: true, attributeFilter: ['class'] });
-
+});
 </script>
 </body>
 </html>
