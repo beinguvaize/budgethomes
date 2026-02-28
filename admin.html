@@ -806,12 +806,143 @@
     }
     .preview-thumb.show { display: block; }
 
+    /* ── GitHub Publish Bar ── */
+    .publish-bar {
+      background: var(--ink);
+      border: 1.5px solid var(--ink);
+      padding: 1.25rem 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      margin-bottom: 2.5rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .publish-bar::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: repeating-linear-gradient(
+        -45deg, transparent, transparent 10px,
+        rgba(184,148,42,0.04) 10px, rgba(184,148,42,0.04) 20px
+      );
+    }
+    .publish-info { position: relative; }
+    .publish-info-title {
+      font-family: var(--serif);
+      font-size: 1rem;
+      font-weight: 600;
+      color: white;
+      margin-bottom: 0.2rem;
+    }
+    .publish-info-sub {
+      font-size: 0.68rem;
+      color: #888;
+      letter-spacing: 0.05em;
+    }
+    .publish-info-sub strong { color: var(--gold-light); }
+
+    .btn-publish {
+      position: relative;
+      background: var(--gold);
+      color: white;
+      border: none;
+      font-family: var(--mono);
+      font-size: 0.8rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 0.85rem 2rem;
+      cursor: pointer;
+      transition: background 0.15s, box-shadow 0.15s, transform 0.1s;
+      white-space: nowrap;
+      min-width: 180px;
+    }
+    .btn-publish:hover:not(:disabled) {
+      background: var(--gold-light);
+      box-shadow: 0 0 20px rgba(184,148,42,0.4);
+    }
+    .btn-publish:active:not(:disabled) { transform: scale(0.97); }
+    .btn-publish:disabled { opacity: 0.5; cursor: not-allowed; }
+
+    .publish-spinner {
+      display: inline-block;
+      width: 12px; height: 12px;
+      border: 2px solid rgba(255,255,255,0.3);
+      border-top-color: white;
+      border-radius: 50%;
+      animation: spin 0.7s linear infinite;
+      margin-right: 6px;
+      vertical-align: middle;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .publish-result {
+      font-size: 0.72rem;
+      margin-top: 0.5rem;
+      letter-spacing: 0.05em;
+      min-height: 1.2em;
+    }
+    .publish-result.ok  { color: #6fcf97; }
+    .publish-result.err { color: #eb5757; }
+
+    /* ── GitHub Settings box ── */
+    .github-settings {
+      border: 1.5px solid var(--rule);
+      background: white;
+      padding: 1.5rem;
+      margin-bottom: 2rem;
+    }
+    .github-settings-title {
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .github-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.75rem;
+    }
+    .github-field { display: flex; flex-direction: column; gap: 0.3rem; }
+    .github-field.full { grid-column: 1 / -1; }
+    .github-input {
+      border: 1.5px solid var(--rule);
+      background: var(--paper);
+      font-family: var(--mono);
+      font-size: 0.8rem;
+      padding: 0.55rem 0.75rem;
+      outline: none;
+      transition: border-color 0.15s;
+      color: var(--ink);
+    }
+    .github-input:focus { border-color: var(--gold); background: white; }
+    .github-save-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 0.9rem;
+      gap: 1rem;
+    }
+    .github-status {
+      font-size: 0.7rem;
+      color: #888;
+    }
+    .github-status.ok { color: var(--success); }
+
     /* responsive */
     @media (max-width: 480px) {
       .admin-body { padding: 1.5rem 1rem; }
       .price-grid { grid-template-columns: 1fr 1fr; }
       .gallery-admin-grid { grid-template-columns: 1fr 1fr; }
       .save-bar { flex-direction: column; align-items: stretch; }
+      .publish-bar { flex-direction: column; align-items: stretch; }
+      .github-grid { grid-template-columns: 1fr; }
       .header-tag { display: none; }
       .btn-changepw { display: none; }
     }
@@ -968,13 +1099,56 @@
       </div>
     </div>
 
-    <!-- Instructions -->
-    <div class="howto">
-      <div class="howto-title">How this works</div>
-      <p>Prices and gallery changes are stored in your browser's local storage and applied to <code>index.html</code> automatically when <code>prices.js</code> is included in the page.</p>
-      <p>To activate on your website, add this line just before the closing <code>&lt;/body&gt;</code> tag in <code>index.html</code>:</p>
-      <p><code>&lt;script src="prices.js"&gt;&lt;/script&gt;</code></p>
-      <p>Both <code>admin.html</code> and <code>index.html</code> must be on the same domain for changes to carry over.</p>
+    <!-- ═══════════════════════════════════════════════ -->
+    <!-- GITHUB PUBLISH                                   -->
+    <!-- ═══════════════════════════════════════════════ -->
+    <div class="section-rule" style="margin-top:2.5rem;">
+      <span class="section-rule-label">Publish to Website</span>
+      <div class="section-rule-line"></div>
+    </div>
+
+    <!-- GitHub Settings -->
+    <div class="github-settings" id="githubSettings">
+      <div class="github-settings-title">
+        <svg viewBox="0 0 24 24" fill="currentColor" width="14" height="14"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+        GitHub Connection
+      </div>
+      <div class="github-grid">
+        <div class="github-field">
+          <span class="field-label">GitHub Username</span>
+          <input type="text" id="ghUser" class="github-input" placeholder="beinguvaize" autocomplete="off" />
+        </div>
+        <div class="github-field">
+          <span class="field-label">Repository Name</span>
+          <input type="text" id="ghRepo" class="github-input" placeholder="budgethomes" autocomplete="off" />
+        </div>
+        <div class="github-field">
+          <span class="field-label">Branch</span>
+          <input type="text" id="ghBranch" class="github-input" placeholder="main" autocomplete="off" />
+        </div>
+        <div class="github-field">
+          <span class="field-label">File path</span>
+          <input type="text" id="ghFile" class="github-input" placeholder="index.html" autocomplete="off" />
+        </div>
+        <div class="github-field full">
+          <span class="field-label">Personal Access Token <span style="color:#aaa;font-size:0.65rem;">(stored locally, never shared)</span></span>
+          <input type="password" id="ghToken" class="github-input" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx" autocomplete="off" />
+        </div>
+      </div>
+      <div class="github-save-row">
+        <span class="github-status" id="ghSettingsStatus"></span>
+        <button class="btn-save" id="ghSaveSettingsBtn" style="padding:0.6rem 1.25rem;font-size:0.72rem;">Save Settings</button>
+      </div>
+    </div>
+
+    <!-- Publish bar -->
+    <div class="publish-bar">
+      <div class="publish-info">
+        <div class="publish-info-title">Publish Live to Website</div>
+        <div class="publish-info-sub">Pushes updated <strong>index.html</strong> directly to GitHub → Vercel auto-deploys in ~10 seconds</div>
+        <div class="publish-result" id="publishResult"></div>
+      </div>
+      <button class="btn-publish" id="publishBtn">🚀 Save &amp; Publish</button>
     </div>
 
   </main>
@@ -1620,19 +1794,238 @@
     document.getElementById('editPhotoModal').style.display = 'none';
   });
 
-  // ── Init gallery on panel show ───────────────────────────
-  const _origShowPanel = showPanel;
-  // Patch showPanel to also render gallery
-  const showPanelOrig = showPanel;
-  // We can't easily wrap since showPanel is a declaration, so call renderGalleryGrid
-  // from DOMContentLoaded after panel is shown via MutationObserver
+  // ═══════════════════════════════════════════════════════
+  // GITHUB PUBLISH
+  // ═══════════════════════════════════════════════════════
+
+  const GH_SETTINGS_KEY = 'bh_gh_settings_v1';
+
+  function loadGhSettings() {
+    try {
+      const raw = localStorage.getItem(GH_SETTINGS_KEY);
+      return raw ? JSON.parse(raw) : { user: 'beinguvaize', repo: 'budgethomes', branch: 'main', file: 'index.html', token: '' };
+    } catch { return { user: '', repo: '', branch: 'main', file: 'index.html', token: '' }; }
+  }
+
+  function saveGhSettings() {
+    const settings = {
+      user:   document.getElementById('ghUser').value.trim(),
+      repo:   document.getElementById('ghRepo').value.trim(),
+      branch: document.getElementById('ghBranch').value.trim() || 'main',
+      file:   document.getElementById('ghFile').value.trim() || 'index.html',
+      token:  document.getElementById('ghToken').value.trim(),
+    };
+    localStorage.setItem(GH_SETTINGS_KEY, JSON.stringify(settings));
+    const status = document.getElementById('ghSettingsStatus');
+    status.textContent = '✓ Settings saved';
+    status.className = 'github-status ok';
+    setTimeout(() => { status.textContent = ''; status.className = 'github-status'; }, 3000);
+    return settings;
+  }
+
+  function populateGhSettings() {
+    const s = loadGhSettings();
+    document.getElementById('ghUser').value   = s.user   || '';
+    document.getElementById('ghRepo').value   = s.repo   || '';
+    document.getElementById('ghBranch').value = s.branch || 'main';
+    document.getElementById('ghFile').value   = s.file   || 'index.html';
+    document.getElementById('ghToken').value  = s.token  || '';
+  }
+
+  document.getElementById('ghSaveSettingsBtn').addEventListener('click', saveGhSettings);
+
+  // ── Price injection into HTML string ────────────────────
+  function injectPricesIntoHtml(html, prices) {
+    if (!prices) return html;
+
+    // Room cards: match ₹X,XXX<span>/night</span> or ₹X,XXX<span>/month</span>
+    // Strategy: find each room-price div and replace the price number
+    const roomMap = {
+      unit1: { old: null, price: prices.unit1?.price, suffix: '/night' },
+      unit2: { old: null, price: prices.unit2?.price, suffix: '/night' },
+      unit3: { old: null, price: prices.unit3?.price, suffix: '/night' },
+      unit4: { old: null, price: prices.unit4?.price, suffix: '/night' },
+      unit5: { old: null, price: prices.unit5?.price, suffix: '/night' },
+      pg:    { old: null, price: prices.pg?.price,    suffix: '/month' },
+    };
+
+    // Replace room-price divs in order (they appear sequentially in the HTML)
+    const keys = ['unit1','unit2','unit3','unit4','unit5','pg'];
+    let searchFrom = 0;
+
+    keys.forEach(key => {
+      const { price, suffix } = roomMap[key];
+      if (!price) return;
+      const formatted = '₹' + Number(price).toLocaleString('en-IN');
+      // Find next .room-price div from current position
+      const marker = '<div class="room-price">';
+      const idx = html.indexOf(marker, searchFrom);
+      if (idx === -1) return;
+      // Find closing </div>
+      const closeIdx = html.indexOf('</div>', idx);
+      if (closeIdx === -1) return;
+      // Replace the content between the div tags
+      const before = html.slice(0, idx + marker.length);
+      const after  = html.slice(closeIdx);
+      html = before + `${formatted}<span>${suffix}</span>` + after;
+      searchFrom = idx + marker.length;
+    });
+
+    // Starting from — hero sub text
+    if (prices.startingFrom) {
+      const sfFormatted = '₹' + Number(prices.startingFrom).toLocaleString('en-IN');
+      html = html.replace(/₹[\d,]+\/night(?=\.)/g, sfFormatted + '/night');
+      // Booking section .amt span
+      html = html.replace(/(<span class="amt">)₹[\d,]+(<\/span>)/, `$1${sfFormatted}$2`);
+    }
+
+    return html;
+  }
+
+  // ── Gallery injection into HTML string ──────────────────
+  function injectGalleryIntoHtml(html, photos) {
+    if (!photos || !Array.isArray(photos)) return html;
+
+    // Replace each gallery-item img src and alt in order
+    let searchFrom = 0;
+    photos.forEach((photo, idx) => {
+      const itemMarker = '<div class="gallery-item';
+      const pos = html.indexOf(itemMarker, searchFrom);
+      if (pos === -1) return;
+
+      // Find the <img inside this gallery-item
+      const imgStart = html.indexOf('<img ', pos);
+      const itemEnd  = html.indexOf('</div>', pos); // end of overlay div
+      if (imgStart === -1 || imgStart > itemEnd + 200) return;
+
+      const imgTagEnd = html.indexOf('>', imgStart);
+      if (imgTagEnd === -1) return;
+
+      const oldImgTag = html.slice(imgStart, imgTagEnd + 1);
+
+      // Build new img tag preserving classes/attributes, just swap src and alt
+      let newImgTag = oldImgTag
+        .replace(/src="[^"]*"/, `src="${photo.src}"`)
+        .replace(/alt="[^"]*"/, `alt="${(photo.alt || '').replace(/"/g, '&quot;')}"`);
+
+      html = html.slice(0, imgStart) + newImgTag + html.slice(imgTagEnd + 1);
+      searchFrom = imgStart + newImgTag.length;
+    });
+
+    return html;
+  }
+
+  // ── Main publish function ────────────────────────────────
+  document.getElementById('publishBtn').addEventListener('click', publishToGitHub);
+
+  async function publishToGitHub() {
+    const btn       = document.getElementById('publishBtn');
+    const resultEl  = document.getElementById('publishResult');
+
+    const ghSettings = loadGhSettings();
+
+    // Validate settings
+    if (!ghSettings.token) {
+      resultEl.textContent = '⚠ Please enter your GitHub token in settings above.';
+      resultEl.className = 'publish-result err';
+      document.getElementById('githubSettings').scrollIntoView({ behavior: 'smooth' });
+      return;
+    }
+    if (!ghSettings.user || !ghSettings.repo) {
+      resultEl.textContent = '⚠ Please fill in GitHub username and repository name.';
+      resultEl.className = 'publish-result err';
+      return;
+    }
+
+    // First save everything locally
+    saveAll();
+    localStorage.setItem(GALLERY_KEY, JSON.stringify(galleryPhotos));
+
+    btn.disabled = true;
+    btn.innerHTML = '<span class="publish-spinner"></span> Publishing…';
+    resultEl.textContent = 'Fetching current index.html from GitHub…';
+    resultEl.className = 'publish-result';
+
+    const { user, repo, branch, file, token } = ghSettings;
+    const apiBase = `https://api.github.com/repos/${user}/${repo}/contents/${file}`;
+    const headers = {
+      'Authorization': `Bearer ${token}`,
+      'Accept': 'application/vnd.github+json',
+      'X-GitHub-Api-Version': '2022-11-28',
+    };
+
+    try {
+      // Step 1: Get current file + SHA
+      resultEl.textContent = '① Fetching current file…';
+      const getRes = await fetch(`${apiBase}?ref=${branch}`, { headers });
+      if (!getRes.ok) {
+        const err = await getRes.json();
+        throw new Error(err.message || `GitHub API error ${getRes.status}`);
+      }
+      const fileData = await getRes.json();
+      const sha      = fileData.sha;
+
+      // Step 2: Decode base64 content
+      resultEl.textContent = '② Updating prices in file…';
+      let htmlContent = decodeURIComponent(escape(atob(fileData.content.replace(/\n/g, ''))));
+
+      // Step 3: Inject prices
+      const priceData   = loadSaved();
+      const galleryData = loadGallery();
+      htmlContent = injectPricesIntoHtml(htmlContent, priceData);
+      htmlContent = injectGalleryIntoHtml(htmlContent, galleryData);
+
+      // Step 4: Encode back to base64
+      const newContent = btoa(unescape(encodeURIComponent(htmlContent)));
+
+      // Step 5: Push to GitHub
+      resultEl.textContent = '③ Pushing to GitHub…';
+      const now        = new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' });
+      const putRes     = await fetch(apiBase, {
+        method: 'PUT',
+        headers: { ...headers, 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          message: `Admin: update prices & gallery — ${now} IST`,
+          content: newContent,
+          sha,
+          branch,
+        }),
+      });
+
+      if (!putRes.ok) {
+        const err = await putRes.json();
+        throw new Error(err.message || `Push failed with status ${putRes.status}`);
+      }
+
+      resultEl.textContent = '✓ Published! Vercel is deploying — live in ~15 seconds.';
+      resultEl.className = 'publish-result ok';
+
+      // Show toast
+      const toast = document.getElementById('saveToast');
+      toast.textContent = '🚀 Published to GitHub! Going live now…';
+      toast.classList.add('show');
+      setTimeout(() => { toast.classList.remove('show'); toast.textContent = '✦ Prices saved successfully'; }, 4000);
+
+    } catch (err) {
+      console.error(err);
+      resultEl.textContent = '✕ Error: ' + err.message;
+      resultEl.className = 'publish-result err';
+    } finally {
+      btn.disabled = false;
+      btn.innerHTML = '🚀 Save &amp; Publish';
+    }
+  }
+
+  // ── Init gallery + GitHub settings when panel shows ─────
   const panelObserver = new MutationObserver(() => {
     if (adminPanel.classList.contains('active')) {
       renderGalleryGrid();
+      populateGhSettings();
       panelObserver.disconnect();
     }
   });
   panelObserver.observe(adminPanel, { attributes: true, attributeFilter: ['class'] });
+
 </script>
 </body>
 </html>
