@@ -205,7 +205,7 @@
     .btn-text:hover { color: var(--gold); }
 
     /* ── Forgot / Reset card ── */
-    #resetCard { display: none; }
+
     .card-title {
       font-family: var(--serif);
       font-size: 1.2rem;
@@ -1101,24 +1101,6 @@
       <div class="f-error" id="loginErr"></div>
       <button class="btn btn-primary" id="loginBtn">Unlock Panel →</button>
       <div style="text-align:center;margin-top:0.75rem;">
-        <button class="btn btn-text" id="forgotBtn">Forgot password?</button>
-      </div>
-    </div>
-
-    <!-- Reset password card -->
-    <div class="login-card" id="resetCard">
-      <div class="login-card-label">Reset Password</div>
-      <p style="font-size:0.72rem;color:#888;line-height:1.7;margin-bottom:1rem;">Enter your recovery key to set a new password.</p>
-      <label class="f-label" for="recoveryInput">Recovery Key</label>
-      <input class="f-input" type="text" id="recoveryInput" placeholder="XXXX-XXXX-XXXX" autocomplete="off" style="letter-spacing:0.12em;" />
-      <label class="f-label" for="newPwReset">New Password</label>
-      <input class="f-input" type="password" id="newPwReset" placeholder="Min 6 characters" />
-      <label class="f-label" for="confirmPwReset">Confirm Password</label>
-      <input class="f-input" type="password" id="confirmPwReset" placeholder="Re-enter password" />
-      <div class="f-error" id="resetErr"></div>
-      <button class="btn btn-primary" id="doResetBtn">Set New Password →</button>
-      <div style="text-align:center;margin-top:0.75rem;">
-        <button class="btn btn-text" id="backLoginBtn">← Back to login</button>
       </div>
     </div>
   </div>
@@ -1324,8 +1306,12 @@
               <input class="f-input" type="text" id="ghBranch" placeholder="main" autocomplete="off" />
             </div>
             <div class="github-field">
-              <label class="f-label" for="ghFile">File Path</label>
+              <label class="f-label" for="ghFile">File Path (public site)</label>
               <input class="f-input" type="text" id="ghFile" placeholder="index.html" autocomplete="off" />
+            </div>
+            <div class="github-field">
+              <label class="f-label" for="ghAdminRepo">Admin Repo Name <span style="color:#bbb;font-size:0.62rem;">(for password sync)</span></label>
+              <input class="f-input" type="text" id="ghAdminRepo" placeholder="budgethomes-admin" autocomplete="off" />
             </div>
             <div class="github-field full">
               <label class="f-label" for="ghToken">Personal Access Token <span style="color:#bbb;font-size:0.62rem;font-weight:300;">(stored locally on this device only)</span></label>
@@ -1377,8 +1363,8 @@
           </div>
         </div>
 
-        <div class="alert alert-warn">
-          <strong>⚠ Recovery Key:</strong> A new recovery key is generated every time you change your password. It will be shown immediately after saving — copy it somewhere safe. Without it you cannot reset a forgotten password.
+        <div class="alert alert-info">
+          <strong>ℹ How password works:</strong> Your password hash is stored directly in <code>admin.html</code> on GitHub — not in the browser. Changing it here automatically publishes the new hash to your private admin repo, so it works instantly on <strong>every browser and device</strong> without needing to log out or clear cache. Make sure your GitHub token is saved in the <strong>Publish</strong> settings page first.
         </div>
       </div>
     </div>
@@ -1423,16 +1409,7 @@
   </div>
 </div>
 
-<!-- Recovery key modal -->
-<div class="modal-backdrop" id="recoveryModal">
-  <div class="modal">
-    <div class="modal-title" id="recoveryModalTitle">🔐 Save Your Recovery Key</div>
-    <p style="font-size:0.75rem;color:#888;line-height:1.7;">This key lets you reset your password if you ever forget it. <strong>Store it somewhere safe</strong> — it will not be shown again.</p>
-    <div class="recovery-box" id="recoveryKeyDisplay"></div>
-    <button class="btn btn-ghost" id="copyRecoveryBtn" style="width:100%;margin-bottom:0.75rem;">Copy Key</button>
-    <button class="btn btn-gold" id="recoveryDoneBtn" style="width:100%;">✦ I've saved it — Continue</button>
-  </div>
-</div>
+<!-- Recovery key modal removed — password hash is stored in admin.html on GitHub -->
 
 <!-- Toast -->
 <div id="toast"></div>
@@ -1445,7 +1422,7 @@
 // ═══════════════════════════════════════════════════════
 // STORAGE KEYS
 // ═══════════════════════════════════════════════════════
-const KEY_AUTH     = 'bh_auth_v2';
+// KEY_AUTH removed — password hash now lives in admin.html itself
 const KEY_PRICES   = 'bh_prices_v1';
 const KEY_GALLERY  = 'bh_gallery_v1';
 const KEY_GH       = 'bh_gh_v1';
@@ -1496,10 +1473,7 @@ async function sha256(text) {
   return Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,'0')).join('');
 }
 
-function genKey() {
-  const s = () => Math.random().toString(36).slice(2,6).toUpperCase();
-  return `${s()}-${s()}-${s()}`;
-}
+// genKey removed — no longer using recovery keys
 
 function toast(msg, type='') {
   const el = $('toast');
@@ -1519,34 +1493,20 @@ function logActivity(msg, type='ok') {
 // ═══════════════════════════════════════════════════════
 // AUTH
 // ═══════════════════════════════════════════════════════
-async function initAuth() {
-  if (!load(KEY_AUTH)) {
-    const key = genKey();
-    store(KEY_AUTH, {
-      hash: await sha256('budgethomes2026'),
-      recoveryHash: await sha256(key)
-    });
-    showRecoveryModal(key, true);
-  }
-}
+// Password hash is hardcoded here — identical on every browser/device.
+// Default password: budgethomes2026
+// To change: Settings page → pushes new hash to your private GitHub repo.
+// ───────────────────────────────────────────────────────
+let CURRENT_PW_HASH = '3e1003cd350ff4eec8ca43fa54ae0ebd98b7afbf6ead89216e45ed195c636668'; // PW_HASH_SLOT
 
 async function verifyPw(pw) {
-  const a = load(KEY_AUTH);
-  return a && (await sha256(pw)) === a.hash;
-}
-
-async function verifyRecovery(key) {
-  const a = load(KEY_AUTH);
-  return a && (await sha256(key.trim().toUpperCase())) === a.recoveryHash;
+  return (await sha256(pw)) === CURRENT_PW_HASH;
 }
 
 async function changePw(newPw) {
-  const key = genKey();
-  store(KEY_AUTH, {
-    hash: await sha256(newPw),
-    recoveryHash: await sha256(key)
-  });
-  return key;
+  // Updates in-memory — caller must push to GitHub to persist across browsers
+  CURRENT_PW_HASH = await sha256(newPw);
+  return CURRENT_PW_HASH;
 }
 
 // ═══════════════════════════════════════════════════════
@@ -1579,38 +1539,7 @@ $('loginBtn').addEventListener('click', async () => {
 });
 $('pwInput').addEventListener('keydown', e => { if(e.key==='Enter') $('loginBtn').click(); });
 
-// Forgot
-$('forgotBtn').addEventListener('click', () => {
-  $('loginCard').style.display = 'none';
-  $('resetCard').style.display = 'block';
-  $('resetErr').textContent = '';
-});
-$('backLoginBtn').addEventListener('click', () => {
-  $('resetCard').style.display = 'none';
-  $('loginCard').style.display = '';
-  $('loginErr').textContent = '';
-});
-
-// Do reset
-$('doResetBtn').addEventListener('click', async () => {
-  const key  = $('recoveryInput').value;
-  const pw   = $('newPwReset').value;
-  const conf = $('confirmPwReset').value;
-  const err  = $('resetErr');
-
-  if (!key)          { err.textContent = 'Enter your recovery key.'; return; }
-  if (pw.length < 6) { err.textContent = 'Password must be at least 6 characters.'; return; }
-  if (pw !== conf)   { err.textContent = 'Passwords do not match.'; return; }
-  if (!await verifyRecovery(key)) { err.textContent = 'Recovery key is incorrect.'; return; }
-
-  const newKey = await changePw(pw);
-  err.textContent = '';
-  ['recoveryInput','newPwReset','confirmPwReset'].forEach(id => $(id).value = '');
-  $('resetCard').style.display = 'none';
-  $('loginCard').style.display = '';
-  showRecoveryModal(newKey, false);
-  toast('Password reset successfully', 'ok');
-});
+// Forgot password: handled via Settings page → Change Password → publishes new hash to GitHub.
 
 // Logout
 $('logoutBtn').addEventListener('click', () => {
@@ -1618,11 +1547,8 @@ $('logoutBtn').addEventListener('click', () => {
   location.reload();
 });
 
-// Auto-login
-(async () => {
-  await initAuth();
-  if (sessionStorage.getItem('bh_sess') === '1') showApp();
-})();
+// Auto-login (no initAuth — hash is hardcoded in file)
+if (sessionStorage.getItem('bh_sess') === '1') showApp();
 
 // ═══════════════════════════════════════════════════════
 // NAVIGATION
@@ -1650,25 +1576,7 @@ document.addEventListener('click', e => {
   }
 });
 
-// ═══════════════════════════════════════════════════════
-// RECOVERY KEY MODAL
-// ═══════════════════════════════════════════════════════
-function showRecoveryModal(key, isFirst) {
-  $('recoveryModalTitle').textContent = isFirst ? '🔐 Welcome — Save Your Recovery Key' : '🔐 New Recovery Key';
-  $('recoveryKeyDisplay').textContent = key;
-  $('recoveryModal').classList.add('open');
-}
-
-$('copyRecoveryBtn').addEventListener('click', () => {
-  navigator.clipboard.writeText($('recoveryKeyDisplay').textContent).then(() => {
-    $('copyRecoveryBtn').textContent = '✓ Copied!';
-    setTimeout(() => $('copyRecoveryBtn').textContent = 'Copy Key', 2000);
-  });
-});
-
-$('recoveryDoneBtn').addEventListener('click', () => {
-  $('recoveryModal').classList.remove('open');
-});
+// Recovery key modal removed — password managed via GitHub file hash.
 
 // ═══════════════════════════════════════════════════════
 // CHANGE PASSWORD (Settings page + topbar button)
@@ -1686,13 +1594,71 @@ $('cpSaveBtn').addEventListener('click', async () => {
   if (pw !== conf)            { err.textContent = 'Passwords do not match.'; return; }
   if (pw === cur)             { err.textContent = 'New password must differ from current.'; return; }
 
-  const newKey = await changePw(pw);
+  const newHash = await changePw(pw);
   err.textContent = '';
   ['cpCurrent','cpNew','cpConfirm'].forEach(id => $(id).value = '');
-  showRecoveryModal(newKey, false);
-  logActivity('Password changed');
-  toast('Password updated successfully', 'ok');
+
+  // Push new hash to GitHub admin file so it works on ALL browsers/devices
+  $('cpSaveBtn').disabled = true;
+  $('cpSaveBtn').textContent = 'Publishing…';
+  const pushOk = await pushPasswordHash(newHash);
+  $('cpSaveBtn').disabled = false;
+  $('cpSaveBtn').textContent = 'Update Password';
+
+  if (pushOk) {
+    logActivity('Password changed & published to GitHub');
+    toast('✓ Password updated on all devices', 'ok');
+    err.style.color = 'var(--success)';
+    err.textContent = '✓ Password updated. Works on all browsers immediately.';
+  } else {
+    logActivity('Password changed locally only — GitHub push failed', 'warn');
+    toast('Password changed locally. GitHub push failed — update token in Publish settings.', 'err');
+    err.style.color = 'var(--error)';
+    err.textContent = '⚠ Changed locally only. GitHub push failed — check Publish settings.';
+  }
+  setTimeout(() => { err.textContent=''; err.style.color=''; }, 6000);
 });
+
+// Push new password hash into admin.html on GitHub
+async function pushPasswordHash(newHash) {
+  const s = load(KEY_GH, {});
+  if (!s.token || !s.user || !s.repo) return false;
+
+  // GitHub settings for admin repo (same repo as this file)
+  const adminFile = 'admin.html';
+  const apiUrl = \`https://api.github.com/repos/\${s.user}/\${s.adminRepo || s.repo + '-admin'}/contents/\${adminFile}\`;
+  const headers = {
+    'Authorization': \`Bearer \${s.token}\`,
+    'Accept': 'application/vnd.github+json',
+    'X-GitHub-Api-Version': '2022-11-28',
+  };
+
+  try {
+    // Fetch current admin.html from the admin repo
+    const getRes = await fetch(\`\${apiUrl}?ref=\${s.branch||'main'}\`, { headers });
+    if (!getRes.ok) return false;
+    const fileData = await getRes.json();
+    let html = decodeURIComponent(escape(atob(fileData.content.replace(/\n/g,''))));
+
+    // Replace the hash slot — matches: let CURRENT_PW_HASH = 'xxxx'; // PW_HASH_SLOT
+    html = html.replace(
+      /let CURRENT_PW_HASH = '[a-f0-9]+'; \/\/ PW_HASH_SLOT/,
+      \`let CURRENT_PW_HASH = '\${newHash}'; // PW_HASH_SLOT\`
+    );
+
+    const putRes = await fetch(apiUrl, {
+      method: 'PUT',
+      headers: { ...headers, 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        message: 'Admin: update password hash',
+        content: btoa(unescape(encodeURIComponent(html))),
+        sha: fileData.sha,
+        branch: s.branch || 'main',
+      })
+    });
+    return putRes.ok;
+  } catch(e) { return false; }
+}
 
 // ═══════════════════════════════════════════════════════
 // APP INIT
@@ -1960,7 +1926,7 @@ function openPhotoModal(idx) {
 
 $('photoCancel').addEventListener('click', () => $('photoModal').classList.remove('open'));
 $('photoModal').addEventListener('click', e => { if(e.target === $('photoModal')) $('photoModal').classList.remove('open'); });
-$('recoveryModal').addEventListener('click', e => { if(e.target === $('recoveryModal')) $('recoveryModal').classList.remove('open'); });
+
 
 // Tabs
 document.querySelectorAll('.tab-btn').forEach(btn => {
@@ -2025,22 +1991,24 @@ $('photoApply').addEventListener('click', () => {
 // GITHUB SETTINGS
 // ═══════════════════════════════════════════════════════
 function loadGhSettings() {
-  const s = load(KEY_GH, { user:'beinguvaize', repo:'budgethomes', branch:'main', file:'index.html', token:'' });
-  $('ghUser').value   = s.user   || '';
-  $('ghRepo').value   = s.repo   || '';
-  $('ghBranch').value = s.branch || 'main';
-  $('ghFile').value   = s.file   || 'index.html';
-  $('ghToken').value  = s.token  || '';
+  const s = load(KEY_GH, { user:'beinguvaize', repo:'budgethomes', adminRepo:'budgethomes-admin', branch:'main', file:'index.html', token:'' });
+  $('ghUser').value      = s.user      || '';
+  $('ghRepo').value      = s.repo      || '';
+  $('ghAdminRepo').value = s.adminRepo || '';
+  $('ghBranch').value    = s.branch    || 'main';
+  $('ghFile').value      = s.file      || 'index.html';
+  $('ghToken').value     = s.token     || '';
   updateGhStatus();
 }
 
 function getGhSettings() {
   return {
-    user:   $('ghUser').value.trim(),
-    repo:   $('ghRepo').value.trim(),
-    branch: $('ghBranch').value.trim() || 'main',
-    file:   $('ghFile').value.trim() || 'index.html',
-    token:  $('ghToken').value.trim(),
+    user:      $('ghUser').value.trim(),
+    repo:      $('ghRepo').value.trim(),
+    adminRepo: $('ghAdminRepo').value.trim(),
+    branch:    $('ghBranch').value.trim() || 'main',
+    file:      $('ghFile').value.trim() || 'index.html',
+    token:     $('ghToken').value.trim(),
   };
 }
 
@@ -2052,7 +2020,8 @@ function updateGhStatus() {
 }
 
 $('ghSaveBtn').addEventListener('click', () => {
-  store(KEY_GH, getGhSettings());
+  const s = getGhSettings();
+  store(KEY_GH, s);
   updateGhStatus();
   toast('GitHub settings saved', 'ok');
   $('connResult').textContent = '✓ Settings saved';
