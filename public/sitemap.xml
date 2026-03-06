@@ -2,27 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://www.bhomesindia.com/</loc>
-    <lastmod>2024-03-05</lastmod>
+    <lastmod>2026-03-06</lastmod>
     <priority>1.0</priority>
-  </url>
-  <url>
-    <loc>https://www.bhomesindia.com/rooms</loc>
-    <lastmod>2024-03-05</lastmod>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://www.bhomesindia.com/booking</loc>
-    <lastmod>2024-03-05</lastmod>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://www.bhomesindia.com/about</loc>
-    <lastmod>2024-03-05</lastmod>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://www.bhomesindia.com/contact</loc>
-    <lastmod>2024-03-05</lastmod>
-    <priority>0.6</priority>
   </url>
 </urlset>
