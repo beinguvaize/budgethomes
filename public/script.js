@@ -5,8 +5,8 @@
 // ── Navbar scroll effect ──
 const navbar = document.getElementById('navbar');
 window.addEventListener('scroll', () => {
-    navbar.classList.toggle('scrolled', window.scrollY > 60);
-});
+    if (navbar) navbar.classList.toggle('scrolled', window.scrollY > 60);
+}, { passive: true });
 
 // ── Hamburger menu ──
 const hamburger = document.querySelector('.hamburger');
@@ -18,10 +18,11 @@ hamburger?.addEventListener('click', () => {
     hamburger.setAttribute('aria-label', isOpen ? 'Close menu' : 'Open menu');
     document.body.style.overflow = isOpen ? 'hidden' : '';
 });
+
 document.querySelectorAll('.mobile-menu a').forEach(link => {
     link.addEventListener('click', () => {
         hamburger?.classList.remove('open');
-        mobileMenu.classList.remove('open');
+        mobileMenu?.classList.remove('open');
         hamburger?.setAttribute('aria-expanded', 'false');
         hamburger?.setAttribute('aria-label', 'Open menu');
         document.body.style.overflow = '';
@@ -37,6 +38,7 @@ const revealObserver = new IntersectionObserver((entries) => {
         }
     });
 }, { threshold: 0.1 });
+
 document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
 
 // ── Animated counters ──
@@ -55,6 +57,7 @@ function animateCounter(el, target, suffix = '') {
         }
     }, 20);
 }
+
 const statsObserver = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
         if (entry.isIntersecting) {
@@ -67,6 +70,7 @@ const statsObserver = new IntersectionObserver((entries) => {
         }
     });
 }, { threshold: 0.5 });
+
 const statsSection = document.getElementById('stats');
 if (statsSection) statsObserver.observe(statsSection);
 
@@ -81,27 +85,42 @@ const galleryImages = Array.from(document.querySelectorAll('.gallery-item img'))
 let currentIdx = 0;
 
 function openLightbox(idx) {
+    if (!lbImg || !lightbox) return;
     currentIdx = idx;
     lbImg.src = galleryImages[idx].src;
     lightbox.classList.add('open');
     document.body.style.overflow = 'hidden';
 }
+
 function closeLightbox() {
-    lightbox.classList.remove('open');
+    if (lightbox) lightbox.classList.remove('open');
     document.body.style.overflow = '';
 }
-function showPrev() { currentIdx = (currentIdx - 1 + galleryImages.length) % galleryImages.length; openLightbox(currentIdx); }
-function showNext() { currentIdx = (currentIdx + 1) % galleryImages.length; openLightbox(currentIdx); }
+
+function showPrev() {
+    currentIdx = (currentIdx - 1 + galleryImages.length) % galleryImages.length;
+    openLightbox(currentIdx);
+}
+
+function showNext() {
+    currentIdx = (currentIdx + 1) % galleryImages.length;
+    openLightbox(currentIdx);
+}
 
 document.querySelectorAll('.gallery-item').forEach((item, idx) => {
     item.addEventListener('click', () => openLightbox(idx));
 });
+
 lbClose?.addEventListener('click', closeLightbox);
 lbPrev?.addEventListener('click', showPrev);
 lbNext?.addEventListener('click', showNext);
-lightbox?.addEventListener('click', e => { if (e.target === lightbox) closeLightbox(); });
+lightbox?.addEventListener('click', e => {
+    if (e.target === lightbox) closeLightbox();
+});
+
 document.addEventListener('keydown', e => {
-    if (!lightbox?.classList.contains('open')) return; \n  if (e.key === 'Escape') closeLightbox();
+    if (!lightbox?.classList.contains('open')) return;
+    if (e.key === 'Escape') closeLightbox();
     if (e.key === 'ArrowLeft') showPrev();
     if (e.key === 'ArrowRight') showNext();
 });
@@ -109,15 +128,18 @@ document.addEventListener('keydown', e => {
 // ── Date picker validation ──
 const checkIn = document.getElementById('checkIn');
 const checkOut = document.getElementById('checkOut');
+const todayStr = new Date().toISOString().split('T')[0];
 
-const today = new Date().toISOString().split('T')[0];
-if (checkIn) checkIn.min = today; \nif(checkOut) checkOut.min = today;
+if (checkIn) checkIn.min = todayStr;
+if (checkOut) checkOut.min = todayStr;
 
 checkIn?.addEventListener('change', () => {
-\n  if (checkOut) {
-\n    checkOut.min = checkIn.value;
-    if (checkOut.value && checkOut.value <= checkIn.value) checkOut.value = '';
-}
+    if (checkOut) {
+        checkOut.min = checkIn.value;
+        if (checkOut.value && checkOut.value <= checkIn.value) {
+            checkOut.value = '';
+        }
+    }
 });
 
 // ── Booking Form ──
@@ -128,14 +150,15 @@ const submitBtn = document.getElementById('submitBtn');
 form?.addEventListener('submit', async (e) => {
     e.preventDefault();
 
-    // Validate dates
-    if (checkIn.value && checkOut.value && checkOut.value <= checkIn.value) {
+    if (checkIn && checkOut && checkIn.value && checkOut.value && checkOut.value <= checkIn.value) {
         showMsg('Check-out date must be after check-in date.', 'error');
         return;
     }
 
-    submitBtn.disabled = true;
-    submitBtn.innerHTML = '<span class="spinner">⏳</span> Sending…';
+    if (submitBtn) {
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = '<span class="spinner">⏳</span> Sending…';
+    }
 
     try {
         const data = new FormData(form);
@@ -154,14 +177,27 @@ form?.addEventListener('submit', async (e) => {
             const err = json.errors?.map(e => e.message).join(', ') || 'Submission failed.';
             showMsg('⚠️ ' + err, 'error');
         }
-    } catch (err) { \n    showMsg('⚠️ Network error. Please call us directly at +91 77361 61763.', 'error'); \n } finally { \n    submitBtn.disabled = false; \n    submitBtn.innerHTML = '✦ Send Booking Request'; \n }
+    } catch (err) {
+        showMsg('⚠️ Network error. Please call us directly at +91 77361 61763.', 'error');
+    } finally {
+        if (submitBtn) {
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = '✦ Send Booking Request';
+        }
+    }
 });
 
-function showMsg(text, type) { \n  formMsg.textContent = text; \n  formMsg.className = 'form-msg ' + type; \n  formMsg.scrollIntoView({ behavior: 'smooth', block: 'nearest' }); \n }
+function showMsg(text, type) {
+    if (!formMsg) return;
+    formMsg.textContent = text;
+    formMsg.className = 'form-msg ' + type;
+    formMsg.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+}
 
 // ── Toast notification ──
 function showToast(msg) {
     const toast = document.getElementById('toast');
+    if (!toast) return;
     toast.textContent = msg;
     toast.classList.add('show');
     setTimeout(() => toast.classList.remove('show'), 4500);
@@ -175,23 +211,23 @@ const mcwCloseIcon = document.querySelector('.mcw-icon-close');
 
 mcwToggle?.addEventListener('click', (e) => {
     e.stopPropagation();
+    if (!mcwOptions) return;
     const isOpen = mcwOptions.classList.toggle('active');
     mcwToggle.setAttribute('aria-expanded', isOpen);
-    mcwOpenIcon.style.display = isOpen ? 'none' : 'flex';
-    mcwCloseIcon.style.display = isOpen ? 'flex' : 'none';
+    if (mcwOpenIcon) mcwOpenIcon.style.display = isOpen ? 'none' : 'flex';
+    if (mcwCloseIcon) mcwCloseIcon.style.display = isOpen ? 'flex' : 'none';
 });
 
-// Close widget when clicking outside
 document.addEventListener('click', (e) => {
     if (mcwOptions?.classList.contains('active') && !e.target.closest('#mobileContactWidget')) {
         mcwOptions.classList.remove('active');
-        mcwToggle.setAttribute('aria-expanded', 'false');
-        mcwOpenIcon.style.display = 'flex';
-        mcwCloseIcon.style.display = 'none';
+        mcwToggle?.setAttribute('aria-expanded', 'false');
+        if (mcwOpenIcon) mcwOpenIcon.style.display = 'flex';
+        if (mcwCloseIcon) mcwCloseIcon.style.display = 'none';
     }
 });
 
-// ── Interactive Hero Day/Night Toggle (Mouse Driven) ──
+// ── Interactive Hero Day/Night Toggle ──
 const heroCanvas = document.getElementById('heroCanvas');
 if (heroCanvas) {
     const handleWipe = (clientX) => {
@@ -199,7 +235,12 @@ if (heroCanvas) {
         const x = clientX - rect.left;
         const percent = Math.max(0, Math.min(100, (x / rect.width) * 100));
         heroCanvas.style.setProperty('--wipe', `${percent}%`);
-    }; \n\n  heroCanvas.addEventListener('mousemove', (e) => handleWipe(e.clientX)); \n\n  heroCanvas.addEventListener('touchmove', (e) => { \n    handleWipe(e.touches[0].clientX); \n }, { passive: true }); \n
+    };
+
+    heroCanvas.addEventListener('mousemove', (e) => handleWipe(e.clientX));
+    heroCanvas.addEventListener('touchmove', (e) => {
+        handleWipe(e.touches[0].clientX);
+    }, { passive: true });
 }
 
 // ── Smooth active nav link on scroll ──
@@ -207,6 +248,11 @@ const sections = document.querySelectorAll('section[id]');
 const navLinks = document.querySelectorAll('.nav-links a');
 window.addEventListener('scroll', () => {
     let current = '';
-    sections.forEach(s => { \n    if (window.scrollY >= s.offsetTop - 120) current = s.id; \n });
-    navLinks.forEach(a => { \n    a.style.color = a.getAttribute('href') === '#' + current ? 'var(--gold)' : ''; \n });
+    sections.forEach(s => {
+        const offset = s.offsetTop;
+        if (window.scrollY >= offset - 120) current = s.id;
+    });
+    navLinks.forEach(a => {
+        a.style.color = a.getAttribute('href') === '#' + current ? 'var(--gold)' : '';
+    });
 }, { passive: true });
