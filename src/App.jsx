@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Routes, Route, Link, useNavigate } from 'react-router-dom'
+import { Routes, Route, Link, useNavigate, useLocation } from 'react-router-dom'
 import clsx from 'clsx'
 
 const BRAND = 'Budget Homes'
@@ -7,18 +7,18 @@ const BRAND = 'Budget Homes'
 const sampleRooms = [
   { id: 'r1', title: 'Economy Twin', beds: 2, price: 59, features: ['Free Wi‑Fi', 'Heating'], img: 'https://picsum.photos/seed/r1/800/500' },
   { id: 'r2', title: 'Standard Double', beds: 1, price: 75, features: ['Free Wi‑Fi', 'TV'], img: 'https://picsum.photos/seed/r2/800/500' },
-  { id: 'r3', title: 'Family Suite', beds: 3, price: 120, features: ['Kitchenette','Free Parking'], img: 'https://picsum.photos/seed/r3/800/500' },
+  { id: 'r3', title: 'Family Suite', beds: 3, price: 120, features: ['Kitchenette', 'Free Parking'], img: 'https://picsum.photos/seed/r3/800/500' },
 ]
 
-function useLocalBookings(){
-  const [bookings, setBookings] = useState(()=>{
-    try{ return JSON.parse(localStorage.getItem('bh_bookings')||'[]') }catch(e){return []}
+function useLocalBookings() {
+  const [bookings, setBookings] = useState(() => {
+    try { return JSON.parse(localStorage.getItem('bh_bookings') || '[]') } catch (e) { return [] }
   })
-  useEffect(()=>{ localStorage.setItem('bh_bookings', JSON.stringify(bookings)) },[bookings])
+  useEffect(() => { localStorage.setItem('bh_bookings', JSON.stringify(bookings)) }, [bookings])
   return [bookings, setBookings]
 }
 
-function Header(){
+function Header() {
   return (
     <header className="bg-white shadow-sm sticky top-0 z-40">
       <div className="container flex items-center justify-between py-4">
@@ -46,28 +46,28 @@ function Header(){
   )
 }
 
-function NavLink({to, children}){
+function NavLink({ to, children }) {
   return (<Link to={to} className="text-slate-700 hover:text-teal-600 text-sm">{children}</Link>)
 }
 
-function MobileMenu(){
+function MobileMenu() {
   const [open, setOpen] = useState(false)
   return (
     <div className="relative">
-      <button aria-expanded={open} onClick={()=>setOpen(s=>!s)} className="p-2 rounded-md border">Menu</button>
+      <button aria-expanded={open} onClick={() => setOpen(s => !s)} className="p-2 rounded-md border">Menu</button>
       {open && (
         <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-md p-3">
-          <Link to="/rooms" onClick={()=>setOpen(false)} className="block py-1">Rooms</Link>
-          <Link to="/booking" onClick={()=>setOpen(false)} className="block py-1">Book</Link>
-          <Link to="/about" onClick={()=>setOpen(false)} className="block py-1">About</Link>
-          <Link to="/contact" onClick={()=>setOpen(false)} className="block py-1">Contact</Link>
+          <Link to="/rooms" onClick={() => setOpen(false)} className="block py-1">Rooms</Link>
+          <Link to="/booking" onClick={() => setOpen(false)} className="block py-1">Book</Link>
+          <Link to="/about" onClick={() => setOpen(false)} className="block py-1">About</Link>
+          <Link to="/contact" onClick={() => setOpen(false)} className="block py-1">Contact</Link>
         </div>
       )}
     </div>
   )
 }
 
-function Home(){
+function Home() {
   return (
     <main>
       <section className="bg-gradient-to-r from-teal-50 to-white py-12">
@@ -89,7 +89,7 @@ function Home(){
           </div>
 
           <div>
-            <img alt="hotel" src="https://picsum.photos/seed/hero/900/600" className="rounded-md shadow-md" />
+            <img alt="Clean and modern economy twin room at Budget Homes" src="https://picsum.photos/seed/hero/900/600" className="rounded-md shadow-md" />
           </div>
         </div>
       </section>
@@ -98,7 +98,7 @@ function Home(){
         <div className="container">
           <h2 className="text-2xl font-semibold">Featured Rooms</h2>
           <div className="mt-6 grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {sampleRooms.map(r=> (
+            {sampleRooms.map(r => (
               <RoomCard key={r.id} room={r} />
             ))}
           </div>
@@ -108,7 +108,7 @@ function Home(){
   )
 }
 
-function Feature({icon, title, text}){
+function Feature({ icon, title, text }) {
   return (
     <div className="flex gap-3 items-start bg-white p-3 rounded-md shadow-sm">
       <div className="text-2xl">{icon}</div>
@@ -120,7 +120,7 @@ function Feature({icon, title, text}){
   )
 }
 
-function RoomCard({room}){
+function RoomCard({ room }) {
   return (
     <article className="bg-white rounded-md shadow-sm overflow-hidden">
       <img src={room.img} alt={room.title} className="w-full h-40 object-cover" />
@@ -136,24 +136,24 @@ function RoomCard({room}){
   )
 }
 
-function Rooms(){
+function Rooms() {
   const [q, setQ] = useState('')
-  const filtered = sampleRooms.filter(r=> r.title.toLowerCase().includes(q.toLowerCase()) )
+  const filtered = sampleRooms.filter(r => r.title.toLowerCase().includes(q.toLowerCase()))
   return (
     <div className="py-12 container">
       <h2 className="text-2xl font-semibold">Rooms</h2>
       <div className="mt-4 flex gap-3 items-center">
-        <input value={q} onChange={e=>setQ(e.target.value)} placeholder="Search rooms" className="border rounded-md px-3 py-2 w-full md:w-64" />
+        <input value={q} onChange={e => setQ(e.target.value)} placeholder="Search rooms" className="border rounded-md px-3 py-2 w-full md:w-64" />
       </div>
 
       <div className="mt-6 grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        {filtered.map(r=> <RoomCard key={r.id} room={r} />)}
+        {filtered.map(r => <RoomCard key={r.id} room={r} />)}
       </div>
     </div>
   )
 }
 
-function Booking(){
+function Booking() {
   const navigate = useNavigate()
   const [bookings, setBookings] = useLocalBookings()
   const params = new URLSearchParams(window.location.search)
@@ -163,16 +163,16 @@ function Booking(){
     name: '', email: '', phone: '', room: preRoom || sampleRooms[0].id, checkin: '', checkout: '', guests: 1, notes: ''
   })
 
-  function handleChange(e){
-    const {name, value} = e.target
-    setForm(f=>({...f, [name]: value}))
+  function handleChange(e) {
+    const { name, value } = e.target
+    setForm(f => ({ ...f, [name]: value }))
   }
 
-  function submit(e){
+  function submit(e) {
     e.preventDefault()
     const id = 'B' + Date.now()
-    const payload = {...form, id, createdAt: new Date().toISOString()}
-    setBookings(prev=>[payload, ...prev])
+    const payload = { ...form, id, createdAt: new Date().toISOString() }
+    setBookings(prev => [payload, ...prev])
     alert('Booking received — saved locally. For a real site connect to a backend or email service.')
     navigate('/admin')
   }
@@ -186,7 +186,7 @@ function Booking(){
         <input name="phone" value={form.phone} onChange={handleChange} placeholder="Phone" className="border rounded-md px-3 py-2" />
 
         <select name="room" value={form.room} onChange={handleChange} className="border rounded-md px-3 py-2">
-          {sampleRooms.map(r=> <option key={r.id} value={r.id}>{r.title} — ${r.price}/night</option>)}
+          {sampleRooms.map(r => <option key={r.id} value={r.id}>{r.title} — ${r.price}/night</option>)}
         </select>
 
         <input name="checkin" value={form.checkin} onChange={handleChange} type="date" className="border rounded-md px-3 py-2" />
@@ -198,28 +198,28 @@ function Booking(){
 
         <div className="md:col-span-2 flex gap-3">
           <button type="submit" className="px-4 py-2 rounded-md bg-teal-500 text-white">Send Booking</button>
-          <button type="button" onClick={()=>{ setForm({name:'', email:'', phone:'', room: sampleRooms[0].id, checkin:'', checkout:'', guests:1, notes:''}) }} className="px-4 py-2 rounded-md border">Reset</button>
+          <button type="button" onClick={() => { setForm({ name: '', email: '', phone: '', room: sampleRooms[0].id, checkin: '', checkout: '', guests: 1, notes: '' }) }} className="px-4 py-2 rounded-md border">Reset</button>
         </div>
       </form>
     </div>
   )
 }
 
-function Admin(){
+function Admin() {
   const [bookings, setBookings] = useLocalBookings()
 
-  function cancel(id){
-    if(!confirm('Delete booking?')) return
-    setBookings(prev=>prev.filter(b=>b.id!==id))
+  function cancel(id) {
+    if (!confirm('Delete booking?')) return
+    setBookings(prev => prev.filter(b => b.id !== id))
   }
 
   return (
     <div className="py-12 container">
       <h2 className="text-2xl font-semibold">Bookings (local)</h2>
       <div className="mt-4">
-        {bookings.length===0 && <div className="text-slate-500">No bookings yet. Use the booking form to create one (saved to your browser localStorage).</div>}
+        {bookings.length === 0 && <div className="text-slate-500">No bookings yet. Use the booking form to create one (saved to your browser localStorage).</div>}
         <ul className="mt-4 space-y-3">
-          {bookings.map(b=> (
+          {bookings.map(b => (
             <li key={b.id} className="p-3 border rounded-md bg-white flex items-start justify-between">
               <div>
                 <div className="font-semibold">{b.name} — <span className="text-xs text-slate-500">{b.email}</span></div>
@@ -227,7 +227,7 @@ function Admin(){
                 {b.notes && <div className="mt-2 text-sm">Notes: {b.notes}</div>}
               </div>
               <div className="flex flex-col gap-2">
-                <button onClick={()=>cancel(b.id)} className="px-2 py-1 rounded-md border text-sm">Delete</button>
+                <button onClick={() => cancel(b.id)} className="px-2 py-1 rounded-md border text-sm">Delete</button>
               </div>
             </li>
           ))}
@@ -237,7 +237,7 @@ function Admin(){
   )
 }
 
-function About(){
+function About() {
   return (
     <div className="py-12 container">
       <h2 className="text-2xl font-semibold">About {BRAND}</h2>
@@ -246,9 +246,9 @@ function About(){
   )
 }
 
-function Contact(){
+function Contact() {
   const [sent, setSent] = useState(false)
-  function submit(e){ e.preventDefault(); setSent(true); }
+  function submit(e) { e.preventDefault(); setSent(true); }
   return (
     <div className="py-12 container">
       <h2 className="text-2xl font-semibold">Contact</h2>
@@ -270,7 +270,7 @@ function Contact(){
   )
 }
 
-function Footer(){
+function Footer() {
   return (
     <footer className="bg-slate-50 py-8 mt-12">
       <div className="container text-sm text-slate-600 flex flex-col md:flex-row justify-between items-center gap-4">
@@ -284,17 +284,72 @@ function Footer(){
   )
 }
 
-export default function App(){
+function StructuredData() {
+  const data = {
+    "@context": "https://schema.org",
+    "@type": "Hotel",
+    "name": BRAND,
+    "description": "Affordable, clean, and centrally located accommodation.",
+    "url": "https://www.bhomesindia.com/",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "123 Budget Street",
+      "addressLocality": "Your City",
+      "addressRegion": "NS",
+      "postalCode": "B3J 1A1",
+      "addressCountry": "CA"
+    },
+    "telephone": "+1-902-555-0123",
+    "priceRange": "$",
+    "image": "https://picsum.photos/seed/hero/900/600",
+    "amenityFeature": [
+      { "@type": "LocationFeatureSpecification", "name": "Free Wi-Fi", "value": true },
+      { "@type": "LocationFeatureSpecification", "name": "Free Parking", "value": true }
+    ]
+  };
+
+  return (
+    <script type="application/ld+json">
+      {JSON.stringify(data)}
+    </script>
+  );
+}
+
+export default function App() {
+  const location = useLocation();
+
+  useEffect(() => {
+    const titles = {
+      '/': `${BRAND} | Affordable Stays & Friendly Service`,
+      '/rooms': `Rooms | ${BRAND}`,
+      '/booking': `Book Your Stay | ${BRAND}`,
+      '/about': `About Us | ${BRAND}`,
+      '/contact': `Contact Us | ${BRAND}`,
+      '/admin': `Admin Portal | ${BRAND}`
+    };
+    document.title = titles[location.pathname] || BRAND;
+
+    // Update canonical link
+    let link = document.querySelector("link[rel='canonical']");
+    if (!link) {
+      link = document.createElement('link');
+      link.setAttribute('rel', 'canonical');
+      document.head.appendChild(link);
+    }
+    link.setAttribute('href', `https://www.bhomesindia.com${location.pathname === '/' ? '' : location.pathname}`);
+  }, [location]);
+
   return (
     <div className="min-h-screen bg-slate-50 text-slate-800">
+      <StructuredData />
       <Header />
       <Routes>
-        <Route path="/" element={<Home/>} />
-        <Route path="/rooms" element={<Rooms/>} />
-        <Route path="/booking" element={<Booking/>} />
-        <Route path="/about" element={<About/>} />
-        <Route path="/contact" element={<Contact/>} />
-        <Route path="/admin" element={<Admin/>} />
+        <Route path="/" element={<Home />} />
+        <Route path="/rooms" element={<Rooms />} />
+        <Route path="/booking" element={<Booking />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/contact" element={<Contact />} />
+        <Route path="/admin" element={<Admin />} />
       </Routes>
       <Footer />
     </div>
