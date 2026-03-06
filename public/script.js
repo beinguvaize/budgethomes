@@ -228,17 +228,18 @@ document.addEventListener('click', (e) => {
 });
 
 // ── Interactive Hero Day/Night Toggle ──
+const heroSection = document.getElementById('hero');
 const heroCanvas = document.getElementById('heroCanvas');
-if (heroCanvas) {
+if (heroSection && heroCanvas) {
     const handleWipe = (clientX) => {
-        const rect = heroCanvas.getBoundingClientRect();
+        const rect = heroSection.getBoundingClientRect();
         const x = clientX - rect.left;
         const percent = Math.max(0, Math.min(100, (x / rect.width) * 100));
         heroCanvas.style.setProperty('--wipe', `${percent}%`);
     };
 
-    heroCanvas.addEventListener('mousemove', (e) => handleWipe(e.clientX));
-    heroCanvas.addEventListener('touchmove', (e) => {
+    heroSection.addEventListener('mousemove', (e) => handleWipe(e.clientX));
+    heroSection.addEventListener('touchmove', (e) => {
         handleWipe(e.touches[0].clientX);
     }, { passive: true });
 }
